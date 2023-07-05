@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.ezen.FSB.mapper.businessProfileMapper">
+	<!-- 비즈니스 프로필 디티오 뽑아오기 -->
+	<select id="getBP" resultType="BusinessProfileDTO">
+		select * from f_business_profile where mem_num = #{mem_num}
+	</select>
+</mapper>
