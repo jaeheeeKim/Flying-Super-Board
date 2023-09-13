@@ -4,11 +4,15 @@
 <%@include file="myPage_top.jsp" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script type="text/javascript">
-	function checkDel(sr_num, mem_num) {
+	function checkDel(sr_num, mem_num, sr_img1, sr_img2, sr_img3, sr_img4) {
 		var isDel = window.confirm("정말로 삭제하시겠습니까?")
 		if (isDel) {
 			document.f2.sr_num.value = sr_num
 			document.f2.mem_num.value = mem_num
+			document.f2.sr_img1.value = sr_img1
+			document.f2.sr_img2.value = sr_img2
+			document.f2.sr_img3.value = sr_img3
+			document.f2.sr_img4.value = sr_img4
 			document.f2.submit()
 		}
 	}
@@ -67,31 +71,29 @@
             </h6>
             <h6><b>${dto.sr_title }</b></h6>
             <h6>${dto.sr_content }</h6>
-            <c:if test="${dto.sr_img1 ne null }">
+            <c:if test="${!empty dto.sr_img1}">
 				<img src="resources/img/${dto.sr_img1 }" width="150" height="150">
 			</c:if>
-			<c:if test="${dto.sr_img2 ne null }">
+			<c:if test="${!empty dto.sr_img2}">
 				<img src="resources/img/${dto.sr_img2 }" width="150" height="150">
 			</c:if>
-			<c:if test="${dto.sr_img3 ne null }">
+			<c:if test="${!empty dto.sr_img3}">
 				<img src="resources/img/${dto.sr_img3 }" width="150" height="150">
 			</c:if>
-			<c:if test="${dto.sr_img4 ne null }">
+			<c:if test="${!empty dto.sr_img4}">
 				<img src="resources/img/${dto.sr_img4 }" width="150" height="150">
 			</c:if>
          </div>
          <div class="col-1 bg-white border-bottom py-3 pb-2" height="500" align="right">
-<!-- 		   <button type="button" class="btn btn-outline-secondary">수정</button> -->
-		   <a href="shop_myPage_review_update.do?sr_num=${dto.sr_num }&mem_num=${getMemNum}"><input type="button" value="수정"></a>
+		   <a href="shop_myPage_review_updateForm.do?sr_num=${dto.sr_num }&mem_num=${getMemNum}"><button type="button" class="btn btn-outline-secondary">수정</button></a>
 		   <br><br>
            <h6><font color="gray">작성자</font></h6>
            <h6><font color="gray">작성일</font></h6>            
          </div>
          <div class="col-1 bg-white border-bottom py-3" height="300" align="left">
-<!--          	<button type="button" class="btn btn-outline-secondary" width="30">삭제</button> -->
-			<a href="javascript:checkDel('${dto.sr_num}','${getMemNum }')"><input type="button" value="삭제"></a>
+			<a href="javascript:checkDel('${dto.sr_num}','${getMemNum }','${dto.sr_img1 }','${dto.sr_img2 }','${dto.sr_img3 }','${dto.sr_img4 }')"><button type="button" class="btn btn-outline-secondary">삭제</button></a>
          	<br><br>
-            <h6>${dto.mem_num }</h6>
+            <h6>${login_mem.mem_nickname }</h6>
             <h6>${dto.sr_regdate }</h6>  
          </div>
          </c:forEach>

@@ -113,10 +113,4 @@ public class Admin_PageController { // 관리자 - Page Controller
 		return new ModelAndView("admin/notice_view", "getNotice", dto);
 	}
 	
-	// 전체 신고 내역
-	@RequestMapping("/admin_report.list.do")
-	public String listReport() {
-		return "admin/report_list";
-	}
-	
 }

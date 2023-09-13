@@ -32,7 +32,7 @@
 				<table border="0" width="100%" height="80%" align="center">
 					<tr height="50">
 						<th width="20%" align="right">상품명</th>												<!-- prod_company와 game_name은 DTO에만 넣어둠! -->
-						<td width="80%"><input type="text" class="form-control" name="game_name" value="${[getReview.prod_company]}${getReview.game_name}"></td>
+						<td width="80%"><input type="text" class="form-control" name="game_name" value="[${getReview.prod_company}]${getReview.game_name}"></td>
 					</tr>
 					<tr height="50">
 						<th width="20%">별 &nbsp점</th>

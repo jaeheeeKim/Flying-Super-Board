@@ -1,14 +1,13 @@
 package com.ezen.FSB.dto;
 
 public class GameDTO {
-	private int game_num;				// 보드게임 등록 번호
+	private int game_num;				// 보드게임 등록 번호(pk)
 	private String game_img;			// 보드게임 이미지
 	private String game_name;			// 보드게임 이름
 	private String game_player;			// 인원
 	private String game_playTime;		// 플레이 시간
 	private String game_level;			// 난이도
 	private String game_content;		// 게임설명
-	private int game_starrating;		// 별점
 	private int game_likeCount;			// 좋아요 총 개수
 	
 	public int getGame_num() {
@@ -65,14 +64,6 @@ public class GameDTO {
 	
 	public void setGame_content(String game_content) {
 		this.game_content = game_content;
-	}
-	
-	public int getGame_starrating() {
-		return game_starrating;
-	}
-	
-	public void setGame_starrating(int game_starrating) {
-		this.game_starrating = game_starrating;
 	}
 
 	public int getGame_likeCount() {

@@ -10,12 +10,13 @@
 
  <link rel="stylesheet" type="text/css" href="resources/css/button.css">
 
+<!-- 아이디 / 비밀번호 찾기 처음 누르면 나오는.jsp  -->
     
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>아이디찾기</title>
+<title>아이디/비밀번호찾기</title>
 </head>
 <body>
 
@@ -75,7 +76,7 @@
        <!-- 인증 칸 안의 폼 -->
        <!-- 이름 -->
        <form name="f" action="sendSMS.do" method="post" onsubmit="return check()">
-       
+       <input type="hidden" name="mode" value="${mode}"/>
     
 	
        <div class="mb-3">
@@ -109,6 +110,8 @@
     </div>
   </div>
  
+ 
+<c:if test="${mode!='id'}">	
 <div class="accordion-item">
     <h2 class="accordion-header" id="headingTwo">
       <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
@@ -119,7 +122,8 @@
       <div class="accordion-body">
   
   <!-- 이메일 입력폼 -->     
-  <form name="email" action="sendEmail.do" method="post" onsubmit="return emailcheck()">      
+  <form name="email" action="sendEmail.do" method="post" onsubmit="return emailcheck()">   
+  <input type="hidden" name="mode" value="${mode}"/>   
  <div class="input-group mb-3">
   <label for="exampleFormControlTextarea1" class="form-label"></label>
   
@@ -140,6 +144,7 @@
 	
       </div>
     </div>
+    </c:if>
   </div>
     
     
@@ -155,6 +160,8 @@
 </c:if>
 
 </div>
+
+
 
 </div>
 </body>

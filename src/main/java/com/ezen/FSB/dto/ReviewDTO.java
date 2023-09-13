@@ -1,10 +1,10 @@
 package com.ezen.FSB.dto;
 
 public class ReviewDTO {
-	private int review_num;				// 한줄평 등록 번호
-	private int game_num;				// 보드게임 등록 번호
-	private int mem_num;				// 회원 번호
-	private int review_starrating;		// 별점 (보드게임과 별도)
+	private int review_num;				// 한줄평 등록 번호(pk)
+	private int game_num;				// 보드게임 등록 번호(fk)
+	private int mem_num;				// 회원 번호(fk)
+	private int review_starrating;		// 별점
 	private String review_content;		// 한줄 평
 	private String review_report;		// 신고 유무 // 신고 X : 0 // 신고 O : 1, 2, 3, 4, 5
 	private String review_regdate;		// 등록일

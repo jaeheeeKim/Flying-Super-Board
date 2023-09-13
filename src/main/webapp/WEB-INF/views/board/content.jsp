@@ -5,8 +5,28 @@
 <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
 <link rel="icon" href="/favicon.ico" type="image/x-icon">
 <script src="resources/js/jquery-3.7.0.js"></script>
+
+<style>
+.box {
+    width: 50px;
+    height: 50px; 
+    border-radius: 70%;
+    overflow: hidden;
+}
+.box1 {
+    width: 20px;
+    height: 20px; 
+    border-radius: 70%;
+    overflow: hidden;
+}
+.profile {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+</style>
 <script type="text/javascript">
-	function checkDel(board_num, board_img1, board_img2, board_img3, board_img4) {
+	function checkDel(board_num, board_img1, board_img2, board_img3, board_img4, filename) {
 		var isDel = window.confirm("정말로 삭제하겠습니까?")
 		if (isDel) {
 			document.f.board_num.value = board_num
@@ -14,6 +34,7 @@
 			document.f.board_img2.value = board_img2
 			document.f.board_img3.value = board_img3
 			document.f.board_img4.value = board_img4
+			document.f.filename.value = filename
 			document.f.submit()
 		}
 	}
@@ -26,13 +47,14 @@
 			document.f1.submit()
 		}
 		function checkReport(board_num) {
-			var link = 
 			window.open("report_board.do?mode=board&board_num="+board_num,"",  "width=550, height=470, left=680, top=270")
 		}
 		function checkReport_br(br_num){
 			window.open("report_board.do?mode=reply&br_num="+br_num,"",  "width=550, height=470, left=680, top=270")
 		}
-		
+		function memReport(mem_num){
+			window.open("mem_report.do?mem_num="+mem_num,"", "width=550, height=470, left=680, top=270")
+		}
 		function back(mode){
 		if(mode==''){
 		window.location="board_free.do?mode="
@@ -49,7 +71,7 @@
 		$.ajax({
 	    url:'update_reply.do', //request 보낼 서버의 경로
 	    type:'get', // 메소드(get, post, put 등)
-	    data:{'br_num' : br_num , 'pageNum' : ${pageNum} }, //보낼 데이터 (json 형식)
+	    data:{'br_num' : br_num , 'pageNum' : ${pageNum}}, //보낼 데이터 (json 형식)
 	    success: function(data) { // 컨트롤러 리턴값
 
 	    	$("#updateReply"+br_num).html(data);
@@ -126,23 +148,51 @@
 		});
 	}
 	function cancel(board_num){
-		window.location='content_board.do?board_num='+board_num+'pageNum='+${pageNum}
+		window.location='content_board.do?board_num='+board_num+'&pageNum='+${pageNum}
 		}
 
 </script>
 
 	<div align="center">
 		<!-- 게싯글 제목 -->
-		<h1 class="display-5">${getBoard.board_title}</h1>
+		<p class="h1">${getBoard.board_title}</p>
 		<!-- 작성자 조회수 -->
 		<div align="center">
-			<h6><c:if test ="${mode==null}">작성자 : ${getBoard.mem_nickname}</c:if> 조회수 : ${getBoard.board_readcount}</h6>
+			<!-- 익명일 때 -->
+			<div><c:if test ="${mode eq 'anony'}">작성자 : 익명</c:if>
+			<!-- 자유게시판 일때  -->
+			<c:if test ="${mode ne 'anony'}">
+						<c:if test="${getBoard.mem_img eq null }">
+						<div class="box" style="background: #BDBDBD;">
+						<img class="profile" src="resources/img/default_profile.png"></div></c:if>&nbsp;
+						<c:if test="${getBoard.mem_img ne null }">
+						<div class="box" style="background: #BDBDBD;">
+						<img class="profile" src="resources/img/${getBoard.mem_img}"></div></c:if>&nbsp;
+  						작성자 :
+						<div class="btn-group dropend">
+  					<button type="button" class="btn btn-light dropdown-toggle btn-sm" data-bs-toggle="dropdown" aria-expanded="false">
+ 					 ${getBoard.mem_nickname}
+  					</button>
+  						<c:if test="${login_mem.mem_num ne getBoard.mem_num }">
+ 					 <ul class="dropdown-menu">
+ 					 	 <c:if test="${login_mem eq null }">
+ 					  <li><a class="dropdown-item" href="javascript:checkLogin()">회원 신고</a></li>
+ 					 </c:if>
+ 					  <c:if test="${login_mem ne null }">
+   						 <li><a class="dropdown-item" href="javascript:memReport('${getBoard.mem_num }')">회원 신고</a></li>
+  						</c:if>
+  					</ul>
+  					</c:if>
+				</div>
+			</c:if>
+	</div>
+			<div>조회수 : ${getBoard.board_readcount} 작성일 : ${getBoard.board_regdate }</div>
 				<!-- 버튼 : 수정, 글삭제는 해당 아이디 글만 노출-->
 				<c:if test="${sessionScope.mem_num eq getBoard.mem_num}">
 				<input type="button" class="btn btn-outline-secondary" value="글수정"
-					onclick="window.location='update_board.do?board_num=${getBoard.board_num}'">
+					onclick="window.location='update_board.do?board_num=${getBoard.board_num}&mode=${param.mode }'">
 				<a
-					href="javascript:checkDel('${getBoard.board_num}','${getBoard.board_img1}','${getBoard.board_img2}','${getBoard.board_img3}','${getBoard.board_img4}')"><input
+					href="javascript:checkDel('${getBoard.board_num}','${getBoard.board_img1}','${getBoard.board_img2}','${getBoard.board_img3}','${getBoard.board_img4}','${getFiles.filename }')"><input
 					type="button" class="btn btn-outline-secondary" value="삭제"></a>
 				</c:if>
 				<!-- 상세보기 같이 쓰기 때문에 글목록 = 뒤로가기-->
@@ -150,11 +200,13 @@
 					onclick="javascript:back('${mode}')">
 				<c:if test="${getBoard.board_re_step == 0}">
 					<input type="button" class="btn btn-outline-secondary" value="답글쓰기"
-						onclick="window.location='write_board.do?board_num=${getBoard.board_num}&board_re_group=${getBoard.board_re_group}&board_re_step=${getBoard.board_re_step}&board_re_level=${getBoard.board_re_level}'">
+						onclick="window.location='write_board.do?board_num=${getBoard.board_num}&board_re_group=${getBoard.board_re_group}&board_re_step=${getBoard.board_re_step}&board_re_level=${getBoard.board_re_level}&mode=${mode }'">
 				</c:if>
 				<!-- 자유, 익명 게시글 신고 -->
+				<c:if test="${getBoard.mem_num ne login_mem.mem_num}">
 				<a href="javascript:checkReport('${getBoard.board_num}')"><input type="button" value="🚨" class="btn btn-outline-secondary"
 					></a>
+				</c:if>
 		</div>
 
 		<!-- 이미지 슬라이드 -->
@@ -224,55 +276,101 @@
 			</div>
 		</c:if>
 		<!-- 내용 -->
-		<div class="mb-3 w-50 p-3 mx-auto p-2">
+		<div class="mb-3 w-50 mx-auto p-2">
 			<textarea class="form-control" id="exampleFormControlTextarea1"
-				name="board_content" rows="20" readonly>${getBoard.board_content}</textarea>
+				name="board_content" rows="15" readonly>${getBoard.board_content}</textarea>
 		</div>
+<!-- 첨부파일 -->		
+		<c:if test="${not empty listFile}">
+		<div class="mb-3 w-50 mx-auto p-2" align="right"> 
+		 <button type="button" class="btn btn-sm btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#image-collapse" aria-expanded="false">
+                        <svg class="bi pe-none me-2" fill="#A6A6A6" width="24" height="24">
+                        <use xlink:href="#img-select"></use></svg>
+                       		 첨부파일다운로드 🔽</button>
+                </div>
+                <c:forEach items="${listFile}" var="file">
+                    <div class="collapse mb-3 w-50 p-3 mx-auto p-2" id="image-collapse" align ="right">
+                    <div class="row">	 
+                    <div class="col-end"> 
+        			<a href="file_download.do?board_num=${getBoard.board_num }&filename=${file.filename}">${file.filename}</a>🔽<br>
+  		 			</div>
+  		 			</div>
+  		 			</div>
+  		 			</c:forEach>
+  		 			</c:if>
+				</div>
 		<!-- 댓글 -->
-			<div class="container text-center">
+			<div class="container text-center mb-3 w-50 mx-auto p-2">
 			<c:if test="${empty listReply}">
  			 <div class="row justify-content-md-center">
 			 등록된 댓글이 없습니다.
 			 </div>
 			</c:if>
 			<c:forEach var="dto" items="${listReply}" varStatus="status">
-		<!-- 댓글 신고 5회 이상 먹을시 규제 -->
+			<!-- 작성사 댓글 삭제시 -->
+				<c:if test="${dto.br_content eq '-'}">
+				  <div class="row" align="left">
+				  	<div class="col-2"></div>
+					 <div class="col-7">
+					<c:if test="${dto.br_re_step>0}"><img src="resources/img/re.png" height="10"></c:if><font color="gray"><small>작성자에 의해 삭제된 글입니다.</small></font>
+					</div>
+					<div class="col-2"></div>
+					<div class="col-1"></div>
+					</div>
+				</c:if>
+				<c:if test="${dto.br_content ne '-'}">
+	<!-- 댓글 신고 5회 이상 먹을시 규제 -->
 				<c:if test="${dto.br_report > 4}">
 				 <div class="row">
-				 	<div class="col"></div>
-					<div class="col"><font color="gray"><strong>관리자에 의해 규제된 댓글입니다.</strong></font></div>
-					<div class="col"></div>
-					<div class="col"></div>
+				 	<div class="col-2"></div>
+					<div class="col-7" align="left"><font color="gray"><small>관리자에 의해 규제된 댓글입니다.</small></font></div>
+					<div class="col-2"></div>
+					<div class="col-1"></div>
 				 </div>
 				</c:if>
 				<c:if test="${dto.br_report < 5}">
 <!-- 수정 버튼 누르면 대체 --> <div class="row"  id="updateReply${dto.br_num}">
 					<c:if test="${getBoard.board_anony_check eq 0}">
-					 	<div class="col">
-					 		<!-- 대댓글 앞에 이모지 추가 -->
-					 	<c:if test="${dto.br_re_step>0}">
-						<img src="resources/img/re.png" height="10">
+					 	<div class="col-2">
+				<!-- 댓글 프사 -->
+						<div class="btn-group dropend">
+						<c:if test="${dto.br_re_step>0}">
+						<img src="resources/img/re.png" height="20">
 						</c:if>
-						<strong>${dto.mem_nickname}</strong>
+						<c:if test="${dto.mem_img eq null }">
+						<div class="box1" style="background: #BDBDBD;">
+						<img class="profile" src="resources/img/default_profile.png"></div></c:if>
+						<c:if test="${dto.mem_img ne null }">
+						<div class="box1" style="background: #BDBDBD;">
+						<img class="profile" src="resources/img/${dto.mem_img}"></div></c:if>&nbsp;
+  						<button type="button" class="btn btn-light dropdown-toggle btn-sm" data-bs-toggle="dropdown" aria-expanded="false">
+  						${dto.mem_nickname}
+  					</button>
+  					<c:if test="${login_mem.mem_num ne dto.mem_num }">
+ 					 <ul class="dropdown-menu">
+   						 <li><a class="dropdown-item" href="javascript:memReport('${dto.mem_num }')">회원 신고</a></li>
+  					</ul>
+  					</c:if>
+				</div>
 						</div>
 					</c:if>
 					<c:if test="${getBoard.board_anony_check eq 1}">
-					 	<div class="col">
+					 	<div class="col-2">
 					 		<!-- 대댓글 앞에 이모지 추가 -->
 					 	<c:if test="${dto.br_re_step>0}">
-					 	<img src="resources/img/re.png" height="10">
+					 	<img src="resources/img/re.png" height="20">
 						</c:if>
 						<strong>익명</strong>
 						</div>
 					</c:if>
-					 	<div class="col-5" align = "left">
-						${dto.br_content}
+					 	<div class="col-7" align = "left">
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${dto.br_content}
 						</div>
-						<div class="col">
+						<div class="col-2">
 						${dto.br_regdate}
 						</div>
 						<!-- 댓글 드롭다운 본인 댓글만  수정 삭제 가능 -->
-						<div class="col-2">
+						<div class="col-1">
 							<div class="btn-group">
 								<button class="btn btn-secondary btn-sm dropdown-toggle"
 									type="button" data-bs-toggle="dropdown" aria-expanded="false"></button>
@@ -282,7 +380,9 @@
 <!-- 에이젝스 여기야 여기 -->			 <li><a class="dropdown-item" href="javascript:updateReply('${dto.br_num}')">수정</a></li>
    								 <li><a class="dropdown-item" href="delete_reply.do?br_num=${dto.br_num}&board_num=${getBoard.board_num}&pageNum=${pageNum}">삭제</a></li>
    								</c:if>
+   								<c:if test="${dto.mem_num ne login_mem.mem_num}">
    								 <li><a class="dropdown-item" href="javascript:checkReport_br('${dto.br_num}')">신고</a></li>
+   								 </c:if>
 								</ul>
 							</div>
 						</div>
@@ -290,6 +390,7 @@
 							</c:if>
 								<!-- 대댓글 누르면 폼 생성 -->	<div class= "row" id="re_reply${dto.br_num}">
 							</div>
+							</c:if>
 					</c:forEach>
 				</div>
 				<!-- 댓글입력창 -->
@@ -299,11 +400,8 @@
 				<input type="hidden" name="br_re_group" value="${params.br_re_group}"/>
 				<input type="hidden" name="br_re_step" value="${params.br_re_step}"/>
 				<input type="hidden" name="br_re_level" value="${params.br_re_level}"/>			 		
-			<br>
-			<br>
-			<br>
-			<br>
-				<div class="input-group mb-3 w-50 p-3 mx-auto p-2">
+	<!-- 댓글 입력참 -->			
+		<div class="input-group mb-3 w-50 p-3 mx-auto p-2">
   				<input hidden="hidden"><!-- 엔터키 서브밋 방지 -->
   				<input type="text" class="form-control" placeholder="댓글을 입력하세요" aria-label="Recipient's username" aria-describedby="button-addon2" name="br_content">
   				<a href ="javascript:check()"><input type="button" class="btn btn-outline-secondary" id="button-addon2" value="작성"></a>
@@ -338,7 +436,6 @@
 	 </c:if>
   	</ul>
 	</nav>
-	</div>
 	<!-- 삭제시 게시글 번호 ,이미지 넘기기 -->
 	<form name="f" action="delete_board.do" method="post">
 		<input type="hidden" name="board_num"/> 
@@ -346,21 +443,8 @@
 		<input type="hidden" name="board_img2" /> 
 		<input type="hidden" name="board_img3" /> 
 		<input type="hidden" name="board_img4" />
+		<input type="hidden" name="filename" />
 	</form>
 <%@include file="../user/user_bottom.jsp"%>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 

@@ -1,7 +1,11 @@
 package com.ezen.FSB;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.*;
 
 import javax.servlet.http.HttpSession;
@@ -22,9 +26,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @Controller
 public class KakaoController {
 
-	  private final static String K_CLIENT_ID = "c4d7636880ff1b6ee5fe5baee7289e7b";
+	  private final static String K_CLIENT_ID = "c4d7636880ff1b6ee5fe5baee7289e7b"; //카카오개발자 아이디
       //이런식으로 REDIRECT_URI를 써넣는다.                                                                                                  //                                                //
-	  private final static String K_REDIRECT_URI = "http://localhost:8081/FSB/kakao.do";
+	  private final static String K_REDIRECT_URI = "http://localhost:8081/FSB/kakao.do"; //카카오개발자 uri
 
 	  
 	  public static String getAuthorizationUrl(HttpSession session) {
@@ -34,7 +38,7 @@ public class KakaoController {
 	  }
 
 
-	  public static JsonNode getAccessToken(String autorize_code) {
+	  public static JsonNode getAccessToken(String autorize_code) { //토큰 받아오기
 		  final String RequestUrl = "https://kauth.kakao.com/oauth/token";
 		  final List<NameValuePair> postParams = new ArrayList<NameValuePair>();
 		  postParams.add(new BasicNameValuePair("grant_type", "authorization_code"));
@@ -62,7 +66,7 @@ public class KakaoController {
 		  return returnNode;
 	  }
 
-	  public static JsonNode getKakaoUserInfo(JsonNode accessToken) {
+	  public static JsonNode getKakaoUserInfo(JsonNode accessToken) { //카카오 정보 받아오기 
 		  final String RequestUrl = "https://kapi.kakao.com/v2/user/me";
 		  final HttpClient client = HttpClientBuilder.create().build();
 		  final HttpPost post = new HttpPost(RequestUrl);
@@ -83,4 +87,54 @@ public class KakaoController {
 		  }
 		  return returnNode;
 	  }
+	  
+	  public static void kakaoLogout(String access_Token) { //카카오톡 로그아웃 
+		    String reqURL = "https://kapi.kakao.com/v1/user/logout";
+		    try {
+		        URL url = new URL(reqURL);
+		        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+		        conn.setRequestMethod("POST");
+		        conn.setRequestProperty("Authorization", "Bearer " + access_Token);
+		        
+		        int responseCode = conn.getResponseCode();
+		        System.out.println("responseCode : " + responseCode);
+		        
+		        BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+		        
+		        String result = "";
+		        String line = "";
+		        
+		        while ((line = br.readLine()) != null) {
+		            result += line;
+		        }
+		        System.out.println(result);
+		    } catch (IOException e) {
+		        e.printStackTrace();
+		    }
+		}
+	  
+		public static void unlink(String access_Token) { //연결끊기? 회원탈퇴
+		    String reqURL = "https://kapi.kakao.com/v1/user/unlink";
+		    try {
+		        URL url = new URL(reqURL);
+		        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+		        conn.setRequestMethod("POST");
+		        conn.setRequestProperty("Authorization", "Bearer " + access_Token);
+		        
+		        int responseCode = conn.getResponseCode();
+		        System.out.println("responseCode : " + responseCode);
+		        
+		        BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+		        
+		        String result = "";
+		        String line = "";
+		        
+		        while ((line = br.readLine()) != null) {
+		            result += line;
+		        }
+		        System.out.println(result);
+		    } catch (IOException e) {
+		        e.printStackTrace();
+		    }
+		}
 }

@@ -15,10 +15,11 @@
    </script>
    <meta name="viewport" content="width=device-width, initial-scale=1">
    <link href="resources/css/bootstrap.min.css" rel="stylesheet">
-   <script src="resources/js/bootstrap.bundle.min.js"></script>
-
+	<link href="resources/css/bootstrap.min.css" rel="stylesheet">
+   <link href="resources/css/sidebars.css" rel="stylesheet">
+	
    <!-- 벡터 아이콘 정의 -->
-    <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+   <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
         <symbol id="home" viewBox="0 0 16 16">
              <path d="M8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4.5a.5.5 0 0 0 .5-.5v-4h2v4a.5.5 0 0 0 .5.5H14a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146zM2.5 14V7.707l5.5-5.5 5.5 5.5V14H10v-4a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v4H2.5z"></path>
         </symbol>
@@ -62,9 +63,12 @@
         <symbol id="text-quote" viewBox="0 0 24 24">
            <path d="M1.751 10c0-4.42 3.584-8 8.005-8h4.366c4.49 0 8.129 3.64 8.129 8.13 0 2.96-1.607 5.68-4.196 7.11l-8.054 4.46v-3.69h-.067c-4.49.1-8.183-3.51-8.183-8.01zm8.005-6c-3.317 0-6.005 2.69-6.005 6 0 3.37 2.77 6.08 6.138 6.01l.351-.01h1.761v2.3l5.087-2.81c1.951-1.08 3.163-3.13 3.163-5.36 0-3.39-2.744-6.13-6.129-6.13H9.756z"></path>
         </symbol>
-        <symbol id="heart-empty" viewBox="0 0 24 24">
-           <path d="M16.697 5.5c-1.222-.06-2.679.51-3.89 2.16l-.805 1.09-.806-1.09C9.984 6.01 8.526 5.44 7.304 5.5c-1.243.07-2.349.78-2.91 1.91-.552 1.12-.633 2.78.479 4.82 1.074 1.97 3.257 4.27 7.129 6.61 3.87-2.34 6.052-4.64 7.126-6.61 1.111-2.04 1.03-3.7.477-4.82-.561-1.13-1.666-1.84-2.908-1.91zm4.187 7.69c-1.351 2.48-4.001 5.12-8.379 7.67l-.503.3-.504-.3c-4.379-2.55-7.029-5.19-8.382-7.67-1.36-2.5-1.41-4.86-.514-6.67.887-1.79 2.647-2.91 4.601-3.01 1.651-.09 3.368.56 4.798 2.01 1.429-1.45 3.146-2.1 4.796-2.01 1.954.1 3.714 1.22 4.601 3.01.896 1.81.846 4.17-.514 6.67z"></path>
-      </symbol>
+       <symbol id="heart-empty" viewBox="0 0 24 24">
+<path d="M16.697 5.5c-1.222-.06-2.679.51-3.89 2.16l-.805 1.09-.806-1.09C9.984 6.01 8.526 5.44 7.304 5.5c-1.243.07-2.349.78-2.91 1.91-.552 1.12-.633 2.78.479 4.82 1.074 1.97 3.257 4.27 7.129 6.61 3.87-2.34 6.052-4.64 7.126-6.61 1.111-2.04 1.03-3.7.477-4.82-.561-1.13-1.666-1.84-2.908-1.91zm4.187 7.69c-1.351 2.48-4.001 5.12-8.379 7.67l-.503.3-.504-.3c-4.379-2.55-7.029-5.19-8.382-7.67-1.36-2.5-1.41-4.86-.514-6.67.887-1.79 2.647-2.91 4.601-3.01 1.651-.09 3.368.56 4.798 2.01 1.429-1.45 3.146-2.1 4.796-2.01 1.954.1 3.714 1.22 4.601 3.01.896 1.81.846 4.17-.514 6.67z"></path>
+</symbol>
+      	<symbol id="heart-fill" viewBox="0 0 24 24">
+           <path d="M20.884 13.19c-1.351 2.48-4.001 5.12-8.379 7.67l-.503.3-.504-.3c-4.379-2.55-7.029-5.19-8.382-7.67-1.36-2.5-1.41-4.86-.514-6.67.887-1.79 2.647-2.91 4.601-3.01 1.651-.09 3.368.56 4.798 2.01 1.429-1.45 3.146-2.1 4.796-2.01 1.954.1 3.714 1.22 4.601 3.01.896 1.81.846 4.17-.514 6.67z"></path>
+      	</symbol>
       <symbol id="location" viewBox="0 0 16 24">
          <path d="M10 0c4.4 0 7.95 3.5 7.95 7.79a7.6 7.6 0 01-1.23 4.15l-6.33 8.02a.5.5 0 01-.78 0l-6.38-8.1A7.6 7.6 0 012.05 7.8 7.89 7.89 0 0110 0zm0 1.54A6.38 6.38 0 003.55 7.8c0 1.18.34 2.33.96 3.28l5.5 6.92 5.44-6.86a6.08 6.08 0 001-3.34A6.37 6.37 0 0010 1.54zM6.75 6.92h6.5a.5.5 0 01.5.5v.54a.5.5 0 01-.5.5h-6.5a.5.5 0 01-.5-.5v-.54a.5.5 0 01.5-.5z"></path>
       </symbol>
@@ -83,24 +87,51 @@
       <symbol id="search" viewBox="0 0 16 16">
            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
       </symbol>
+      <symbol id="dots-vertical" viewBox="0 0 16 16">
+  			<path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
+		</symbol>
+		<symbol id="arrow-left-circle" viewBox="0 0 16 16">
+           <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-4.5-.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z"/>
+      </symbol>
+		<symbol id="controller" viewBox="0 0 16 16">
+			<path d="M11.5 6.027a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zm-1.5 1.5a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1zm2.5-.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zm-1.5 1.5a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1zm-6.5-3h1v1h1v1h-1v1h-1v-1h-1v-1h1v-1z"/>
+  			<path d="M3.051 3.26a.5.5 0 0 1 .354-.613l1.932-.518a.5.5 0 0 1 .62.39c.655-.079 1.35-.117 2.043-.117.72 0 1.443.041 2.12.126a.5.5 0 0 1 .622-.399l1.932.518a.5.5 0 0 1 .306.729c.14.09.266.19.373.297.408.408.78 1.05 1.095 1.772.32.733.599 1.591.805 2.466.206.875.34 1.78.364 2.606.024.816-.059 1.602-.328 2.21a1.42 1.42 0 0 1-1.445.83c-.636-.067-1.115-.394-1.513-.773-.245-.232-.496-.526-.739-.808-.126-.148-.25-.292-.368-.423-.728-.804-1.597-1.527-3.224-1.527-1.627 0-2.496.723-3.224 1.527-.119.131-.242.275-.368.423-.243.282-.494.575-.739.808-.398.38-.877.706-1.513.773a1.42 1.42 0 0 1-1.445-.83c-.27-.608-.352-1.395-.329-2.21.024-.826.16-1.73.365-2.606.206-.875.486-1.733.805-2.466.315-.722.687-1.364 1.094-1.772a2.34 2.34 0 0 1 .433-.335.504.504 0 0 1-.028-.079zm2.036.412c-.877.185-1.469.443-1.733.708-.276.276-.587.783-.885 1.465a13.748 13.748 0 0 0-.748 2.295 12.351 12.351 0 0 0-.339 2.406c-.022.755.062 1.368.243 1.776a.42.42 0 0 0 .426.24c.327-.034.61-.199.929-.502.212-.202.4-.423.615-.674.133-.156.276-.323.44-.504C4.861 9.969 5.978 9.027 8 9.027s3.139.942 3.965 1.855c.164.181.307.348.44.504.214.251.403.472.615.674.318.303.601.468.929.503a.42.42 0 0 0 .426-.241c.18-.408.265-1.02.243-1.776a12.354 12.354 0 0 0-.339-2.406 13.753 13.753 0 0 0-.748-2.295c-.298-.682-.61-1.19-.885-1.465-.264-.265-.856-.523-1.733-.708-.85-.179-1.877-.27-2.913-.27-1.036 0-2.063.091-2.913.27z"/>
+		</symbol>
+		<symbol id="controller" viewBox="0 0 16 16">
+<path d="M11.5 6.027a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zm-1.5 1.5a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1zm2.5-.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zm-1.5 1.5a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1zm-6.5-3h1v1h1v1h-1v1h-1v-1h-1v-1h1v-1z"/>
+<path d="M3.051 3.26a.5.5 0 0 1 .354-.613l1.932-.518a.5.5 0 0 1 .62.39c.655-.079 1.35-.117 2.043-.117.72 0 1.443.041 2.12.126a.5.5 0 0 1 .622-.399l1.932.518a.5.5 0 0 1 .306.729c.14.09.266.19.373.297.408.408.78 1.05 1.095 1.772.32.733.599 1.591.805 2.466.206.875.34 1.78.364 2.606.024.816-.059 1.602-.328 2.21a1.42 1.42 0 0 1-1.445.83c-.636-.067-1.115-.394-1.513-.773-.245-.232-.496-.526-.739-.808-.126-.148-.25-.292-.368-.423-.728-.804-1.597-1.527-3.224-1.527-1.627 0-2.496.723-3.224 1.527-.119.131-.242.275-.368.423-.243.282-.494.575-.739.808-.398.38-.877.706-1.513.773a1.42 1.42 0 0 1-1.445-.83c-.27-.608-.352-1.395-.329-2.21.024-.826.16-1.73.365-2.606.206-.875.486-1.733.805-2.466.315-.722.687-1.364 1.094-1.772a2.34 2.34 0 0 1 .433-.335.504.504 0 0 1-.028-.079zm2.036.412c-.877.185-1.469.443-1.733.708-.276.276-.587.783-.885 1.465a13.748 13.748 0 0 0-.748 2.295 12.351 12.351 0 0 0-.339 2.406c-.022.755.062 1.368.243 1.776a.42.42 0 0 0 .426.24c.327-.034.61-.199.929-.502.212-.202.4-.423.615-.674.133-.156.276-.323.44-.504C4.861 9.969 5.978 9.027 8 9.027s3.139.942 3.965 1.855c.164.181.307.348.44.504.214.251.403.472.615.674.318.303.601.468.929.503a.42.42 0 0 0 .426-.241c.18-.408.265-1.02.243-1.776a12.354 12.354 0 0 0-.339-2.406 13.753 13.753 0 0 0-.748-2.295c-.298-.682-.61-1.19-.885-1.465-.264-.265-.856-.523-1.733-.708-.85-.179-1.877-.27-2.913-.27-1.036 0-2.063.091-2.913.27z"/>
+</symbol>
+<symbol id="heart-fill" viewBox="0 0 24 24">
+<path d="M20.884 13.19c-1.351 2.48-4.001 5.12-8.379 7.67l-.503.3-.504-.3c-4.379-2.55-7.029-5.19-8.382-7.67-1.36-2.5-1.41-4.86-.514-6.67.887-1.79 2.647-2.91 4.601-3.01 1.651-.09 3.368.56 4.798 2.01 1.429-1.45 3.146-2.1 4.796-2.01 1.954.1 3.714 1.22 4.601 3.01.896 1.81.846 4.17-.514 6.67z"></path>
+</symbol>
    </svg>
 </head>
 <body>
    <ul class="nav justify-content-end">
-        <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">회원가입</a>
-        </li>
         <!-- 로그인됐을 때 로그아웃으로 변경 -->
-        <c:set var="isLogin" value="false"/>
+       <c:set var="isLogin" value="false"/>
    <c:if test="${not empty mbId or not empty mbName or not empty kname}">
    <c:set var="isLogin" value="true"/>
    </c:if>
    
-   <c:if test="${isLogin=='true'}">
+   <c:if test="${isLogin=='true' and not empty loginMode and empty naverLogin}">
      <li class="nav-item">            
       <a class="nav-link" href="logout.do">로그아웃</a>
       </li>
    </c:if>
+   
+   <c:if test="${isLogin=='true' and empty loginMode and empty naverLogin}">
+     <li class="nav-item">            
+      <a class="nav-link" href="kakaologout.do?access_Token=${sessionScope.access_Token}">로그아웃</a>
+      </li>
+   </c:if>
+   
+   <c:if test="${isLogin=='true' and empty loginMode and not empty naverLogin}">
+   	<li class="nav-item">            
+      <a class="nav-link" href="naverLogout.do">로그아웃</a>
+     </li>
+   </c:if>
+   
    <c:if test="${isLogin=='false'}">
         <li class="nav-item">
       <a class="nav-link" href="login.do">로그인</a>
@@ -109,9 +140,12 @@
          <li class="nav-item">
           <a class="nav-link" href="user_main.do">메인페이지로 가기</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="admin_main.do">임시)관리자페이지로 가기</a>
-        </li>
+        <c:if test="${not empty admin }">
+        	<li class="nav-item">
+          		<a class="nav-link" href="admin_main.do">관리자페이지로 가기</a>
+        	</li>
+        </c:if>
+        
    </ul>
    <div align="center">
       <a href="user_main.do"><img src="resources/img/logo1.png"  alt="로고사진" width="150" height="150"></a>
@@ -127,28 +161,42 @@
         <li><a class="dropdown-item" href="board_secondhand.do?mode=all">중고게시판</a></li>
          <li><a class="dropdown-item" href="board_anony.do?mode=anony">익명게시판</a></li>
          <li><hr class="dropdown-divider"></li>
-          <li><a class="dropdown-item" href="#">보드게임 매장 지도</a></li>
+         <li><a class="dropdown-item" href="map.do">보드게임 매장 지도</a></li>
    </ul>
      </li>
    <li class="nav-item">
           <a class="nav-link" href="shop_main.do">쇼핑몰</a>
    </li>
- <c:if test="${member != null}">
+  <c:if test="${login_mem != null}">
    <li class="nav-item dropdown">
       <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">마이페이지</a>
       <ul class="dropdown-menu">
-     	 <c:if test="${member.getMem_mode() eq '사업자'}">
-     	 <li><a class="dropdown-item" href="b_mypage.do">사업자 프로필</a></li>
-         <li><a class="dropdown-item" href="b_feed.do">타임라인(사업자)</a></li>
-         </c:if>
-          <c:if test="${member.getMem_mode() eq '일반'}">
+         <c:if test="${login_mem.getMem_mode() eq '사업자'}">
+          <li><a class="dropdown-item" href="b_personalHome.do?num=${login_mem.mem_num }">프로필</a></li>
+         <li><a class="dropdown-item" href="feed.do">타임라인(사업자)</a></li>
+    	 </c:if>
+          <c:if test="${login_mem.getMem_mode() eq '일반'}">
          <li><a class="dropdown-item" href="feed.do">타임라인</a></li>
-         </c:if>
-         <li><a class="dropdown-item" href="#">계정 관리</a></li>
-         <li><a class="dropdown-item" href="#">보관함</a></li>
+       </c:if>
+         <li><a class="dropdown-item" href="myPage.do">계정 관리</a></li>
+         <li><a class="dropdown-item" href="myAlarm.do">알림함</a></li>
+         <li><a class="dropdown-item" href="myCoupon.do">쿠폰함</a></li>
+         <li><a class="dropdown-item" href="game_like_list.do">보관함</a></li>
          <li><hr class="dropdown-divider"></li>
-         <li><a class="dropdown-item" href="#">문의사항</a></li>
+      	 <li><a href="mypage_FAQ.do" class="dropdown-item"">자주 묻는 질문</a></li>
       </ul>
+   </li>
+   </c:if>
+  <c:if test="${login_mem != null}">
+   <li class="nav-item dropdown">
+      <button type="button" class="btn btn-outline-danger position-relative" onclick="window.location='myAlarm.do'">
+                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bell" viewBox="0 0 16 16">
+                 <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zM8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z"></path>
+               </svg>
+        		<c:if test="${empty alarmCount}"><span class="position-absolute top-0 start-100 translate-middle badge rounded-pill text-bg-danger">0<span class="visually-hidden">unread messages</span></span></c:if>
+        		<c:if test="${not empty alarmCount}"><span class="position-absolute top-0 start-100 translate-middle badge rounded-pill text-bg-danger">${alarmCount}<span class="visually-hidden">unread messages</span></span></c:if>
+             
+               </button>
    </li>
    </c:if>
    <!-- <a class="nav-link disabled">비활성화</a> -->

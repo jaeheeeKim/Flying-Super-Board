@@ -43,14 +43,41 @@
     	margin: auto;
 	}
 	
+	.input-file-button{
+		margin-top: 0.7rem;
+		padding: 0.3rem 0.5rem;
+		font-size: 0.8rem;
+		background-color: #6c757d;
+		border-radius: 0.2rem;
+		color: white;
+		cursor: pointer;
+	}
+	
 </style>
 
 <script type="text/javascript">
 	let sorted_files = []; //이미지 배열
-	let isOpen = '${prof_open}';
+	let isOpen = '${feed.feed_open}'; //c1 피드의 공개정보 받아오기
 	
 	window.addEventListener('DOMContentLoaded', function(){
+		//isOpen 설정
+		if(!isOpen){
+			isOpen = '${profile.prof_open}'; //c2 프로필의 공개정보 받아오기
+		}
 		lock_btn_set(isOpen);
+		//sorted_files 설정
+		if(${feed.feed_img1!=null}){
+			sorted_files.push(1);
+			if(${feed.feed_img2!=null}){
+				sorted_files.push(2);
+				if(${feed.feed_img3!=null}){
+					sorted_files.push(3);
+					if(${feed.feed_img4!=null}){
+						sorted_files.push(4);
+					}
+				}
+			}
+		}
 	});
 	
 	//잠금버튼 설정
@@ -76,27 +103,59 @@
 			lock_btn_set(isOpen);
 		}
 	}
-	//장소 창 열기
-	function openplace(){
-		var popupX = (document.body.offsetWidth /2) - (1200 /2);
-		var popupY= (window.screen.height /2) - (800 /2);
-		window.open('mapSelect.do', '지도', 'status=no, width=1200, height=800, left='+popupX+', top='+popupY);
+	//기존 이미지 삭제
+	function deleteImgDiv(img_num){
+		//div 삭제
+		let deleteBox = document.getElementById('imgBox'+img_num);
+		let parent = deleteBox.parentElement;
+		parent.removeChild(deleteBox);
+		
+		//sorted_files에서 삭제
+		for(let i=0; i<sorted_files.length; i++){
+			if(sorted_files[i] === img_num){
+				sorted_files.splice(i, 1);
+			}
+		}
+		
+		//삭제된 이미지 목록 갱신
+		let input = document.getElementById('deleted_img');
+		input.value = input.value+','+img_num;//1,2,3,4 형식으로 저장
 	}
-	//임시목록 창 열기
-	function opentemplist(feednum){
+	//게임 창 열기
+	function openGame(){
 		var popupX = (document.body.offsetWidth /2) - (600 /2);
 		var popupY= (window.screen.height /2) - (800 /2);
-		window.open('tempList.do', '임시 글 목록', 'status=no, width=600, height=800, left='+popupX+', top='+popupY);
+		window.open('feed_game_list.do', '게임찾기', 'status=no, width=600, height=800, left='+popupX+', top='+popupY);
 	}
+	//게임 선택
+	function selectGameOK(gameNum, gameName){
+		f.game_num.value = gameNum;
+		$("#gameText").html(gameName);
+		$("#gameZone").show();
+	}
+	//게임 삭제
+	function deleteGame(){
+		f.game_num.value = 0;
+		$("#gameText").html('');
+		$("#gameZone").hide();
+	}	
+	
 	//등록
 	function submitform(){
-		if(sorted_files.length !== 0){//이미지가 있으면
+		//주소설정
+		if(${feedForm_mode=='insert'}){
+			f.action = 'feedFormOk.do';
+		}else{
+			f.action = 'feedUpdateOk.do';
+		}
+		
+		if(sorted_files.length !== 0){//b1. 이미지가 있으면
 			encodeImageFiles(afterReading);
 		}else{//이미지가 없으면
 			inputOpen();
 			submitFormAction();
 		}
-		//imgs 담긴 input 생성
+		//b3. imgs 담긴 input 생성
 		function afterReading(encodedImages){
 			for (let i=0; i<encodedImages.length; ++i){
 				let input = document.createElement('input');
@@ -112,7 +171,7 @@
 			inputOpen();
 			submitFormAction();
 		}
-		//공개여부 input에 넣기
+		//b4. 공개여부 input에 넣기
 		function inputOpen(){
 			let input = document.createElement('input');
 			input.type = 'hidden';
@@ -121,35 +180,76 @@
 			f.appendChild(input);
 			document.body.appendChild(f);
 		}
-		//submit동작
+		//b5. submit동작
 		function submitFormAction(){
-			f.action = 'feedFormOk.do';
 			f.submit();
 		}
 	}
-	//임시저장
-	function saveform(){
-		f.action='feedSave.do';
-		f.submit();
-	}
-	//이미지 Base64로 전환
+	
+	//b2. 이미지 Base64로 전환
 	function encodeImageFiles(callback) {
-		let encodedImages = []; //base64로 변환된 이미지 배열
+		let encodedImages = []; //b2-1. base64로 변환된 이미지 배열
 		
 		for (let i = 0; i < sorted_files.length; i++) {
-	        let reader = new FileReader();
-	        //하단의 reader.readAsDataURL이 완료되면 실행됨
-	        reader.onload = function () {
-	            let base64Data = reader.result.split(",")[1];
-	            encodedImages.push(base64Data);
-	            if(sorted_files.length === encodedImages.length){
-			        callback(encodedImages);//이미지 전부 변환하면 콜백으로 afterReading 실행
+			//file 형태라면
+			if(sorted_files[i]!==1 && sorted_files[i]!==2 && sorted_files[i]!==3 && sorted_files[i]!==4){
+		        let reader = new FileReader();
+		        //b2-3. 하단의 reader.readAsDataURL이 완료되면 실행됨
+		        reader.onload = function () {
+		            //let base64Data = reader.result.split(",")[1];
+		            let base64 = reader.result;
+		            console.log("처음 base64: "+base64);
+		            
+					//b2-4. 용량검사, 줄이기
+		            const image = new Image();
+		            image.src = base64;
+	
+		            image.onload = function () {
+		            	let imgSize = base64.length;
+		            	let mag = 1;
+		            	
+			            if(imgSize > 524288){
+			            	//축소율 구하기
+			            	while(imgSize > 2000000){
+			            		imgSize = imgSize/4;
+			            		mag = mag/4;
+			            	}
+			            	
+			            	const tempCanvas = document.createElement('canvas');
+			            	const ctx = tempCanvas.getContext('2d');
+			             
+			            	tempCanvas.width = image.width;
+			            	tempCanvas.height = image.height;
+			            	
+			            	ctx.drawImage(image, 0, 0);
+			            	
+			            	base64 = tempCanvas.toDataURL('image/jpeg', mag);
+			            	console.log("변환율: "+mag);
+			            	console.log("변환 후 base64: "+base64);
+			            }
+			            
+			            let base64Data = base64.split(",")[1];
+			            console.log("base64Data: "+base64Data);
+			            
+						encodedImages.push(base64Data); //b2-5. 배열에 추가
+			            console.log("배열에 추가함");
+			            if(sorted_files.length === encodedImages.length){
+					        callback(encodedImages);//b2-6. 이미지 전부 변환하면 콜백으로 afterReading 실행
+			            }
+		            }		
+		        };
+		        reader.readAsDataURL(sorted_files[i]);//b2-2. 다 읽어오면 onload실행	
+			//file이 아니라면
+			}else{
+				encodedImages.push(sorted_files[i]);
+				if(sorted_files.length === encodedImages.length){
+			        callback(encodedImages);//전부 변환하면 콜백으로 afterReading 실행
 	            }
-	        };
-	        reader.readAsDataURL(sorted_files[i]);//다 읽어오면 onload실행
+			}
 	    }
 	}
-	//이미지 유효성 검사
+	
+	//a1-2. 이미지 유효성 검사
 	function checkExtension(fileName,fileSize){
 		let ext = fileName.toLowerCase().substring(fileName.lastIndexOf(".")+1, fileName.length);
         let maxSize = 20971520;  //20MB
@@ -171,14 +271,17 @@
 		let attZone = document.getElementById('attZone');
 		
 		btnAtt.onchange = function(){
-			//추가한 이미지 가져오기
+			//a1. 추가한 이미지 가져오기
 			let files = btnAtt.files;
-			//이미지 4개 제한
+			if(files.length = 0){//변화가 없었다면 돌아가기
+				return;
+			}
+			//a1-1. 이미지 4개 제한
 			if(sorted_files.length + files.length > 4){
 				alert('이미지는 4개까지 업로드 가능합니다.');
 				return;
 			}
-			
+			//a1-2. 이미지 확장자&크기 제한
 			for(file of files){
 				let fileName = file.name;
 				let fileSize = file.size;
@@ -188,16 +291,16 @@
 				}
 			}
 			
-			//추가한 이미지 목록에 추가
+			//a2. 추가한 이미지 목록에 추가
 			for(file of files){
 				sorted_files.push(file);
 			}
 			
 			function setPriview(){
-				//기존 미리보기 지우기
+				//a3. 기존 미리보기 지우기
 				attZone.replaceChildren();
-				let index = 0;
-				//이미지 미리보기 추가
+				let index = 0; //미리보기 중 몇번째인지
+				//a4. 이미지 미리보기 추가
 				for(file of sorted_files){
 					const imgBox = document.createElement('div');
 					const image = document.createElement('img');
@@ -205,16 +308,39 @@
 					imgBox.className = 'col-auto';
 					imgBox.id = 'imgBox'+index;
 					imgBox.style = 'display:inline-block; position:relative; width:120px; height:120px; margin-right: 10px;';
-					image.src = URL.createObjectURL(file);
 					image.className = 'imgPreviewCrop';
 					delBtn.className = 'btn-close';
 					delBtn.type='button';
 					delBtn.style='position: absolute; right: 0px; top: 0px;'
+									
+					//이미지 src & delBtn 세팅
+					if(file!==1 && file!==2 && file!==3 && file!==4){//새 이미지라면
+						image.src = URL.createObjectURL(file);
+						delBtn.onclick= function(event){
+							let indexNow = event.target.parentNode.getAttribute('id').substring(6,7);//클릭한 버튼이 소속된 imgBox의 번호
+							sorted_files.splice(indexNow, 1);//해당 번호의 file을 배열에서 제거
+							setPriview();//미리보기 세팅
+						}
+					}else{//기존 이미지라면
+						const oldImgNum = file;
+						if(oldImgNum===1){//기존 img1이라면
+							image.src = "resources/img/${feed.feed_img1}";
+						}else if(oldImgNum===2){//기존 img2라면
+							image.src = "resources/img/${feed.feed_img2}";
+						}else if(oldImgNum===3){//기존 img3이라면
+							image.src = "resources/img/${feed.feed_img3}";
+						}else{//기존 img4라면
+							image.src = "resources/img/${feed.feed_img4}";
+						}
 					
-					delBtn.onclick= function(event){
-						let indexNow = event.target.parentNode.getAttribute('id').substring(6,7);
-						sorted_files.splice(indexNow, 1);
-						setPriview();
+						delBtn.onclick= function(event){
+							let indexNow = event.target.parentNode.getAttribute('id').substring(6,7);//클릭한 버튼이 소속된 imgBox의 번호
+							sorted_files.splice(indexNow, 1);//해당 번호의 file을 배열에서 제거
+							setPriview();//미리보기 세팅					
+							
+							let input = document.getElementById('deleted_img');
+							input.value = input.value+','+oldImgNum;//1,2,3,4 형식으로 저장
+						}
 					}
 					
 					imgBox.appendChild(image);
@@ -226,8 +352,7 @@
 			}
 			setPriview();
 		};
-	};
-	
+	};	
 </script>
 
 
@@ -237,126 +362,42 @@
   	<main class="d-flex flex-nowrap">
   	
   		<!-- 사이드 바 -->
-  		<div class="vertical-right-line flex-shrink-0 p-3 bg-white" style="width: 280px;">
-    		<a href="feed.do" class="d-flex align-items-center pb-3 mb-3 link-dark text-decoration-none border-bottom">
-      			<svg class="bi pe-none me-2" width="30" height="24"><use xlink:href="#people-circle"></use></svg>
-      			<span class="fs-5 fw-semibold">${member.mem_nickname} 님</span>
-   			</a>
-   			
-   			<!-- 프로필 -->
-   			<div class="container">
-   				<!-- 프사 -->
-   				<div class="row mb-3">
-	   				<div class="col" align="center"><img src="resources/img/${profile.prof_img}" class="img-thumbnail"></div>
-	   			</div>
-	   			<!-- 버튼 -->
-	   			<div class="row mb-3">
-	   				<div class="col" align="center">
-	   					<button type="button" class="btn btn-outline-primary btn-sm">프로필 수정</button>&nbsp;&nbsp;
-	   					<button type="button" class="btn btn-outline-primary btn-sm" onclick="location.href='dm_main.do'">쪽지함</button>
-	   				</div>
-	   			</div>
-	   			<!-- 상태 메시지 -->
-	   			<div class="row mb-3">
-	   				<div class="col" align="center">
-	   				<span class="small">${profile.prof_msg}</span></div>
-	   			</div>
-	   			<!-- 팔로잉 팔로워 -->
-	   			<div class="row mb-3">
-	   				<div class="col" align="center">
-	   					<span class="small fw-semibold">팔로잉</span>&nbsp;&nbsp;
-	   					<span class="small">${profile.prof_following}</span>
-	   				</div>
-	   				<div class="col" align="center">
-	   					<span class="small fw-semibold">팔로우</span>&nbsp;&nbsp;
-	   					<span class="small">${profile.prof_follower}</span>
-	   				</div>
-	   			</div>
-   			</div>
-   			
-   			<div class="border-top"></div>
-   		
-	   		<!-- 메뉴 항목 -->	
-	    	<ul class="list-unstyled ps-0 mt-3">
-	      		<li class="mb-1">
-	        		<button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#friend-collapse" aria-expanded="true">
-	         			친구 관리
-	       			</button>
-	        		<div class="collapse show" id="friend-collapse">
-	          			<ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-	            			<li><a href="friendRequest.do" class="link-dark d-inline-flex text-decoration-none rounded">친구 요청</a></li>
-	            			<li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">차단 목록</a></li>
-	         			</ul>
-	        		</div>
-	      		</li>
-	      		<li class="mb-1">
-	        		<button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#account-collapse" aria-expanded="false">
-	         			계정 관리
-	        		</button>
-	        		<div class="collapse" id="account-collapse">
-	          			<ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-	            			<li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">내 정보</a></li>
-	            			<li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">비밀번호 변경</a></li>
-	          			</ul>
-	        		</div>
-	      		</li>
-	      		<li class="mb-1">
-	        		<button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#storage-collapse" aria-expanded="false">
-	          			보관함
-	        		</button>
-	        		<div class="collapse" id="storage-collapse">
-	          			<ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-	            			<li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">쿠폰함</a></li>
-	            			<li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">뱃지 목록</a></li>
-	           	 			<li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">보드게임 지도</a></li>
-	            			<li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">찜한 보드게임</a></li>
-	          			</ul>
-	        		</div>
-	    		</li>
-    		
-	    		<!--구분선 -->
-	       		<li class="border-top my-3"></li>
-	       		
-	      		<li class="mb-1">
-	        		<button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#inquiry-collapse" aria-expanded="false">
-	          			문의 사항
-	        		</button>
-	        		<div class="collapse" id="inquiry-collapse">
-	          			<ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-	            			<li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">공지사항</a></li>
-	            			<li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">1:1 문의</a></li>
-	           			 	<li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">회원 탈퇴</a></li>
-	          			</ul>
-	        		</div>
-	      		</li>
-	      		
-	    	</ul>
-	  	</div>
+  		<%@include file="../user/sns_top.jsp" %>
 		
 		<!-- 상단 배젤 -->
-		<div class="flex-shrink-0 p-3 bg-white" style="width: 900px;">
+		<div class="flex-shrink-0 p-3 bg-white" style="width: 70%; min-width: 30rem; max-width: 60rem;">
 			<div class="d-flex align-items-center pb-3 mb-3 link-dark text-decoration-none border-bottom">
 				<span class="fs-5 fw-semibold">새 글 쓰기</span>
 			</div>
 			
 			<!-- 글쓰기 폼 -->
-			<form name="f" id="feedForm" method="POST" action="" enctype="multipart/form-data">
-				<!-- 이부분 el로 받아오기 -->
-				<input name="feed_num" type="hidden" value="${feed_num}"/><!-- feed_num 임시저장 불러올 경우 덮어씌워짐. 아니면 null -->
-				<input name="mem_num" type="hidden" value="${member.mem_num}"/><!-- mem_num 지금은 데이터 1 하나만 존재-->
+			<form name="f" id="feedForm" method="POST" action="" enctype="multipart/form-data"><!-- 그냥 위에 if문 때문에 div 꼬여서 이러는 거임 문제 없습니다 -->
+				<input name="feed_num" type="hidden" value="${feed.feed_num}"/><!-- feed_num 임시저장 불러올 경우 덮어씌워짐. 아니면 null -->
+				<input name="mem_num" type="hidden" value="${login_mem.mem_num}"/><!-- mem_num 지금은 데이터 1 하나만 존재-->
+				<input name="deleted_img" id="deleted_img" type="hidden" value=""/>
+				<input name="old_feed_img1" type="hidden" value="${feed.feed_img1}"/>
+				<input name="old_feed_img2" type="hidden" value="${feed.feed_img2}"/>
+				<input name="old_feed_img3" type="hidden" value="${feed.feed_img3}"/>
+				<input name="old_feed_img4" type="hidden" value="${feed.feed_img4}"/>
+				<input name="game_num" type="hidden"/>
 				
 				<div class="container">
 					<!-- 글 상자 -->
 	   				<div class="row mb-3">
 		   				<div class="col" align="center">
-		   					<textarea class="form-control" name="feed_content" id="textarea" rows="10"></textarea>
+		   					<textarea class="form-control" name="feed_content" id="textarea" rows="10">${feed.feed_content}</textarea>
 		   				</div>
 		   			</div>
 		   			<!-- 태그 버튼 -->
 		   			<div class="row mb-1" style="padding: 10px">
 			   			<c:forEach var="theme" items="${listTheme}" varStatus="status"><!-- 테마 리스트 listTheme로 넘겨받기 -->
 		   					<div class="col-auto" align="left" style="margin: 5px -5px;">
-						   		<input type="checkbox" class="btn-check h-75" id="btn-check-${status.count}" name="theme" value="${theme.theme_num}" autocomplete="off">
+						   		<c:if test="${theme.feed_checked == 1}">
+						   			<input type="checkbox" class="btn-check h-75" id="btn-check-${status.count}" name="theme" value="${theme.theme_num}" checked>							
+								</c:if>
+								<c:if test="${empty theme.feed_checked || theme.feed_checked == 0}">
+						   			<input type="checkbox" class="btn-check h-75" id="btn-check-${status.count}" name="theme" value="${theme.theme_num}">
+								</c:if>
 								<label class="btn btn-outline-secondary" for="btn-check-${status.count}">#${theme.theme_name}</label>
 							</div>
 						</c:forEach>
@@ -368,37 +409,77 @@
 			         			<svg class="bi pe-none me-2" fill="#A6A6A6" width="24" height="24"><use xlink:href="#img-select"></use></svg>
 			         			사진 첨부
 			        		</button>
-			        		<button type="button" class="btn btn-sm rounded border-0" onclick="javascript:openplace()">
-			         			<svg class="bi pe-none me-2" fill="#A6A6A6" width="20" height="20"><use xlink:href="#location"></use></svg>
-			         			장소 추가
-			        		</button>
-			        		<button type="button" class="btn btn-sm rounded border-0" onclick="javascript:opentemplist()">
-			         			<svg class="bi pe-none me-2" fill="#A6A6A6" width="20" height="20"><use xlink:href="#collection"></use></svg>
-			         			임시 글 목록
+			        		<button type="button" class="btn btn-sm rounded border-0" onclick="javascript:openGame()">
+			         			<svg class="bi pe-none me-2" fill="#A6A6A6" width="20" height="20"><use xlink:href="#controller"></use></svg>
+			         			게임 추가
 			        		</button>
 			        		<button id="lock_btn" type="button" class="btn btn-sm rounded border-0" onclick="javascript:lockUnlock()">
 			         			<svg id="lock_svg" class="bi pe-none me-2" fill="#A6A6A6" width="20" height="20"></svg>
 			         			<span id="lock_span"></span>
 			        		</button>
 			        		<!-- 이미지 선택 박스 -->
-			        		<div class="collapse" id="image-collapse">
+			        		<c:if test="${empty feed.feed_img1}">
+			        		<div class="collapse" id="image-collapse"><!-- 그냥 위에 if문 때문에... -->
+			        		</c:if>
+			        		<c:if test="${!empty feed.feed_img1}">
+			        		<div class="collapse.show" id="image-collapse"><!-- 그냥 위에 if문 때문에... -->
+			        		</c:if>
 				        		<div id="image_preview">
-									<input type="file" id="btnAtt" multiple="multiple" class="mt-2 small" style="margin-left: 20px;" accept=".png, .jpg, .jpeg" enctype="multipart/form-data"/>
-									<div id="attZone" class="row small mt-2" style="margin-left: 20px;" data-placeholder="파일을 첨부 하려면 파일 선택 버튼을 클릭하거나 파일을 드래그앤드롭 하세요"></div>
+				        			<label class="input-file-button" for="btnAtt" style="margin-left: 2rem;">파일 선택</label>
+									<input type="file" id="btnAtt" multiple="multiple" class="mt-2 small" style="margin-left: 20px; display: none;" accept=".png, .jpg, .jpeg" enctype="multipart/form-data"/>
+									<div id="attZone" class="row small mt-2" style="margin-left: 20px;" data-placeholder="파일을 첨부 하려면 파일 선택 버튼을 클릭하세요">
+										<c:if test="${!empty feed.feed_img1}">
+											<div class="col-auto" id="imgBox1" style="display: inline-block; position: relative; width: 120px; height: 120px; margin-right: 10px;">
+												<img src="resources/img/${feed.feed_img1}" class="imgPreviewCrop">
+												<button class="btn-close" onclick="deleteImgDiv(1)" type="button" style="position: absolute; right: 0px; top: 0px;"></button>
+											</div>
+										</c:if>
+										<c:if test="${!empty feed.feed_img2}">
+											<div class="col-auto" id="imgBox2" style="display: inline-block; position: relative; width: 120px; height: 120px; margin-right: 10px;">
+												<img src="resources/img/${feed.feed_img2}" class="imgPreviewCrop">
+												<button class="btn-close" onclick="deleteImgDiv(2)" type="button" style="position: absolute; right: 0px; top: 0px;"></button>
+											</div>
+										</c:if>
+										<c:if test="${!empty feed.feed_img3}">
+											<div class="col-auto" id="imgBox3" style="display: inline-block; position: relative; width: 120px; height: 120px; margin-right: 10px;">
+												<img src="resources/img/${feed.feed_img3}" class="imgPreviewCrop">
+												<button class="btn-close" onclick="deleteImgDiv(3)" type="button" style="position: absolute; right: 0px; top: 0px;"></button>
+											</div>
+										</c:if>
+										<c:if test="${!empty feed.feed_img4}">
+											<div class="col-auto" id="imgBox4" style="display: inline-block; position: relative; width: 120px; height: 120px; margin-right: 10px;">
+												<img src="resources/img/${feed.feed_img4}" class="imgPreviewCrop">
+												<button class="btn-close" onclick="deleteImgDiv(4)" type="button" style="position: absolute; right: 0px; top: 0px;"></button>
+											</div>
+										</c:if>
+									</div>
 								</div>
 							</div>
+							<c:if test="${!empty feed.game_num && feed.game_num!=0}">
+								<div id="gameZone" class="col-auto" align="right">
+									<svg class="bi pe-none me-2" fill="#A6A6A6" width="20" height="20"><use xlink:href="#controller"></use></svg>
+									<span id="gameText">${feed.game_name}</span>
+									<button class="btn-close" onclick="deleteGame()" type="button"></button>
+								</div>
+							</c:if>
+							<c:if test="${empty feed.game_num || feed.game_num==0}">
+								<div id="gameZone" class="col-auto" align="right" style="display: none;">
+									<svg class="bi pe-none me-2" fill="#A6A6A6" width="20" height="20"><use xlink:href="#controller"></use></svg>
+									<span id="gameText">${feed.game_name}</span>
+									<button class="btn-close" onclick="deleteGame()" type="button"></button>
+								</div>
+							</c:if>
 						</div>
 	   				</div>
 	   				<div class="row">
 	   					<div class="col" align="right">
 		   					<button type="button" class="btn btn-outline-primary btn-sm" onclick="history.back()">취소</button>&nbsp;&nbsp;
-		   					<button type="button" class="btn btn-outline-primary btn-sm" onclick="javascript:saveform()">임시저장</button>&nbsp;&nbsp;
 		   					<button type="button" class="btn btn-outline-primary btn-sm" onclick="javascript:submitform()">피드 작성</button>
 		   				</div>
 	   				</div>
 	   			</div>
-   			</form>
-		</div>
+   			</form><!-- 그냥 위에 if문 때문에... -->
+		</div><!-- 그냥 위에 if문 때문에... -->
 	
 	</main>
 

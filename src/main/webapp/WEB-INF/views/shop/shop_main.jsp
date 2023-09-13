@@ -29,51 +29,56 @@
    </p>
    <div class="collapse collapse-horizontal" id="collapseWidthExample">
     <div class="card card-body" style="width: 1000px;">
-     <form name="f" action="game_checkFind.do" method="post">
+      <form name="f" action="shop_checkFind.do" method="post">
 	   <table width="100%">
 	      <tr height="50" align="center">
-	         <th bgcolor="#CCCCCC" rowspan="2">테마별</th>
-	            <%-- <c:forEach var="tdto" items="${listTheme}"> --%>      
-	            <td><input type="checkbox" value="">전략</td>
-				<td><input type="checkbox" value="">추리</td>
-				<td><input type="checkbox" value="">카드</td>
-				<td><input type="checkbox" value="">스릴러/공포</td>
-				<td><input type="checkbox" value="">판타지</td>
-				<td><input type="checkbox" value="">역사</td>
-				<td><input type="checkbox" value="">공상과학</td>
-				<td><input type="checkbox" value="">스포츠</td>
-	           <%--  </c:forEach> --%>
-	      </tr>
-	      <tr>
-	         <!-- 일단 버튼을 나눠놨는데 마지막에 최종으로 나눌지 합칠지(합쳐서 데이터 표현이 될지)생각하기 -->
-	         <td colspan="8" align="right">
-	            <button type="submit" class="btn btn-dark">검색하기</button>
-	         </td>
+	         <th>테마별&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<div class="vr"></div></th>
+				<c:forEach var="tdto" items="${listTheme}">
+					<td><input type="checkbox" name="theme" value="${tdto.theme_num }">${tdto.theme_name }</td>
+				</c:forEach>
 	      </tr>
 	      <tr height="50" align="center">
-	         <th bgcolor="#CCCCCC" rowspan="2">인원별</th>
-	         <td><input type="checkbox" name="game_player" value="1"> 1인</td>
-	         <td><input type="checkbox" name="game_player" value="2"> 2~4인</td>
-	         <td><input type="checkbox" name="game_player" value="3"> 5~6인</td>
-	         <td><input type="checkbox" name="game_player" value="4"> 7인 이상</td>
-	      </tr>
-	      <tr>
-	         <td colspan="8" align="right">
-	            <button type="submit" class="btn btn-dark">검색하기</button>
-	         </td>
+	         <th>인원별&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<div class="vr"></div></th>
+				<td align="center" colspan="2"><input type="checkbox" name="game_player" value="1"> 1인</td>
+				<td align="center" colspan="2"><input type="checkbox" name="game_player" value="2"> 2~4인</td>
+				<td align="center" colspan="2" ><input type="checkbox" name="game_player" value="3"> 5~6인</td>
+				<td align="center" colspan="2"><input type="checkbox" name="game_player" value="4"> 7인 이상</td>
 	      </tr>
 	      <tr height="50" align="center">
-	         <th bgcolor="#CCCCCC" rowspan="2">난이도별</th>
-						<td><input type="checkbox" value="1">★</td>
-						<td><input type="checkbox" value="2">★★</td>
-						<td><input type="checkbox" value="3">★★★</td>
-						<td><input type="checkbox" value="4">★★★★</td>
-						<td><input type="checkbox" value="5">★★★★★</td>
-	      </tr>
-	      <tr>
-	         <td colspan="8" align="right">
-	            <button type="submit" class="btn btn-dark">검색하기</button>
-	         </td>
+	         <th>난이도별&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<div class="vr"></div></th>
+				<td colspan="2">
+					<input type="checkbox" name="game_level" value="1">
+  						<c:forEach begin="1" end="1">
+    						<img src="resources/img/fire.png" width="15" height="15">
+    					</c:forEach>			
+    			</td>
+				<td>
+					<input type="checkbox" name="game_level" value="2">
+    					<c:forEach begin="1" end="2">
+							<img src="resources/img/fire.png" width="15" height="15">
+						</c:forEach>
+				</td>
+				<td>
+					<input type="checkbox" name="game_level" value="3">
+    					<c:forEach begin="1" end="3">
+							<img src="resources/img/fire.png" width="15" height="15">
+					</c:forEach>
+				</td>
+				<td>
+					<input type="checkbox" name="game_level" value="4">
+    					<c:forEach begin="1" end="4">
+							<img src="resources/img/fire.png" width="15" height="15">
+					</c:forEach>
+				</td>
+				<td>
+					<input type="checkbox" name="game_level" value="5">
+    					<c:forEach begin="1" end="5">
+							<img src="resources/img/fire.png" width="15" height="15">
+						</c:forEach>
+				</td>
+				<td colspan="2" align="center">
+					<button type="submit" class="btn btn-outline-dark">검색하기</button>
+				</td>
 	      </tr>
 	   </table>
       </form>
@@ -81,39 +86,51 @@
    </div>
 </div>
 <br>
+<c:if test="${not empty listRank}">
 <div class="d-flex justify-content-center pb-5">
 					<!-- padding x,y축 여백 -->
 	<div class="container px-3 py-3 bg-light" id="featured-best">
-		<!-- 인기 보드게임은 판매수량이 많은 또는 찜수가 많은!!! <<<정해서 해야함  -->
 		<h4 class="pb-2 border-bottom">인기 보드게임</h4>
 		<div class="row row-cols-4">
+			<c:forEach var="dto" items="${listRank}" begin="0" end="3">
 			<div class="feature col">
-				<a href="shop_view.do"><img src="resources/img/game_bang.jpg" width="270" height="270" class="img-responsive img-rounded img-thumbnail" alt="bang"></a>
-				<h5><a href="shop_view.do">[코리아보드게임즈] 뱅</a></h5>
-				<h5>23% <del>28,000원</del></h5>
-				<h5><font color="red"><b>21,560원</b></font></h5>
+				<div class="pb-2"><a href="shop_view.do?prod_num=${dto.prod_num}"><img src="resources/img/${dto.game_img}" width="310" height="310" class="img-responsive img-rounded img-thumbnail"></a></div>
+				<c:if test="${empty dto.prod_starratingAvg}">
+					<c:forEach begin="1" end="5">
+		           	 	<img src="resources/img/star1.png" width="17" height="17">	
+		        	</c:forEach>				
+				</c:if>
+				<c:if test="${not empty dto.prod_starratingAvg}">
+					<c:forEach var="i" begin="1" end="5">
+						<c:if test="${(dto.prod_starratingAvg - i) >= 0}">
+							<img src="resources/img/star2.png" width="17" height="17">
+	  					</c:if>
+	  					<c:if test="${(dto.prod_starratingAvg - i) <0}">
+	  						<img src="resources/img/star1.png" width="17" height="17">
+	  					</c:if>
+	  				</c:forEach>
+				</c:if>
+				<br>
+				<h5><a href="shop_view.do?prod_num=${dto.prod_num}" class="link-dark text-decoration-none">[${dto.prod_company}] ${dto.game_name}</a></h5>
+				<h5><b>${df.format(dto.prod_price)}원</b></h5>
+				<font color="orange">
+					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-square-dots-fill" viewBox="0 0 16 16">
+		             <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.5a1 1 0 0 0-.8.4l-1.9 2.533a1 1 0 0 1-1.6 0L5.3 12.4a1 1 0 0 0-.8-.4H2a2 2 0 0 1-2-2V2zm5 4a1 1 0 1 0-2 0 1 1 0 0 0 2 0zm4 0a1 1 0 1 0-2 0 1 1 0 0 0 2 0zm3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
+					</svg>
+				</font>
+				<font color="gray">리뷰 ${dto.sr_count }</font>&nbsp
+				<font color="red">				
+					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
+					 <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+					</svg>	
+				</font>
+				<font color="gray">찜 ${dto.sl_count }</font>
 			</div>
-			<div class="feature col">
-				<a href="shop_view.do"><img src="resources/img/game_bang.jpg" width="270" height="270" class="img-responsive img-rounded img-thumbnail" alt="bang"></a>
-				<h5><a href="shop_view.do">[코리아보드게임즈] 뱅</a></h5>
-				<h5>23% <del>28,000원</del></h5>
-				<h5><font color="red"><b>21,560원</b></font></h5>
-			</div>
-			<div class="feature col">
-				<a href="shop_view.do"><img src="resources/img/game_bang.jpg" width="270" height="270" class="img-responsive img-rounded img-thumbnail" alt="bang"></a>
-				<h5><a href="shop_view.do">[코리아보드게임즈] 뱅</a></h5>
-				<h5>23% <del>28,000원</del></h5>
-				<h5><font color="red"><b>21,560원</b></font></h5>
-			</div>
-			<div class="feature col">
-				<a href="shop_view.do"><img src="resources/img/game_bang.jpg" width="270" height="270" class="img-responsive img-rounded img-thumbnail" alt="bang"></a>
-				<h5><a href="shop_view.do">[코리아보드게임즈] 뱅</a></h5>
-				<h5>23% <del>28,000원</del></h5>
-				<h5><font color="red"><b>21,560원</b></font></h5>
-			</div>
+			</c:forEach>
 		</div>
 	</div>
 </div>
+</c:if>
 
 <div class="d-flex justify-content-center">
 	<div class="container px-3 py-1" id="featured-all">
@@ -126,8 +143,7 @@
 			  <ul class="dropdown-menu dropdown-menu-end">
 			    <li><a class="dropdown-item" href="prod_sort.do?sort=prod_regdate">최신순</a></li>
 			    <li><a class="dropdown-item" href="prod_sort.do?sort=game_name">이름순</a></li>
-			    <li><a class="dropdown-item" href="#">판매순</a></li>
-			    <li><a class="dropdown-item" href="#">인기순</a></li>
+			    <li><a class="dropdown-item" href="shop_main_best.do">판매순</a></li>
 			  </ul>
 			 </div>
 			 &nbsp
@@ -136,60 +152,53 @@
 			    &nbsp&nbsp20개씩&nbsp&nbsp
 			  </button>
 			  <ul class="dropdown-menu dropdown-menu-end">
-			    <li><a class="dropdown-item" href="prod_sort.do?sort=">20개씩</a></li>
-			    <li><a class="dropdown-item" href="prod_sort.do?sort=">40개씩</a></li>
-			    <li><a class="dropdown-item" href="prod_sort.do?sort=">60개씩</a></li>
+			    <li><a class="dropdown-item" href="prod_view_20.do">20개씩</a></li>
+			    <li><a class="dropdown-item" href="prod_view_40.do">40개씩</a></li>
+			    <li><a class="dropdown-item" href="prod_view_60.do">60개씩</a></li>
 			  </ul>
 			</div>			
 		</div>
 		<div class="row row-cols-4">
 			<c:forEach var="dto" items="${listProd}">
-			<div class="feature col px-2 py-3">			
+			<div class="feature col px-2 py-3">
 				<div class="pb-2"><a href="shop_view.do?prod_num=${dto.prod_num}"><img src="resources/img/${dto.game_img}" width="310" height="310" class="img-responsive img-rounded img-thumbnail"></a></div>
+				<c:if test="${empty dto.prod_starratingAvg}">
+					<c:forEach begin="1" end="5">
+		           	 	<img src="resources/img/star1.png" width="17" height="17">	
+		        	</c:forEach>				
+				</c:if>
+				<c:if test="${not empty dto.prod_starratingAvg}">
+					<c:forEach var="i" begin="1" end="5">
+						<c:if test="${(dto.prod_starratingAvg - i) >= 0}">
+							<img src="resources/img/star2.png" width="17" height="17">
+	  					</c:if>
+	  					<c:if test="${(dto.prod_starratingAvg - i) <0}">
+	  						<img src="resources/img/star1.png" width="17" height="17">
+	  					</c:if>
+	  				</c:forEach>
+				</c:if>
+				<br>
 				<h5><a href="shop_view.do?prod_num=${dto.prod_num}" class="link-dark text-decoration-none">[${dto.prod_company}] ${dto.game_name}</a></h5>
 				<c:if test="${dto.prod_discount eq 0}"><!-- 할인율이 없다면 -->
 				<h5><b>${df.format(dto.prod_price)}원</b></h5>
-				<h6>
-					<font color="yellow">
-					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
-					  <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
-					</svg>					
-					</font>
-					<font color="gray">
-					<a href="#" class="link-dark d-inline-flex text-decoration-none rounded">평점 
-					${reviewAvg}/5</a>	
-					</font>&nbsp		
-					<font color="orange">
-					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-square-dots-fill" viewBox="0 0 16 16">
-					  <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.5a1 1 0 0 0-.8.4l-1.9 2.533a1 1 0 0 1-1.6 0L5.3 12.4a1 1 0 0 0-.8-.4H2a2 2 0 0 1-2-2V2zm5 4a1 1 0 1 0-2 0 1 1 0 0 0 2 0zm4 0a1 1 0 1 0-2 0 1 1 0 0 0 2 0zm3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
-					</svg>
-					</font>
-					<font color="gray">
-					<a href="shop_insertReview.do" class="link-dark d-inline-flex text-decoration-none rounded">리뷰 000</a>	
-					</font>&nbsp
-					<font color="red">
-					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
-					  <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
-					</svg>	
-					</font>
-					<font color="gray">
-					<a href="#" class="link-dark d-inline-flex text-decoration-none rounded">찜 000</a>	
-					</font>			
-				</h6>
 				</c:if>
 				<c:if test="${dto.prod_discount >0}"><!-- 할인율이 있다면 -->
-				<h5><b><font color="red">${dto.prod_discount}%</font>${df.format(dto.prod_price*(1-dto.prod_discount/100))}원</b></h5>
-				<h5><del>${df.format(dto.prod_price)}원</del></h5>
-				<h6><font color="orange">
-					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-square-dots-fill" viewBox="0 0 16 16">
-					  <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.5a1 1 0 0 0-.8.4l-1.9 2.533a1 1 0 0 1-1.6 0L5.3 12.4a1 1 0 0 0-.8-.4H2a2 2 0 0 1-2-2V2zm5 4a1 1 0 1 0-2 0 1 1 0 0 0 2 0zm4 0a1 1 0 1 0-2 0 1 1 0 0 0 2 0zm3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
-					</svg>
-					</font>
-					<font color="gray">
-					<a href="#" class="link-dark d-inline-flex text-decoration-none rounded">후기 000</a>	
-					</font>
-				</h6>
+				<h5><b><font color="red">${dto.prod_discount}% </font>${df.format(dto.prod_price*(1-dto.prod_discount/100))}원</b>
+				<font size="3"><del>${df.format(dto.prod_price)}원</del></font>
+				</h5>
 				</c:if>
+				<font color="orange">
+					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-square-dots-fill" viewBox="0 0 16 16">
+		             <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.5a1 1 0 0 0-.8.4l-1.9 2.533a1 1 0 0 1-1.6 0L5.3 12.4a1 1 0 0 0-.8-.4H2a2 2 0 0 1-2-2V2zm5 4a1 1 0 1 0-2 0 1 1 0 0 0 2 0zm4 0a1 1 0 1 0-2 0 1 1 0 0 0 2 0zm3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
+					</svg>
+				</font>
+				<font color="gray">리뷰 ${dto.sr_count }</font>&nbsp
+				<font color="red">				
+					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
+					 <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+					</svg>	
+				</font>
+				<font color="gray">찜 ${dto.sl_count }</font>
 			</div>
 			</c:forEach>
 		</div>

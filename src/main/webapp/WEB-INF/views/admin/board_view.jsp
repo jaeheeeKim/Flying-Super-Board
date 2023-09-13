@@ -137,13 +137,12 @@
 				</button>
 			</div>
 			</c:if>
-		
 					<!-- 내용 -->
 					<div align="center" class="mb-3 p-3 mx-auto p-2">
-						<textarea class="form-control" id="exampleFormControlTextarea1"
-							name="board_content" rows="12" readonly>${getBoard.board_content}</textarea>
+						<textarea class="form-control" id="exampleFormControlTextarea1" name="board_content" rows="12" readonly><c:if test="${getBoard.board_content eq '-' }">작성자가 삭제한 글입니다.</c:if><c:if test="${getBoard.board_content ne '-' }">${getBoard.board_content}</c:if></textarea>
 					</div>
-		    	</div>
+					<!-- 텍스트 에리어 들여쓰기 또는 엔터 처리하면 그대로 출력되서 불가피하게 일렬로 갈겼습니다. 참고  괴도 다솜-->
+					</div>
 		    	<!-- 댓글 목록 -->
 		    	<div class="col" style="overflow: scroll; width:700px; height: 800px;" align="center">
 				<p>

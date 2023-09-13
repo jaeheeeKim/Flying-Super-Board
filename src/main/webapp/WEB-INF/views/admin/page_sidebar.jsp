@@ -46,17 +46,18 @@
 		        </div>
 	        </li>
 	        <!-- 구분선 -->
-	        <li class="border-top my-3"></li>
+	       <!--  <li class="border-top my-3"></li> -->
 	        <!-- 신고 내역 -->
-	   		<li class="mb-1">
+	   		<!-- <li class="mb-1">
 		   		<button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="true">
-		         			신고 관리
+		         			기타
 		       	</button>
 		        <div class="collapse show" id="dashboard-collapse">
 		          	<ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-		          		<li><a class="link-dark d-inline-flex text-decoration-none rounded" href="admin_report.list.do">전체 신고 내역</a></li>
+		          		<li><a class="link-dark d-inline-flex text-decoration-none rounded" href="#">뱃지 등록</a></li>
+		          		<li><a class="link-dark d-inline-flex text-decoration-none rounded" href="#">뱃지 목록</a></li>
 		         	</ul>
 		        </div>
-	        </li>
+	        </li> -->
 	        </ul>
 			</div>

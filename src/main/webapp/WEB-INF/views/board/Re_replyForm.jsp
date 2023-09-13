@@ -10,14 +10,12 @@
 				<input type="hidden" name="br_re_group" value="${dto.br_re_group}"/>
 				<input type="hidden" name="br_re_step" value="${dto.br_re_step}"/>
 				<input type="hidden" name="br_re_level" value="${dto.br_re_level}"/>
-		<br>
-		<br>
 		<div class = "row">
-		<div class ="col-1">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</div>
-		<div class ="col-2">
+		<div class ="col-1">&nbsp&nbsp&nbsp&nbsp</div>
+		<div class ="col-1">
 		<img src="resources/img/re.png" height="10"></div>
 		<input hidden="hidden"><!-- 엔터키 서브밋 방지 -->
-		<div class = "col-5">
+		<div class = "col-7">
 		<c:if test="${bdto.board_anony_check eq 1}">
 		<input type="text" class="form-control form-control-sm" name="br_content">
 		</c:if>
@@ -25,10 +23,11 @@
 		<input type="text" class="form-control form-control-sm" value="@${dto.mem_nickname } " name="br_content">
 		</c:if>
 		</div>
+		<div class ="col-1"></div>
 		<div class = "col-2">
 			<div class="btn-group btn-group-sm" role="group" aria-label="Basic outlined example">
- 			<a href="javascript:re_replyOk()"><button type="button" class="btn btn-outline-primary">작성</button></a>
- 			<a href="javascript:cancel('${dto.board_num}')"> <button type="button" class="btn btn-outline-primary">취소</button></a>
+ 			<a href="javascript:re_replyOk()"><button type="button" class="btn btn-outline-primary btn-sm">작성</button></a>
+ 			<a href="javascript:cancel('${dto.board_num}')"> <button type="button" class="btn btn-outline-primary btn-sm">취소</button></a>
 			</div>
 		</div>
 		</div>

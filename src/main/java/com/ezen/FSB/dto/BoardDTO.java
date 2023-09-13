@@ -22,8 +22,21 @@ public class BoardDTO {
 	private int board_replycount; // 해당 게시글 댓글 수 
 	
 	private String mem_nickname; // 테이블엔 없는 닉네임디티오...
-
-
+	private String mem_img; // 테이블엔 없는 이미지 디티오
+	private String bf_num; //조인 파일 유무 체크
+	
+	public String getBf_num() {
+		return bf_num;
+	}
+	public void setBf_num(String bf_num) {
+		this.bf_num = bf_num;
+	}
+	public String getMem_img() {
+		return mem_img;
+	}
+	public void setMem_img(String mem_img) {
+		this.mem_img = mem_img;
+	}
 	public String getMem_nickname() {
 		return mem_nickname;
 	}
@@ -43,7 +56,6 @@ public class BoardDTO {
 		this.board_report = board_report;
 	}
 	
-	
 	public int getMem_num() {
 		return mem_num;
 	}
@@ -51,8 +63,6 @@ public class BoardDTO {
 		this.mem_num = mem_num;
 	}
 	
-	
-
 	public int getBoard_num() {
 		return board_num;
 	}

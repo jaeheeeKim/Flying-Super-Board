@@ -9,12 +9,13 @@
 
  <link rel="stylesheet" type="text/css" href="resources/css/button.css">
 
+<!-- 비밀번호 찾기시, 이메일 인증 번호 보내기 누른이후  인증번호 입력하는 칸.jsp -->
     
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>아이디찾기</title>
+<title>아이디/비밀번호찾기</title>
 </head>
 <body>
 
@@ -40,8 +41,15 @@
 <br>
 <div width="80%" height="80%">
 
+<c:if test="${mode=='id'}">	
 <h2 align="center">아이디 찾기</h2>
+</c:if>
 
+<c:if test="${mode!='id'}">	
+		<h2 align="center">비 밀 번 호 찾 기</h2>
+</c:if>	
+	
+ <br>	
 <div align="center">
 <!-- 아이디찾기/비밀번호찾기 구분 -->
 <div align="center" class="btn-group" role="group" aria-label="Basic outlined example" >
@@ -111,7 +119,7 @@
  	
  	<form name="f2" action="sendEmail_ok.do" method="post" onsubmit="return numCheck('${num}')">
  	  <input type="hidden" name ="num" value="${num}">
- 	
+ 	<input type="hidden" name="mode" value="${mode}"/>
 
      <c:if test="${mode!='id'}">
       <div class="input-group mb-3">

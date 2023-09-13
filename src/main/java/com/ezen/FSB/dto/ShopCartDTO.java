@@ -10,6 +10,7 @@ public class ShopCartDTO {
 	// 이렇게 DTO에 넣어주는 이유는 : resultType이 DTO이기때문에
 	// join 을 위한 멤버필드
 	private String game_name;
+	private String game_img;
 	private String prod_company;
 	private int prod_price;
 	private int prod_point;
@@ -81,6 +82,12 @@ public class ShopCartDTO {
 	}
 	public void setProd_company(String prod_company) {
 		this.prod_company = prod_company;
+	}
+	public String getGame_img() {
+		return game_img;
+	}
+	public void setGame_img(String game_img) {
+		this.game_img = game_img;
 	}
 	
 }

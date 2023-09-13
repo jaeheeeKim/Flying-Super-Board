@@ -1,18 +1,25 @@
 package com.ezen.FSB.dto;
 
 public class AlarmDTO {
-	private String mem_id; //회원 아이디
+	private int mem_num; //멤 넘 
+	private int alm_num;  // 알람 넘버 
 	private String alm_cate; //알림 카테고리(쿠폰,친구,피드 등)
 	private String alm_title; //알림 제목
-	private String alm_content; //알림 내용
-	private String alm_link;  //알림 눌렀을 때 연동된 링크
-	private String alm_read;  //알림 읽음 여부
+	private String alm_content; //알림 내용 
+	private String alm_regdate; //알림 생성 날짜
+	private int alm_read;  //알림 읽음 여부 0은 안읽음 1은 읽음 
 	
-	public String getMem_id() {
-		return mem_id;
+	public int getMem_num() {
+		return mem_num;
 	}
-	public void setMem_id(String mem_id) {
-		this.mem_id = mem_id;
+	public void setMem_num(int mem_num) {
+		this.mem_num = mem_num;
+	}
+	public int getAlm_num() {
+		return alm_num;
+	}
+	public void setAlm_num(int alm_num) {
+		this.alm_num = alm_num;
 	}
 	public String getAlm_cate() {
 		return alm_cate;
@@ -32,18 +39,20 @@ public class AlarmDTO {
 	public void setAlm_content(String alm_content) {
 		this.alm_content = alm_content;
 	}
-	public String getAlm_link() {
-		return alm_link;
-	}
-	public void setAlm_link(String alm_link) {
-		this.alm_link = alm_link;
-	}
-	public String getAlm_read() {
+	public int getAlm_read() {
 		return alm_read;
 	}
-	public void setAlm_read(String alm_read) {
+	public void setAlm_read(int alm_read) {
 		this.alm_read = alm_read;
 	}
+	public String getAlm_regdate() {
+		return alm_regdate;
+	}
+	public void setAlm_regdate(String alm_regdate) {
+		this.alm_regdate = alm_regdate;
+	}
+	
+
 	
 			
 }

@@ -3,9 +3,8 @@ package com.ezen.FSB.dto;
 public class Feed_themeDTO {
 	private int feed_num;
 	private int theme_num;
-	private String feed_theme_hide;
 	
-	//join¿ë ÇÊµå 
+	//joinìš© ì»¬ëŸ¼
 	private String theme_name;
 	
 	public int getFeed_num() {
@@ -20,14 +19,8 @@ public class Feed_themeDTO {
 	public void setTheme_num(int theme_num) {
 		this.theme_num = theme_num;
 	}
-	public String getFeed_theme_hide() {
-		return feed_theme_hide;
-	}
-	public void setFeed_theme_hide(String feed_theme_hide) {
-		this.feed_theme_hide = feed_theme_hide;
-	}
 	
-	//join¿ë setter getter
+	//joinìš© setter getter
 	public String getTheme_name() {
 		return theme_name;
 	}

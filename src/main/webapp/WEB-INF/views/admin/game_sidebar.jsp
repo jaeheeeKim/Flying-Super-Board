@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!-- game_sidebar.jsp // 보드게임 사이드바 -->
 
 <!-- 벡터 아이콘 정의 -->
@@ -38,7 +39,9 @@
 		          	<ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
 		            	<li><a href="admin_game_insert.do" class="link-dark d-inline-flex text-decoration-none rounded">보드게임 등록</a></li>
 						<li><a href="admin_game_list.do" class="link-dark d-inline-flex text-decoration-none rounded">보드게임 목록</a></li>
-						<li><a href="admin_game_reportList.do?mode=all&sort=all" class="link-dark d-inline-flex text-decoration-none rounded">보드게임 한줄평 신고 내역</a></li>
+						<li><a href="admin_game_reportList.do?mode=all&sort=all" class="link-dark d-inline-flex text-decoration-none rounded">보드게임 한줄평 신고 내역 
+								<c:if test="${gameReport ne 0}"><span class="badge bg-danger">${gameReport}</span></c:if>
+							</a></li>
 		         	</ul>
 		        </div>
 	        </li>

@@ -36,7 +36,7 @@
 	        			<div class="d-flex w-100 align-items-center justify-content-between mb-1">
 	          				<small class="text-muted">2023.06.01 23:07</small>
 	        			</div>
-	       	 			<div class="col-12 mb-1 small">(브랜치 테스트)집에 가고 싶다 해야할 건 너무 많고 할 수 있는 건 없고 구글링은 이제 그만하고 싶고 어쩌구저쩌구</div>
+	       	 			<div class="col-12 mb-1 small">집에 가고 싶다 해야할 건 너무 많고 할 수 있는 건 없고 구글링은 이제 그만하고 싶고 어쩌구저쩌구</div>
 	      			</div>
 	      		</c:forEach>
 			</div>

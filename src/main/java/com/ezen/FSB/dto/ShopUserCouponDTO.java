@@ -2,8 +2,8 @@ package com.ezen.FSB.dto;
 
 public class ShopUserCouponDTO { // 사용자 쿠폰 현황
 	private int usc_num;		// seq
-	private int mem_num;		// 회원 seq
-	private int sc_num;			// 쿠폰 seq
+	private int mem_num;		// 회원 번호
+	private int sc_num;			// 쿠폰 번호
 	private String usc_regdate;	// 쿠폰 등록일 (사용자가 쿠폰을 등록한 날)
 	private String usc_duedate;	// 쿠폰 만료일
 	//sc_duedate 가 null : usc_regdate + 30 일로 usc_duedate 설정
@@ -13,6 +13,8 @@ public class ShopUserCouponDTO { // 사용자 쿠폰 현황
 	private String sc_name;
 	private String sc_type;
 	private int sc_discount;
+	private int sc_min;
+	private int sc_limit;
 	
 	// join 을 위한
 	private String mem_nickname;
@@ -84,7 +86,26 @@ public class ShopUserCouponDTO { // 사용자 쿠폰 현황
 	public String getMem_nickname() {
 		return mem_nickname;
 	}
+	
 	public void setMem_nickname(String mem_nickname) {
 		this.mem_nickname = mem_nickname;
 	}
+
+	public int getSc_min() {
+		return sc_min;
+	}
+
+	public void setSc_min(int sc_min) {
+		this.sc_min = sc_min;
+	}
+
+	public int getSc_limit() {
+		return sc_limit;
+	}
+
+	public void setSc_limit(int sc_limit) {
+		this.sc_limit = sc_limit;
+	}
+	
+	
 }

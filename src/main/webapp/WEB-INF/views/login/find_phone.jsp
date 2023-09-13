@@ -9,12 +9,12 @@
 
  <link rel="stylesheet" type="text/css" href="resources/css/button.css">
 
-    
+ <!-- 핸드폰으로 찾기시, 번호 입력 + 인증요청 누르는.jsp -->
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>아이디찾기</title>
+<title>아이디/비밀번호찾기</title>
 </head>
 <body>
 
@@ -40,8 +40,16 @@
 <br>
 <div width="80%" height="80%">
 
+<c:if test="${mode=='id'}">	
 <h2 align="center">아이디 찾기</h2>
+</c:if>
 
+<c:if test="${mode!='id'}">	
+		<h2 align="center">비 밀 번 호 찾 기</h2>
+</c:if>	
+	
+ <br>	
+ 
 <div align="center">
 <!-- 아이디찾기/비밀번호찾기 구분 -->
 <div align="center" class="btn-group" role="group" aria-label="Basic outlined example" >
@@ -84,6 +92,8 @@
 
 <!-- 휴대폰 번호 -->
 <form name="f" action="sendSMS.do" method="post" onsubmit="return check()">    
+ 
+ 
 <div class="input-group mb-3">
   <label for="exampleFormControlTextarea1" class="form-label"></label>
 
@@ -95,6 +105,7 @@
 <!-- 인증번호 입력칸 생성 --> 	
  	
  	<form name="f2" action="sendSMS_ok.do" method="post" onsubmit="return numCheck('${numStr}')">
+ 	<input type="hidden" name="mode" value="${mode}"/>
  	  <input type="hidden" name="phoneNumber" value="${phoneNumber}"/>
  	  <input type="hidden" name="name" value="${name}"/>
  	  <c:if test="${mode!='id'}">
@@ -118,7 +129,7 @@
       </div>
     </div>
 
- 
+ <c:if test="${mode!='id'}">	
 <div class="accordion-item">
     <h2 class="accordion-header" id="headingTwo">
       <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
@@ -131,6 +142,7 @@
       </div>
     </div>
   </div>
+  </c:if>
     
     
 

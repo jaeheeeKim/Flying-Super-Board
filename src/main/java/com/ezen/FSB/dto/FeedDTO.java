@@ -1,21 +1,26 @@
 package com.ezen.FSB.dto;
 
+import java.util.List;
+
 public class FeedDTO {
 	private int feed_num;
 	private int mem_num;
-	private int bp_num;
+	private int game_num;
 	private String feed_content;
 	private String feed_img1;
 	private String feed_img2;
 	private String feed_img3;
 	private String feed_img4;
-	private int feed_like;
+	private int feed_replyCount;
+	private int feed_likeCount;
 	private int feed_report;
 	private String feed_regdate;
 	private String feed_open;
-	private String feed_hide;
 	
 	//join용
+	private List<ThemeDTO> feed_theme; 
+	private List<FeedReplyDTO> feed_reply;
+	
 	private String mem_id; //회원 아이디
 	private String mem_nickname; //회원 닉네임
 	
@@ -25,6 +30,11 @@ public class FeedDTO {
 	
 	private int friend_num;
 	private String friend_accept;
+	
+	private String game_img; // 보드게임 이미지
+	private String game_name;
+	
+	private int isLike; //좋아요를 눌렀는지
 	
 	
 	public int getFeed_num() {
@@ -39,12 +49,13 @@ public class FeedDTO {
 	public void setMem_num(int mem_num) {
 		this.mem_num = mem_num;
 	}
-	public int getBp_num() {
-		return bp_num;
+	public int getGame_num() {
+		return game_num;
 	}
-	public void setBp_num(int bp_num) {
-		this.bp_num = bp_num;
+	public void setGame_num(int game_num) {
+		this.game_num = game_num;
 	}
+	
 	public String getFeed_content() {
 		return feed_content;
 	}
@@ -75,11 +86,17 @@ public class FeedDTO {
 	public void setFeed_img4(String feed_img4) {
 		this.feed_img4 = feed_img4;
 	}
-	public int getFeed_like() {
-		return feed_like;
+	public int getFeed_replyCount() {
+		return feed_replyCount;
 	}
-	public void setFeed_like(int feed_like) {
-		this.feed_like = feed_like;
+	public void setFeed_replyCount(int feed_replyCount) {
+		this.feed_replyCount = feed_replyCount;
+	}
+	public int getFeed_likeCount() {
+		return feed_likeCount;
+	}
+	public void setFeed_likeCount(int feed_likeCount) {
+		this.feed_likeCount = feed_likeCount;
 	}
 	public int getFeed_report() {
 		return feed_report;
@@ -99,13 +116,19 @@ public class FeedDTO {
 	public void setFeed_open(String feed_open) {
 		this.feed_open = feed_open;
 	}
-	public String getFeed_hide() {
-		return feed_hide;
-	}
-	public void setFeed_hide(String feed_hide) {
-		this.feed_hide = feed_hide;
-	}
 	
+	public List<ThemeDTO> getFeed_theme() {
+		return feed_theme;
+	}
+	public void setFeed_theme(List<ThemeDTO> feed_theme) {
+		this.feed_theme = feed_theme;
+	}
+	public List<FeedReplyDTO> getFeed_reply() {
+		return feed_reply;
+	}
+	public void setFeed_reply(List<FeedReplyDTO> feed_reply) {
+		this.feed_reply = feed_reply;
+	}
 	public String getMem_id() {
 		return mem_id;
 	}
@@ -147,5 +170,23 @@ public class FeedDTO {
 	}
 	public void setFriend_accept(String friend_accept) {
 		this.friend_accept = friend_accept;
+	}
+	public String getGame_img() {
+		return game_img;
+	}
+	public void setGame_img(String game_img) {
+		this.game_img = game_img;
+	}
+	public String getGame_name() {
+		return game_name;
+	}
+	public void setGame_name(String game_name) {
+		this.game_name = game_name;
+	}
+	public int getIsLike() {
+		return isLike;
+	}
+	public void setIsLike(int isLike) {
+		this.isLike = isLike;
 	}
 }

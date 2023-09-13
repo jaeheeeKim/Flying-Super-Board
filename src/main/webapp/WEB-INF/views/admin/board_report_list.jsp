@@ -37,7 +37,10 @@
 							<td>${dto.report_target}</td>
 							<td>${dto.mem_nickname}</td>
 							<td>${dto.report_regdate}</td>
-							<td>${dto.report_check}</td>
+							<td>
+								<c:if test="${dto.report_check eq 0 }">❌</c:if>
+								<c:if test="${dto.report_check eq 1 }">⭕</c:if>
+							</td>
 							<td>${dto.report_content}</td>
 							<td>${dto.report_detail}</td>
 						</tr>

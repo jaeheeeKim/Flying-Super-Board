@@ -9,12 +9,13 @@
 
  <link rel="stylesheet" type="text/css" href="resources/css/button.css">
 
+<!-- 비밀번호 찾기 시 새로운 비밀번호 설정 .jsp -->
     
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>아이디찾기</title>
+<title>비밀번호찾기</title>
 </head>
 <body>
 

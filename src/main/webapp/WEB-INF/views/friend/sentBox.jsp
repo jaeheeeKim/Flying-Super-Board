@@ -12,7 +12,7 @@
 					<div class="container mb-3" align="left">
 						<div class="row align-items-center">
 							<div class="col-1" align="left" style="padding: 0; vertical-align: middle;">
-								<img src="resources/img/default_profile.png" width="30" height="30">&nbsp;
+								<img src="resources/img/${prof.prof_img}" width="30" height="30">&nbsp;
 							</div>
 							<div class="col-9 container" style="padding-left: 20px;">
 								<div class="row">

@@ -1,6 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!-- board_notice_update.jsp // 게시판 공지글 수정폼 -->
+<script type="text/javascript">
+	function check() {
+		if (f.n_title.value == "") {
+			alert("제목을 입력해주세요!")
+			f.n_title.focus()
+			return false
+		}
+		if (f.n_content.value == "") {
+			alert("내용을 입력해주세요")
+			f.n_content.focus()
+			return false
+		}
+		return true		
+	}
+</script>
+
 
 <%@include file="admin_top.jsp" %>
 
@@ -17,7 +33,7 @@
 			    	</div>
 			    	<p>
 					<div class="col" style="overflow: scroll; height: 800px;" align="center">
-					<form name="f" action="admin_board_notice_update.do" method="post">
+					<form name="f" action="admin_board_notice_update.do" method="post" onsubmit="return check()">
 					<table border="0" width="80%" height="80%">
 						<tr align="center">
 							<th width="30%">구분</th>

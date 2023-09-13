@@ -40,6 +40,7 @@
 					<button class="btn btn-secondary btn-sm" type="submit">찾기</button>
 						</form>
 						<div align="right">
+							<font size="2" color="red">📢상품 이미지를 누르면, 상세보기로 이동합니다</font>&nbsp;&nbsp;
 							<button class="btn btn-secondary btn-sm" type="button" onclick="window.location='admin_prod_list.do?mode=all&sort=all'">
 							전체 목록 보기</button>&nbsp;&nbsp;
 							<div class="btn-group">
@@ -62,7 +63,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="col" style="overflow: scroll; height: 800px;">
+					<div class="col" style="overflow: scroll; height: 600px;">
 					<table class="table table-hover table-bordered table align-middle" width="60%" height="80%">
 					<thead class="table-light">
 					<tr align="center">

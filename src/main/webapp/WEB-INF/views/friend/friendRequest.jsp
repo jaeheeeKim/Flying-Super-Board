@@ -15,60 +15,72 @@
 </style>
 
 <script>
-	function autofind(){
-		let text = document.getElementById('input_findFriend').value;
-		if(text === null || text === ''){
-			$("#auto_profs").children().remove();
-		}else{
-			$.ajax({
-				//async: false, //서버로부터 답을 받기 전까지 일시정지
-			    url:'friendFindAuto.do', //request 보낼 서버의 경로
-			    type:'post', // 메소드(get, post, put 등)
-			    data:{'text': text}, //보낼 데이터 (json 형식)
-			    success: function(data) {	
-			    	$("#auto_profs").html(data);
-			    },
-			    error: function(err) {
-			    	alert("ajax 처리 중 에러 발생");
-			    }
-			});
-		}	
-	}
-	function follow(mem_num,mode,prof_open,where){
-		let text = document.getElementById('input_findFriend').value;
-		alert(prof_open+'상태의 '+mem_num+'을'+mode+'합니다 '+where+'에서 요청됨.');
-		event.stopPropagation();
+function autofind(){
+	let text = document.getElementById('input_findFriend').value;
+	if(text === null || text === ''){
+		$("#auto_profs").children().remove();
+	}else{
 		$.ajax({
-		    url:'follow.do', //request 보낼 서버의 경로
+			//async: false, //서버로부터 답을 받기 전까지 일시정지
+		    url:'friendFindAuto.do', //request 보낼 서버의 경로
 		    type:'post', // 메소드(get, post, put 등)
-		    data:{'mem_num': ${member.mem_num}, 'friend_num': mem_num, 'text': text, 'mode': mode, 'where': where}, //보낼 데이터 (json 형식)
-		    success: function(data) {
-		    	if(where === 'autoBox'){
-					if(text === null || text === ''){
-						$("#auto_profs").children().remove();
-					}else{
-				    	$("#auto_profs").html(data);
-					}
-		    	}else{
-					$("#auto_profs").children().remove();
-					if(where === 'gotBox'){
-						$("#gotBox").children().remove();
-						$("#gotBox").html(data);
-					}else{
-						$("#sentBox").children().remove();
-						$("#sentBox").html(data);
-					}
-		    	}
+		    data:{'text': text}, //보낼 데이터 (json 형식)
+		    success: function(data) {	
+		    	$("#auto_profs").html(data);
 		    },
 		    error: function(err) {
 		    	alert("ajax 처리 중 에러 발생");
 		    }
 		});
-	}
-	function goToFeed(mem_num){
-		alert(mem_num+"의 피드로 이동합니다");
-		//해당 회원 개인 피드로 이동
-	}
+	}	
+}
+function follow(mem_num,mode,prof_open,where){
+	let text = document.getElementById('input_findFriend').value;
+	event.stopPropagation();
+	$.ajax({
+	    url:'follow.do', //request 보낼 서버의 경로
+	    type:'post', // 메소드(get, post, put 등)
+	    data:{'mem_num': ${login_mem.mem_num}, 'friend_num': mem_num, 'text': text, 'mode': mode, 'where': where}, //보낼 데이터 (json 형식)
+	    success: function(data) {
+	    	if(where === 'autoBox'){
+				if(text === null || text === ''){
+					$("#auto_profs").children().remove();
+				}else{
+			    	$("#auto_profs").html(data);
+				}
+				if(mode === 'request' || mode === 'unrequest'){
+					setSentBox();
+				}
+	    	}else{
+				$("#auto_profs").children().remove();
+				if(where === 'gotBox'){
+					$("#gotBox").children().remove();
+					$("#gotBox").html(data);
+				}else{
+					$("#sentBox").children().remove();
+					$("#sentBox").html(data);
+				}
+	    	}
+	    },
+	    error: function(err) {
+	    	alert("ajax 처리 중 에러 발생");
+	    }
+	});
+}
+function setSentBox(){
+	$.ajax({
+	    url:'setSentBox.do', //request 보낼 서버의 경로
+	    type:'post', // 메소드(get, post, put 등)
+	    data:{'mem_num': ${login_mem.mem_num}}, //보낼 데이터 (json 형식)
+	    success: function(data) {
+			$("#sentBox").children().remove();
+			$("#sentBox").html(data);
+	    },
+	    error: function(err) {
+	    	alert("ajax 처리 중 에러 발생");
+	    }
+	});
+}
 </script>
 	
 <%@include file="../user/user_top.jsp" %>
@@ -78,104 +90,10 @@
   	<main class="d-flex flex-nowrap">
   	
   		<!-- 사이드 바 -->
-  		<div class="vertical-right-line flex-shrink-0 p-3 bg-white" style="width: 280px;">
-    		<a href="feed.do" class="d-flex align-items-center pb-3 mb-3 link-dark text-decoration-none border-bottom">
-      			<svg class="bi pe-none me-2" width="30" height="24"><use xlink:href="#people-circle"></use></svg>
-      			<span class="fs-5 fw-semibold">${member.mem_nickname} 님</span>
-   			</a>
-   			
-   			<!-- 프로필 -->
-   			<div class="container">
-   				<!-- 프사 -->
-   				<div class="row mb-3">
-	   				<div class="col" align="center"><img src="resources/img/${profile.prof_img}" class="img-thumbnail"></div>
-	   			</div>
-	   			<!-- 버튼 -->
-	   			<div class="row mb-3">
-	   				<div class="col" align="center">
-	   					<button type="button" class="btn btn-outline-primary btn-sm">프로필 수정</button>&nbsp;&nbsp;
-	   					<button type="button" class="btn btn-outline-primary btn-sm" onclick="location.href='dm_main.do'">쪽지함</button>
-	   				</div>
-	   			</div>
-	   			<!-- 상태 메시지 -->
-	   			<div class="row mb-3">
-	   				<div class="col" align="center">
-	   				<span class="small">${profile.prof_msg}</span></div>
-	   			</div>
-	   			<!-- 팔로잉 팔로워 -->
-	   			<div class="row mb-3">
-	   				<div class="col" align="center">
-	   					<span class="small fw-semibold">팔로잉</span>&nbsp;&nbsp;
-	   					<span class="small">${profile.prof_following}</span>
-	   				</div>
-	   				<div class="col" align="center">
-	   					<span class="small fw-semibold">팔로우</span>&nbsp;&nbsp;
-	   					<span class="small">${profile.prof_follower}</span>
-	   				</div>
-	   			</div>
-   			</div>
-   			
-   			<div class="border-top"></div>
-   		
-	   		<!-- 메뉴 항목 -->	
-	    	<ul class="list-unstyled ps-0 mt-3">
-	      		<li class="mb-1">
-	        		<button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#friend-collapse" aria-expanded="true">
-	         			친구 관리
-	       			</button>
-	        		<div class="collapse show" id="friend-collapse">
-	          			<ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-	            			<li><a href="friendRequest.do" class="link-dark d-inline-flex text-decoration-none rounded">친구 요청</a></li>
-	            			<li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">차단 목록</a></li>
-	         			</ul>
-	        		</div>
-	      		</li>
-	      		<li class="mb-1">
-	        		<button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#account-collapse" aria-expanded="false">
-	         			계정 관리
-	        		</button>
-	        		<div class="collapse" id="account-collapse">
-	          			<ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-	            			<li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">내 정보</a></li>
-	            			<li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">비밀번호 변경</a></li>
-	          			</ul>
-	        		</div>
-	      		</li>
-	      		<li class="mb-1">
-	        		<button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#storage-collapse" aria-expanded="false">
-	          			보관함
-	        		</button>
-	        		<div class="collapse" id="storage-collapse">
-	          			<ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-	            			<li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">쿠폰함</a></li>
-	            			<li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">뱃지 목록</a></li>
-	           	 			<li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">보드게임 지도</a></li>
-	            			<li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">찜한 보드게임</a></li>
-	          			</ul>
-	        		</div>
-	    		</li>
-    		
-	    		<!--구분선 -->
-	       		<li class="border-top my-3"></li>
-	       		
-	      		<li class="mb-1">
-	        		<button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#inquiry-collapse" aria-expanded="false">
-	          			문의 사항
-	        		</button>
-	        		<div class="collapse" id="inquiry-collapse">
-	          			<ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-	            			<li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">공지사항</a></li>
-	            			<li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">1:1 문의</a></li>
-	           			 	<li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">회원 탈퇴</a></li>
-	          			</ul>
-	        		</div>
-	      		</li>
-	      		
-	    	</ul>
-	  	</div>
+  		<%@include file="../user/sns_top.jsp" %>
 
 		<!-- 상단 배젤 -->
-		<div class="d-flex flex-column align-items-stretch flex-shrink-0 bg-white" style="width: 600px;">
+		<div class="d-flex flex-column align-items-stretch flex-shrink-0 bg-white" style="width: 40%; min-width: 30rem; max-width: 45rem;">
 			<div class="d-flex align-items-center flex-shrink-0 p-3 border-bottom">
 				<span class="fs-5 fw-semibold">친구 요청</span>
 			</div>
@@ -211,7 +129,7 @@
 											<div class="container mb-3" align="left">
 												<div class="row align-items-center">
 													<div class="col-1" align="left" style="padding: 0; vertical-align: middle;">
-														<img src="resources/img/default_profile.png" width="30" height="30">&nbsp;
+														<img src="resources/img/${prof.prof_img}" width="30" height="30">&nbsp;
 													</div>
 													<div class="col-8 container" style="padding-left: 20px;">
 														<div class="row">
@@ -263,7 +181,7 @@
 										<div class="container mb-3" align="left">
 											<div class="row align-items-center">
 												<div class="col-1" align="left" style="padding: 0; vertical-align: middle;">
-													<img src="resources/img/default_profile.png" width="30" height="30">&nbsp;
+													<img src="resources/img/${prof.prof_img}" width="30" height="30">&nbsp;
 												</div>
 												<div class="col-9 container" style="padding-left: 20px;">
 													<div class="row">

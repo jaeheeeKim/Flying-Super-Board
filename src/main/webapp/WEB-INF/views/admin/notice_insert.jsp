@@ -1,7 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!-- notice_insert.jsp // 관리자 작성글 등록 -->
-
+<script type="text/javascript">
+	function check() {
+		if (f.n_title.value == "") {
+			alert("제목을 입력해주세요!")
+			f.n_title.focus()
+			return false
+		}
+		if (f.n_content.value == "") {
+			alert("내용을 입력해주세요")
+			f.n_content.focus()
+			return false
+		}
+		return true		
+	}
+</script>
 
 <%@include file="admin_top.jsp" %>
 
@@ -18,7 +32,7 @@
 					</div>
 				</div>
 					<div class="col" style="overflow: scroll; height: 800px;">
-						<form name="f" action="admin_notice_insert.do" method="post">
+						<form name="f" action="admin_notice_insert.do" method="post" onsubmit="return check()">
 							<table border="0" align="center" width="80%" height="100">
 								<tr align="center">
 									<th>구분</th>

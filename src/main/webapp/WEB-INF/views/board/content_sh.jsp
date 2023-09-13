@@ -3,6 +3,25 @@
 <%@include file="../user/user_top.jsp"%>
 <!-- content.jsp -->
 <html>
+<style>
+.box {
+    width: 50px;
+    height: 50px; 
+    border-radius: 70%;
+    overflow: hidden;
+}
+.box1 {
+    width: 20px;
+    height: 20px; 
+    border-radius: 70%;
+    overflow: hidden;
+}
+.profile {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+</style>
 <head>
 <script type="text/javascript">
 	function checkDel(board_num, board_img1, board_img2, board_img3, board_img4) {
@@ -31,17 +50,20 @@
 		function checkReport_br(br_num){
 			window.open("report_board.do?mode=sh_reply&br_num="+br_num,"", "width=550, height=470, left=680, top=270")
 		}
+		function memReport(mem_num){
+			window.open("mem_report.do?mem_num="+mem_num,"", "width=550, height=470, left=680, top=270")
+		}
 		
-	function back(){
+		function back(){
 		window.location="board_secondhand.do?mode=all"
-	}
+		}
 </script>
 <script type="text/javascript">
 	function updateReply(br_num){ // 댓글 에이젝스 수정 폼 끌어오기
 		$.ajax({
 	    url:'update_reply_sh.do', //request 보낼 서버의 경로
 	    type:'get', // 메소드(get, post, put 등)
-	    data:{'br_num' : br_num , 'pageNum' : ${pageNum} }, //보낼 데이터 (json 형식)
+	    data:{'br_num' : br_num , 'pageNum' : ${pageNum}}, //보낼 데이터 (json 형식)
 	    success: function(data) { // 컨트롤러 리턴값
 
 	    	$("#updateReply"+br_num).html(data);
@@ -81,7 +103,7 @@
 		$.ajax({
 	    url:'re_reply_sh.do', //request 보낼 서버의 경로
 	    type:'get', // 메소드(get, post, put 등)
-	    data:{'br_num' : br_num , 'pageNum' : ${pageNum}}, //보낼 데이터 (json 형식)
+	    data:{'br_num' : br_num , 'pageNum' :${pageNum} }, //보낼 데이터 (json 형식)
 	    success: function(data) { // 컨트롤러 리턴값
 
 	    	$("#re_reply"+br_num).html(data);
@@ -128,13 +150,36 @@
 <body>
 	<div align="center">
 		<!-- 게싯글 제목 -->
-		<h1 class="display-5">${getBoard.board_title}</h1>
-
+			<p class="h1">${getBoard.board_title}</p>
 		<!--작성자 조회수 -->
 		<div align="center">
-			<h6>작성자 : ${getBoard.mem_nickname} 조회수 : ${getBoard.board_readcount}</h6>
+			<!-- 프로필 사진(게시판용) -->
+			<!-- 작성자 닉네임 표시 -->
+  			<div><c:if test="${getBoard.mem_img eq null }">
+						<div class="box" style="background: #BDBDBD;">
+						<img class="profile" src="resources/img/default_profile.png"></div></c:if>&nbsp;
+						<c:if test="${getBoard.mem_img ne null }">
+						<div class="box" style="background: #BDBDBD;">
+						<img class="profile" src="resources/img/${getBoard.mem_img}"></div></c:if>&nbsp;
+  						작성자 :
+						<div class="btn-group dropend">
+  					<button type="button" class="btn btn-light dropdown-toggle btn-sm" data-bs-toggle="dropdown" aria-expanded="false">
+ 					 ${getBoard.mem_nickname}
+  					</button>
+  					<c:if test="${login_mem.mem_num ne getBoard.mem_num }">
+ 					 <ul class="dropdown-menu">
+   						  <c:if test="${login_mem eq null }">
+ 					  <li><a class="dropdown-item" href="javascript:checkLogin()">회원 신고</a></li>
+ 					 </c:if>
+ 					  <c:if test="${login_mem ne null }">
+   						 <li><a class="dropdown-item" href="javascript:memReport('${getBoard.mem_num }')">회원 신고</a></li>
+  						</c:if>
+  					</ul>
+  					</c:if>
+				</div>
+			<div>조회수 : ${getBoard.board_readcount} 작성일 : ${getBoard.board_regdate }</div>
 			<!-- 버튼 : 수정, 글삭제는 해당 아이디 글만 노출-->
-				<c:if test="${sessionScope.mem_num eq getBoard.mem_num}">
+				<c:if test="${login_mem.mem_num eq getBoard.mem_num}">
 			<input type="button" class="btn btn-outline-secondary" value="글수정"
 				onclick="window.location='update_board_sh.do?board_num=${getBoard.board_num}'">
 			<a href="javascript:checkDel('${getBoard.board_num}','${getBoard.board_img1}','${getBoard.board_img2}','${getBoard.board_img3}','${getBoard.board_img4}')"><input
@@ -149,7 +194,7 @@
 			<!-- 중고게시판 신고  -->
 		<a href="javascript:checkReport('${getBoard.board_num}')"><input type="button" value="🚨" class="btn btn-outline-secondary"></a>
 		</div>
-
+	</div>
 		<!-- 이미지 슬라이드 -->
 		<c:if
 			test="${not empty getBoard.board_img1 ||not empty getBoard.board_img2||not empty getBoard.board_img3||not empty getBoard.board_img4}">
@@ -236,50 +281,80 @@
 		<!-- 내용 -->
 		<div class="mb-3 w-50 p-3 mx-auto p-2">
 			<textarea class="form-control" id="exampleFormControlTextarea1"
-				name="board_content" rows="10" readonly>${getBoard.board_content}</textarea>
+				name="board_content" rows="15" readonly>${getBoard.board_content}</textarea>
 		</div>
 		<!-- 댓글 -->
-		<div class="container text-center">
+		<div class="container text-center mb-3 w-50 mx-auto p-2">
 			<c:if test="${empty listReply_sh}">
 				 <div class="row justify-content-md-center">등록된 댓글이 없습니다. </div>
 			</c:if>
 			<c:forEach var="dto" items="${listReply_sh}">
+				<!-- 작성사 댓글 삭제시 -->
+				<c:if test="${dto.br_content eq '-'}">
+				 <div class="row">
+				 	<div class="col-2"></div>
+					<div class="col-7" align="left">
+						<c:if test="${dto.br_re_step>0}"><img src="resources/img/re.png" height="10"></c:if><font color="gray"><small>작성자에 의해 삭제된 글입니다.</small></font>
+					<div class="col-2"></div>
+					<div class="col-1"></div>
+				 </div>
+				 </div>
+				</c:if>
+		<c:if test="${dto.br_content ne '-'}">
 			<!-- 댓글 신고 5회 이상 먹을시 규제 -->
 				<c:if test="${dto.br_report > 4}">
 				 <div class="row">
-					<div class="col"></div>
-					<div class="col"><font color="gray"><strong>관리자에 의해 규제된 댓글입니다.</strong></font></div>
-					<div class="col"></div>
-					<div class="col"></div>
+					<div class="col-2"><c:if test="${dto.br_re_step>0}"><img src="resources/img/re.png" height="10"></c:if></div>
+					<div class="col-7" align="left"><font color="gray"><small>관리자에 의해 규제된 댓글입니다.</small></font></div>
+					<div class="col-2"></div>
+					<div class="col-1"></div>
 				 </div>
 				</c:if>
 				<c:if test="${dto.br_report <5}">
-	<!-- 수정 버튼 누르면 대체 --> <div class="row"  id="updateReply${dto.br_num}">
-						
-						<div class="col">
-						<!-- 대댓글 앞에 이모지 추가 -->
-						<c:if test="${dto.br_re_step>0}">
-						<img src="resources/img/re.png" height="10">
-						</c:if>
-						<strong>${dto.mem_nickname}</strong></div>
-						<div class="col-5" align = "left">${dto.br_content}</div>
-						<div class="col">${dto.br_regdate}</div>
-					<!-- 댓글 드롭다운 본인 댓글만  수정 삭제 가능 -->
+	<!-- 수정 버튼 누르면 대체 --> 
+			<div class="row"  id="updateReply${dto.br_num}">
 						<div class="col-2">
+			<!-- 댓글 프사 -->
+						<div class="btn-group dropend">
+						<c:if test="${dto.br_re_step>0}">
+						<img src="resources/img/re.png" height="20">
+						</c:if>
+						<c:if test="${dto.mem_img eq null }">
+						<div class="box1" style="background: #BDBDBD;">
+						<img class="profile" src="resources/img/default_profile.png"></div></c:if>
+						<c:if test="${dto.mem_img ne null }">
+						<div class="box1" style="background: #BDBDBD;">
+						<img class="profile" src="resources/img/${dto.mem_img}"></div></c:if>&nbsp;
+  						<button type="button" class="btn btn-light dropdown-toggle btn-sm" data-bs-toggle="dropdown" aria-expanded="false">
+  						${dto.mem_nickname}
+  					</button>
+  						<c:if test="${login_mem.mem_num ne dto.mem_num }">
+ 					 <ul class="dropdown-menu">
+   						 <li><a class="dropdown-item" href="javascript:memReport('${dto.mem_num }')">회원 신고</a></li>
+  					</ul>
+  					</c:if>
+				</div></div>
+						<div class="col-7" align = "left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${dto.br_content}</div>
+						<div class="col-2">${dto.br_regdate}</div>
+					<!-- 댓글 드롭다운 본인 댓글만  수정 삭제 가능 -->
+						<div class="col-1">
 						<div class="btn-group">
 							<button class="btn btn-secondary btn-sm dropdown-toggle"
 								type="button" data-bs-toggle="dropdown" aria-expanded="false"></button>
 							<ul class="dropdown-menu">
 							<li><a class="dropdown-item" href="javascript:re_reply('${dto.br_num }')" method="post">대댓글</a></li>
-									<c:if test="${sessionScope.mem_num eq dto.mem_num}">
+									<c:if test="${login_mem.mem_num eq dto.mem_num}">
 	 <!-- 에이젝스 여기야 여기 -->		<li><a class="dropdown-item" href="javascript:updateReply('${dto.br_num}')" method="post">수정</a></li>
 								<li><a class="dropdown-item" href="delete_reply_sh.do?br_num=${dto.br_num}&board_num=${getBoard.board_num}&pageNum=${pageNum}">삭제</a></li>
 										</c:if>
+										<c:if test="${dto.mem_num ne login_mem.mem_num}">
 								<li><a class="dropdown-item" href="javascript:checkReport_br('${dto.br_num}')">신고</a></li>
+								</c:if>
 							</ul>
 						</div>
 					</div>
 				</div>
+					</c:if>
 					</c:if>
 	<!-- 대댓글 누르면 폼 생성 -->	<div class= "row" id="re_reply${dto.br_num}">
 							</div>
@@ -292,10 +367,6 @@
 				type="hidden" name="br_re_group" value="${params.br_re_group}" /> <input
 				type="hidden" name="br_re_step" value="${params.br_re_step}" /> <input
 				type="hidden" name="br_re_level" value="${params.br_re_level}" />
-			<br>
-			<br>
-			<br>
-			<br>
 			<div class="input-group mb-3 w-50 p-3 mx-auto p-2">
 			<input hidden="hidden"><!-- 엔터키 서브밋 방지 -->
 				<input type="text" class="form-control" placeholder="댓글을 입력하세요"
@@ -305,8 +376,6 @@
 					value="작성"></a>
 			</div>
 		</form>
-
-
 		<!-- 댓글 리스트 쪽수 -->
 		<nav aria-label="Page navigation example">
 			<ul class="pagination justify-content-center">

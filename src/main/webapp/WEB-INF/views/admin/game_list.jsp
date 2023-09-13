@@ -37,7 +37,7 @@
 					<input type="text" name="searchString">
 					<button class="btn btn-secondary btn-sm" type="submit">찾기</button>
 						</form>
-						<div align="right"><button class="btn btn-secondary btn-sm" type="button" onclick="window.location='admin_game_list.do'">
+						<div align="right"><font size="2" color="red">📢게임 이미지를 누르면, 상세보기로 이동합니다</font>&nbsp;&nbsp;<button class="btn btn-secondary btn-sm" type="button" onclick="window.location='admin_game_list.do'">
 							전체 목록 보기</button>
 						</div>
 					</div>

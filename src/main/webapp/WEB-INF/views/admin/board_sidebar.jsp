@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!-- board_sidebar.jsp // 게시판 사이드바 -->
 
 <!-- 벡터 아이콘 정의 -->
@@ -42,7 +43,9 @@
 		            	<li><a href="admin_board_list.do?view=secondhand" class="link-dark d-inline-flex text-decoration-none rounded">중고게시판 목록</a></li>
 						<li><a href="admin_board_list.do?view=free" class="link-dark d-inline-flex text-decoration-none rounded">자유게시판 목록</a></li>
 						<li><a href="admin_board_list.do?view=anony" class="link-dark d-inline-flex text-decoration-none rounded">익명게시판 목록</a></li>
-						<li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">전체 게시판 신고 내역</a></li>
+						<li><a href="admin_board_total_report.do?mode=all" class="link-dark d-inline-flex text-decoration-none rounded">전체 게시판 신고 내역
+								<c:if test="${boardReport ne 0}"><span class="badge bg-danger">${boardReport}</span></c:if>
+							</a></li>
 		         	</ul>
 		        </div>
 	        </li>
@@ -57,19 +60,6 @@
 		          	<ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
 		          		<li><a class="link-dark d-inline-flex text-decoration-none rounded" href="admin_board_notice_insert.do">게시판 공지글 등록</a></li>
 		          		<li><a class="link-dark d-inline-flex text-decoration-none rounded" href="admin_board_notice_list.do?mode=all&sort=all">게시판 공지글 목록</a></li>
-		         	</ul>
-		        </div>
-	        </li>
-	        <!-- 구분선 -->
-	        <li class="border-top my-3"></li>
-	          <!-- 피드 관리 -->
-	   		<li class="mb-1">
-		   		<button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse1" aria-expanded="true">
-		         			피드 관리
-		       	</button>
-		        <div class="collapse show" id="dashboard-collapse1">
-		          	<ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-		          		<li><a class="link-dark d-inline-flex text-decoration-none rounded" href="#">피드 신고 내역</a></li>
 		         	</ul>
 		        </div>
 	        </li>

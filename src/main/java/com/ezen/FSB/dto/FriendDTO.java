@@ -4,7 +4,6 @@ public class FriendDTO {
 	private int mem_num;
 	private int friend_num;
 	private String friend_accept;
-	private String friend_hide;
 	
 	public int getMem_num() {
 		return mem_num;
@@ -23,11 +22,5 @@ public class FriendDTO {
 	}
 	public void setFriend_accept(String friend_accept) {
 		this.friend_accept = friend_accept;
-	}
-	public String getFriend_hide() {
-		return friend_hide;
-	}
-	public void setFriend_hide(String friend_hide) {
-		this.friend_hide = friend_hide;
 	}
 }

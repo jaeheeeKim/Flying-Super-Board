@@ -1,10 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>   
+
 <!-- shop_top.jsp -->
 <script type="text/javascript">
    function checkLogin(){
       alert("회원 전용 입니다. 로그인 후 이용해 주세요.")
+      
     }
 </script>
 
@@ -28,7 +31,6 @@
 	<div class="position-absolute start-50"><a href="shop_main.do"><img src="resources/img/logo1.png" alt="로고사진" width="80" height="80"></a></div>
 		<!-- 오른쪽 끝으로 네비게이션바 - 회원가입|로그인|장바구니|메인페이지 -->
    <ul class="nav justify-content-end">	
-        <li class="nav-item"><a class="nav-link active" aria-current="page" href="#">회원가입</a> </li>
 
 		<!-- 로그인됐을 때 로그아웃으로 변경 -->
         <c:set var="isLogin" value="false"/>
@@ -36,20 +38,35 @@
 		<c:set var="isLogin" value="true"/>
 		</c:if>
 	
-		<c:if test="${isLogin=='true'}">
-	  		<li class="nav-item">				
-		<a class="nav-link" href="logout.do">로그아웃</a>
-			</li>
-		</c:if>
-		<c:if test="${isLogin=='false'}">
-			<li class="nav-item">
-		<a class="nav-link" href="login.do">로그인</a>
-			</li>
-		</c:if>
+	   <c:if test="${isLogin=='true' and not empty loginMode and empty naverLogin}">
+	     <li class="nav-item">            
+	      <a class="nav-link" href="logout.do">로그아웃</a>
+	      </li>
+	   </c:if>
 
-        <li class="nav-item"><a class="nav-link active" aria-current="page" href="shop_listCart.do?mem_num=${mem_num}">장바구니</a></li>
+	   <c:if test="${isLogin=='true' and empty loginMode and empty naverLogin}">
+	     <li class="nav-item">            
+	      <a class="nav-link" href="kakaologout.do?access_Token=${sessionScope.access_Token}">로그아웃</a>
+	      </li>
+	   </c:if>
+	   
+	   <c:if test="${isLogin=='true' and empty loginMode and not empty naverLogin}">
+	   	<li class="nav-item">            
+	      <a class="nav-link" href="naverLogout.do">로그아웃</a>
+	     </li>
+	   </c:if>
+	   
+	   <c:if test="${isLogin=='false'}">
+	        <li class="nav-item">
+	      <a class="nav-link" href="login.do">로그인</a>
+	      </li>
+	   </c:if> 
+
+		<c:if test="${isLogin=='true'}">
+        	<li class="nav-item"><a class="nav-link active" aria-current="page" href="shop_listCart.do?mem_num=${mem_num}">장바구니</a></li>
+        </c:if>
+        <c:if test="${isLogin=='false'}"> </c:if>
         <li class="nav-item"><a class="nav-link" href="user_main.do">사용자페이지</a></li>        
-        <li class="nav-item"><a class="nav-link" href="admin_main.do">관리자페이지</a></li>        
    </ul>
     <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
       <div class="offcanvas-header">
@@ -67,46 +84,58 @@
         </form>
         <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
           <li class="nav-item">
-            <h5><a class="nav-link active" aria-current="page" href="shop_main.do">베스트 보드게임</a></h5>
+            <h5><a class="nav-link active" aria-current="page" href="shop_main_best.do">인기 보드게임</a></h5>
           </li>
           <li class="nav-item dropdown">
             <h5><a class="nav-link active dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               	전체 카테고리
             </a></h5>
             <ul class="dropdown-menu show">
-              <li><a class="dropdown-item" href="#">추리게임</a></li>
-              <li><a class="dropdown-item" href="#">전략게임</a></li>
-              <li><a class="dropdown-item" href="#">카드게임</a></li>
-              <li><a class="dropdown-item" href="#">공포/스릴러게임</a></li>
-              <li><a class="dropdown-item" href="#">판타지게임</a></li>
-              <li><a class="dropdown-item" href="#">역사게임</a></li>
-              <li><a class="dropdown-item" href="#">공상과학게임</a></li>
-              <li><a class="dropdown-item" href="#">스포츠게임</a></li>              
+            <c:forEach var="tdto" items="${listTheme}">
+				<li><a class="dropdown-item" href="shop_cateFind.do?theme_num=${tdto.theme_num }" >${tdto.theme_name }></a></li>
+			</c:forEach>
+                          
               <li>
                 <hr class="dropdown-divider">
               </li>
-              <li><a class="dropdown-item" href="#">1인</a></li>
-              <li><a class="dropdown-item" href="#">2~4인</a></li>              
-              <li><a class="dropdown-item" href="#">5~6인</a></li>
-              <li><a class="dropdown-item" href="#">7인 이상</a></li>
+              <li><a class="dropdown-item" href="shop_cateFind2.do?game_player=1">1인</a></li>
+              <li><a class="dropdown-item" href="shop_cateFind2.do?game_player=2">2~4인</a></li>              
+              <li><a class="dropdown-item" href="shop_cateFind2.do?game_player=3">5~6인</a></li>
+              <li><a class="dropdown-item" href="shop_cateFind2.do?game_player=4">7인 이상</a></li>
               <li>
                 <hr class="dropdown-divider">
               </li>
-              <li><a class="dropdown-item" href="#">
+              <li><a class="dropdown-item" href="shop_cateFind3.do?game_level=1">
               	<img src="resources/img/fire.png" width="20" height="20">
               </a></li>
-              <li><a class="dropdown-item" href="#">
-              	<c:forEach begin="1" end="2"><img src="resources/img/fire.png" width="20" height="20"></c:forEach>
-              </a></li>              
-              <li><a class="dropdown-item" href="#">
-              	<c:forEach begin="1" end="3"><img src="resources/img/fire.png" width="20" height="20"></c:forEach>              
-              </a></li>
-              <li><a class="dropdown-item" href="#">
-              	<c:forEach begin="1" end="4"><img src="resources/img/fire.png" width="20" height="20"></c:forEach>              
-              </a></li>
-              <li><a class="dropdown-item" href="#">
-              	<c:forEach begin="1" end="5"><img src="resources/img/fire.png" width="20" height="20"></c:forEach>              
-              </a></li>
+              <li>
+              	<a class="dropdown-item" href="shop_cateFind3.do?game_level=2">
+              		<c:forEach begin="1" end="2">
+              			<img src="resources/img/fire.png" width="20" height="20">
+              		</c:forEach>
+              	</a>
+              </li>              
+              <li>
+              	<a class="dropdown-item" href="shop_cateFind3.do?game_level=3">
+              		<c:forEach begin="1" end="3">
+              			<img src="resources/img/fire.png" width="20" height="20">
+              		</c:forEach>              
+              	</a>
+              </li>
+              <li>
+              	<a class="dropdown-item" href="shop_cateFind3.do?game_level=4">
+              		<c:forEach begin="1" end="4">
+              			<img src="resources/img/fire.png" width="20" height="20">
+              		</c:forEach>              
+              	</a>
+              </li>
+              <li>
+              	<a class="dropdown-item" href="shop_cateFind3.do?game_level=5">
+              		<c:forEach begin="1" end="5">
+              			<img src="resources/img/fire.png" width="20" height="20">
+              		</c:forEach>              
+              	</a>
+              </li>
             </ul>
           </li>
         <c:if test="${empty sessionScope.mbId }">
@@ -115,9 +144,6 @@
         <c:if test="${not empty sessionScope.mbId }">
            <li class="nav-item"><h5><a class="nav-link active" aria-current="page" href="user_shop_myPage.do">마이페이지</a></h5></li>
         </c:if>
-          <li class="nav-item">
-           <h5> <a class="nav-link active" aria-current="page" href="shop_">고객센터</a></h5>
-          </li>          
         </ul>
 		<br><br><br><br><br>
       </div>

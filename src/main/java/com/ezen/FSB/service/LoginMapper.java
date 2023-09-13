@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.ezen.FSB.dto.MemberDTO;
 
+
 @Service
 public class LoginMapper {
 	
@@ -23,6 +24,15 @@ public class LoginMapper {
         return sqlSession.selectOne("findId", name);
      }
 	
+	public MemberDTO findIdnum(String name){ // 넘버로 찾기
+        return sqlSession.selectOne("findIdnum", name);
+     }
+	
+	public MemberDTO findNick(String name){ // 닉네임 중복 찾기
+        return sqlSession.selectOne("findNick", name);
+     }
+	
+	
 	public List<MemberDTO> idMember(String id){ // 아이디 일치 확인
         return sqlSession.selectList("idMember",id);
      }
@@ -31,23 +41,23 @@ public class LoginMapper {
         return sqlSession.selectOne("loginMember", id);
      }
 	
-	 public int changePw(MemberDTO dto) {
+	public String joinMember(String id){ // 승인 여부 확인(개인/사업자)
+        return sqlSession.selectOne("joinMember", id);
+     }
+	
+	 public int changePw(MemberDTO dto) { //비밀번호 찾기, 비밀번호 변경시 
 		    return sqlSession.update("changePw", dto);
 	 }
-	/*
-	public int insertStudent(StudentDTO dto) {//오토커밋됨 스프링 이용하면
-		return sqlSession.insert("insertStudent", dto); // 루트에 세션등록해놨으니까 . sql문도 안쓰고 클로즈~ 뭐 어쩌구도 안씀
-	}
+	 
+	 
+	 public int plusCount(MemberDTO dto) { //로그인시 자동 방문횟수+1
+		    return sqlSession.update("plusCount", dto);
+	 }
+	 
 	
-	
-	public List<StudentDTO> listStudent(){
-		return sqlSession.selectList("listStudent");
-	}
-	
-	public int deleteStudent(String id) {
-		return sqlSession.delete("deleteStudent", id);
-	}
-	
-	
-	*/
+	 
+	 public int imageUpdate(MemberDTO dto) {
+		    return sqlSession.update("imageUpdate", dto);
+	 }
+	 
 }

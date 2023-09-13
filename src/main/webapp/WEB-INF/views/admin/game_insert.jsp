@@ -2,6 +2,45 @@
     pageEncoding="UTF-8"%>
 <!-- game_insert.jsp // 보드게임 등록-->
 
+<script type="text/javascript">
+	function check() {
+		if (f.game_name.value == "") {
+			alert("게임 이름을 입력해주세요!")
+			f.game_name.focus()
+			return false
+		}
+		if (f.game_playTime.value == "") {
+			alert("플레이시간을 입력해주세요")
+			f.game_playTime.focus()
+			return false
+		}
+		if (f.game_img.value == "") {
+			alert("게임 이미지를 선택해주세요")
+			return false
+		}
+		if (f.game_content.value == "") {
+			alert("게임 설명을 입력해주세요")
+			f.game_content.focus()
+			return false
+		}
+		return true		
+	}
+	//금액 컴마단위
+	 function inputNumberFormat(obj) {
+	     obj.value = comma(uncomma(obj.value));
+	 }
+
+	 function comma(str) {
+	     str = String(str);
+	     return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
+	 }
+
+	 function uncomma(str) {
+	     str = String(str);
+	     return str.replace(/[^\d]+/g, '');
+	 }
+</script>
+
 <%@include file="admin_top.jsp" %>
 
 	<!-- 보드게임 사이드바 -->
@@ -15,7 +54,7 @@
 		    	<div class="col">보드게임 등록</div>
 		    	<p>
 		    	<div class="col">
-					<form name="f" action="admin_game_insert.do" method="post" enctype="multipart/form-data">
+					<form name="f" action="admin_game_insert.do" method="post" enctype="multipart/form-data" onsubmit="return check()">
 					<table border="0" width="60%" height="80%" align="center">
 						<tr>
 							<th width="30%" align="center">게임 이름</th>
@@ -34,7 +73,7 @@
 						</tr>
 						<tr>
 							<th align="center">플레이 시간</th>
-							<td><input type="text" class="form-control" name="game_playTime" placeholder="숫자만 입력 (단위 : min)"></td>
+							<td><input type="text" class="form-control" name="game_playTime" placeholder="숫자만 입력 (단위 : min)" onkeyup="inputNumberFormat(this)"></td>
 						</tr>
 						<tr>
 					 		<th align="center">플레이 난이도</th>
@@ -57,7 +96,7 @@
 							<td><input type="file" class="form-control" name="game_img"></td>
 						</tr>
 						<tr>
-							<th colspan="2">주요 테마</th>
+							<th colspan="2">주요 테마 <font size="2" color="red">(선택)</font></th>
 						</tr>
 						<tr>
 							<td colspan="2">

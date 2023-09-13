@@ -21,6 +21,9 @@
 			document.f2.submit()
 		}
 	}
+	function checkReport(view, review_num) {
+		window.open("admin_game_report_list.do?view="+view+"&review_num="+review_num,"",  "width=700, height=470, left=680, top=270")
+	}
 </script>
 
 	<!-- 보드게임 사이드바 -->
@@ -32,6 +35,9 @@
 		    <div class="row row-cols-2">
 		    <div class="col vertical-right-line flex-shrink-0 p-3 bg-white" style="width: 500px; height: 800px;">
 		    <p class="fs-5">보드게임 상세보기</p>
+		    	<div align="right">
+		    		<font size="2">좋아요 ❤️ ${gameLike}</font>
+		    	</div>
 					<table border="0" width="80%" height="80%" align="center">
 						<tr>
 							<th width="30%" align="center">게임 이름</th>
@@ -153,9 +159,7 @@
 		  											<img src="resources/img/star1.png" width="25" height="25">
 		  										</c:if>
 	  										</c:forEach>
-	  										&nbsp;신고 사유 :
-	  										<c:if test="${dto.review_report eq 0}"> - </c:if>
-	  										<c:if test="${dto.review_report ne 0}">${dto.review_report}</c:if>
+	  										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:checkReport('보드게임한줄평','${dto.review_num}')">신고내역보기</a>
 	  										</div>
 	  										<br>${dto.review_content}
 										</div>

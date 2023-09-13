@@ -9,7 +9,7 @@
 			<div class="container mb-3" align="left">
 				<div class="row align-items-center">
 					<div class="col-1" align="left" style="padding: 0; vertical-align: middle;">
-						<img src="resources/img/default_profile.png" width="30" height="30">&nbsp;
+						<img src="resources/img/${prof.prof_img}" width="30" height="30">&nbsp;
 					</div>
 					<div class="col-8 container" style="padding-left: 20px;">
 						<div class="row">
@@ -50,7 +50,14 @@
 						<c:if test="${prof.m_friend_accept == 'request'}">
 							<button type="button" class="btn btn-secondary btn-sm" style="width:82%;" onclick="javascript: follow(${prof.mem_num},'unrequest','${prof.prof_open}','autoBox')">요청 취소</button>
 						</c:if>
+						<!-- (내가) 차단 중일 때 -->
+						<c:if test="${prof.m_friend_accept == 'block'}">
+							<button type="button" class="btn btn-danger btn-sm" style="width:82%;" onclick="javascript: follow(${prof.mem_num},'unblock','${prof.prof_open}','autoBox')">차단 해제</button>
+						</c:if>
 						<!-- 차단 당했을 때 -->
+						<c:if test="${prof.f_friend_accept == 'block'}">
+							<button type="button" class="btn btn-danger btn-sm" style="width:82%;" disabled>차단됨</button>
+						</c:if>
 					</div>
 				</div>
 			</div>

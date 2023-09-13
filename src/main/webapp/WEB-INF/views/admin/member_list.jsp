@@ -14,6 +14,11 @@
 		}
 	}
 </script>
+<script type="text/javascript">
+	function sendForm(mem_num){
+		window.open("admin_member_sendEmail.do?mem_num="+mem_num, "", "width=640, height=400")
+	}
+</script>
 
 <%@include file="member_sidebar.jsp" %>
 
@@ -48,14 +53,15 @@
 								<th width="15%">이름</th>
 								<th width="15%">닉네임</th>
 								<th width="15%">가입일</th>
-								<th width="15%">상세보기</th>
-								<th width="15%">삭제</th>
+								<th width="10%">보기</th>
+								<th width="10%">메일</th>
+								<th width="10%">삭제</th>
 							</tr>
 							</thead>
 							<tbody>
 							<c:if test="${empty listMember}">
 								<tr>
-									<td colspan="7">등록된 회원이 없습니다.</td>
+									<td colspan="8">등록된 회원이 없습니다.</td>
 								</tr>
 							</c:if>
 							<c:if test="${not empty listMember}">
@@ -66,7 +72,8 @@
 									<td>${dto.mem_name}</td>
 									<td>${dto.mem_nickname}</td>
 									<td>${dto.mem_regdate}</td>
-									<td><a href="admin_member_view.do?mem_num=${dto.mem_num}">상세보기</a></td>
+									<td><a href="admin_member_view.do?mem_num=${dto.mem_num}">보기</a></td>
+									<td><a href="javascript:sendForm('${dto.mem_num}')">발송</a></td>
 									<td><a href="javascript:checkDel('${dto.mem_num}')">삭제</a></td>
 								</tr>
 							</c:forEach>
@@ -75,6 +82,7 @@
 						</table>
 						<form name="f" action="admin_member_delete.do" method="post">
 							<input type="hidden" name="mem_num"/>
+							<input type="hidden" name="view" value="m"/>
 						</form>
 					</div>
 				</div>

@@ -8,9 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ezen.FSB.dto.BoardDTO;
+import com.ezen.FSB.dto.BoardFilesDTO;
 import com.ezen.FSB.dto.Board_replyDTO;
-import com.ezen.FSB.dto.GameDTO;
-import com.ezen.FSB.dto.MemberDTO;
 import com.ezen.FSB.dto.NoticeDTO;
 import com.ezen.FSB.dto.ReportDTO;
 import com.ezen.FSB.dto.SH_boardDTO;
@@ -36,7 +35,7 @@ public class BoardMapper {
 		return list;
 	}
 	
-	//사용자 게시판에서 공지사항 상세보긴
+	//사용자 게시판에서 공지사항 상세보기
 	public NoticeDTO getNotice(int n_num) {
 		return sqlSession.selectOne("getNotice",n_num);
 	}
@@ -96,14 +95,15 @@ public class BoardMapper {
 
 	//자유, 익명 게시글 작성
 	public  int insertBoard(BoardDTO dto) {
-		if(dto.getBoard_num()==0) {
+		if(dto.getBoard_num()==0) { //겟보드넘이 0 이면 새글 
 			int getcount;
 			if(dto.getBoard_anony_check()==1) {
-			getcount = getCountBoard_anony();
-			}else {
+				getcount = getCountBoard_anony();
+					dto.setBoard_anony_check(1);
+				}else {
 			getcount = getCountBoard();
 			}
-			if(getcount ==0) {
+			if(dto.getBoard_num()!=0) {
 				int res = 1;
 				dto.setBoard_re_group(res+1);
 			}else {
@@ -121,8 +121,7 @@ public class BoardMapper {
 	}
 	//자유, 익명 답글
 	public int maxRe_group() {
-		int res = sqlSession.selectOne("maxRe_group");
-		return res;
+		return sqlSession.selectOne("maxRe_group");
 	}
 	public int maxRe_step() {
 		int res = sqlSession.selectOne("maxRe_step");
@@ -135,7 +134,7 @@ public class BoardMapper {
 	}
 	//자유, 익명 게시글 삭제
 	public int deleteBoard(int board_num) {
-			int res = sqlSession.delete("deleteBoard", board_num);
+			int res = sqlSession.update("deleteBoard", board_num);
 				return res;
 			
 	}
@@ -219,10 +218,8 @@ public class BoardMapper {
 			}
 		}else {
 			int res = sqlSession.selectOne("maxRe_step_reply", dto.getBr_re_group());
-			System.out.println(dto.getBr_re_group());
 			dto.setBr_re_step(res+1);
 			dto.setBr_re_level(1);
-			System.out.println("여기오니");
 
 		}
 			int res = sqlSession.insert("insertReply", dto);
@@ -297,13 +294,13 @@ public class BoardMapper {
 
 	//자유, 익명 댓글 삭제
 	public int deleteReply(int br_num) {
-		int res = sqlSession.delete("deleteReply",br_num);
+		int res = sqlSession.update("deleteReply",br_num);
 		return res;
 	}
 	
 	//중고 댓글 삭제
 		public int deleteReply_sh(int br_num) {
-			int res = sqlSession.delete("deleteReply_sh",br_num);
+			int res = sqlSession.update("deleteReply_sh",br_num);
 			return res;
 		}
 	//자유 익명 게시글 삭제시 댓글 전체 밀기
@@ -340,24 +337,8 @@ public class BoardMapper {
 		}
 	//중고게시판 게시글 작성 
 	public int insertBoard_sh(SH_boardDTO dto,String mode) {
-		if(dto.getBoard_num()==0) {
-			int getcount = getCountBoard_sh(mode);
-			if(getcount ==0) {
-				int res = 1;
-				dto.setBoard_re_group(res+1);
-				
-			}else {
-				int res = maxRe_group();
-				dto.setBoard_re_group(res+1);
-			}
-		}else{
-			int res = sqlSession.selectOne("maxRe_step_sh", dto.getBoard_re_group());
-			dto.setBoard_re_step(res+1);
-			dto.setBoard_re_level(1);
-		}
 		int res = sqlSession.insert("insertBoard_sh", dto);
 			return res; 
-	
 	}
 	
 	//중고 게시글 수정
@@ -367,7 +348,7 @@ public class BoardMapper {
 		}
 		//중고 게시글 삭제
 		public int deleteBoard_sh(int board_num) {
-			int res = sqlSession.delete("deleteBoard_sh", board_num);
+			int res = sqlSession.update("deleteBoard_sh", board_num);
 					return res;
 		}
 		//중고 게시글 상세
@@ -379,7 +360,42 @@ public class BoardMapper {
 				SH_boardDTO dto = sqlSession.selectOne("getBoard_sh",board_num);
 				return dto;
 		}
-
-
+		// 파일 인서트
+		public int fileInsert(BoardFilesDTO fdto) {
+			return sqlSession.insert("fileInsert", fdto);
+			
+		}
+		//상세 게시글에 파일 불러오기
+		public List<BoardFilesDTO> getFiles(int board_num) {
+			return sqlSession.selectList("getFiles", board_num);
+		}
+		//파일 삭제
+		public int fileDelete(int board_num) {
+			return sqlSession.delete("fileDelete", board_num);
+		}
+		//자유 게시판 조회수 순
+		public List<BoardDTO> readlist() {
+			return sqlSession.selectList("readlist");
+		}
+		//자유 게시판 댓글순 
+		public List<BoardDTO> replylist() {
+			return sqlSession.selectList("replylist");
+		}
+		//익명 게시판 조회수순
+		public List<BoardDTO> readlist_a() {
+			return sqlSession.selectList("readlist_a");
+		}
+		//익명 게시판 댓글 순
+		public List<BoardDTO> replylist_a() {
+			return sqlSession.selectList("replylist_a");
+		}
+		//중고게시판 조회수 순
+		public List<SH_boardDTO> readlist_sh() {
+			return sqlSession.selectList("readlist_sh");
+		}
+		//중고 게시판 댓글 순
+		public List<SH_boardDTO> replylist_sh() {
+			return sqlSession.selectList("replylist_sh");
+		}
 		
 }

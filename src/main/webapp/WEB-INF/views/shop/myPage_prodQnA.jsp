@@ -4,11 +4,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!-- myPage_prodQnA.jsp -->
 <script type="text/javascript">
-	function checkDel(sq_num, mem_num) {
+	function checkDel(sq_num, mem_num, sq_img1, sq_img2, sq_img3, sq_img4) {
 		var isDel = window.confirm("정말로 삭제하시겠습니까?")
 		if (isDel) {
 			document.f2.sq_num.value = sq_num
 			document.f2.mem_num.value = mem_num
+			document.f2.sq_img1.value = sq_img1
+			document.f2.sq_img2.value = sq_img2
+			document.f2.sq_img3.value = sq_img3
+			document.f2.sq_img4.value = sq_img4
 			document.f2.submit()
 		}
 	}
@@ -26,33 +30,37 @@
   				<div class="accordion-item">
     			<h2 class="accordion-header">
       			<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse${dto.sq_num }" aria-expanded="true" aria-controls="collapse${dto.sq_num }">
-        			<c:if test="${dto.sq_secret eq 1 }">
-        				🔒&nbsp;
-        			</c:if>
-        				${dto.sq_title }
-        			<c:if test="${dto.sq_check eq 1 }">
-        				<b>&nbsp;[답변 완료]</b>
-        			</c:if>
-        			 &nbsp;${dto.sq_regdate }
+        			<c:if test="${dto.sq_secret eq 0 && dto.sq_check eq 0}">
+						[${dto.sq_type}]<b>${dto.sq_title}</b>&nbsp;${dto.sq_regdate }<span class="badge bg-primary-subtle border border-primary-subtle text-primary-emphasis"></span>
+					</c:if>
+					<c:if test="${dto.sq_secret eq 0 && dto.sq_check eq 1}">
+						[${dto.sq_type}]<b>${dto.sq_title}</b>&nbsp;${dto.sq_regdate }<span class="badge bg-primary-subtle border border-primary-subtle text-primary-emphasis"><font color="black">답변 완료</font></span>
+					</c:if>
+					<c:if test="${dto.sq_secret eq 1 && dto.sq_check eq 0}">
+						🔒 [${dto.sq_type}]<b>${dto.sq_title}</b>&nbsp;${dto.sq_regdate }<span class="badge bg-primary-subtle border border-primary-subtle text-primary-emphasis"></span>
+					</c:if>
+					<c:if test="${dto.sq_secret eq 1 && dto.sq_check eq 1}">
+						🔒[${dto.sq_type}]<b>${dto.sq_title}</b>&nbsp;${dto.sq_regdate }<span class="badge bg-primary-subtle border border-primary-subtle text-primary-emphasis"><font color="black">답변 완료</font></span>
+					</c:if>
       			</button>
     			</h2>
     			<div id="collapse${dto.sq_num }" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
       			<div class="accordion-body">
       				<div align="right">
-      					<a href="shop_myPage_ProdQnA_update.do?sq_num=${dto.sq_num }"><input type="button" value="수정"></a>
-      					<a href="javascript:checkDel('${dto.sq_num}','${getMemNum }')"><input type="button" value="삭제"></a>
+      					<a href="shop_myPage_ProdQnA_updateForm.do?sq_num=${dto.sq_num }"><button type="button" class="btn btn-outline-secondary">수정</button></a>
+      					<a href="javascript:checkDel('${dto.sq_num}','${getMemNum }','${dto.sq_img1 }','${dto.sq_img2 }','${dto.sq_img3 }','${dto.sq_img4 }')"><button type="button" class="btn btn-outline-secondary">삭제</button></a>
       				</div>
-        		<strong>문의 내역 : </strong><br>
-        		<c:if test="${dto.sq_img1 ne null }">
+        		<strong>❔ 문의 내역 </strong><br>
+        		<c:if test="${!empty dto.sq_img1 }">
 					<img src="resources/img/${dto.sq_img1 }" width="100" height="100">
 				</c:if>
-				<c:if test="${dto.sq_img2 ne null }">
+				<c:if test="${!empty dto.sq_img2 }">
 					<img src="resources/img/${dto.sq_img2 }" width="100" height="100">
 				</c:if>
-				<c:if test="${dto.sq_img3 ne null }">
+				<c:if test="${!empty dto.sq_img3 }">
 					<img src="resources/img/${dto.sq_img3 }" width="100" height="100">
 				</c:if>
-				<c:if test="${dto.sq_img4 ne null }">
+				<c:if test="${!empty dto.sq_img4 }">
 					<img src="resources/img/${dto.sq_img4 }" width="100" height="100">
 				</c:if>
 				<br><br><br>
@@ -60,7 +68,14 @@
 				<br>
 				<br>
 				<br>
-        		<code>관리자 답변 : </code> 넣어주기
+        		<code>❓ <b>관리자 답변 </b></code>
+        		<br>
+        		  <c:if test="${dto.sq_check eq 0}">
+                 답변을 기다리고 있습니다.
+              </c:if>
+              <c:if test="${dto.sq_check eq 1}">
+                 ${dto.sq_reply}
+              </c:if>
       			</div>
     			</div>
   				</div>

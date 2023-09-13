@@ -6,10 +6,10 @@
 
 	<!-- 보드게임 -->
 	<select id="adminListGame" resultType="gameDTO">
-		select * from f_game order by game_num desc
+		select * from f_game order by game_num asc
 	</select>
 	<insert id="adminInsertGame" parameterType="gameDTO">
-		insert into f_game values(#{game_num}, #{game_img}, #{game_name}, #{game_player}, #{game_playTime}, #{game_level}, #{game_content}, 0, 0)
+		insert into f_game values(#{game_num}, #{game_img}, #{game_name}, #{game_player}, #{game_playTime}, #{game_level}, #{game_content}, 0)
 	</insert>
 	
 	<select id="adminMaxGameNum" resultType="int">
@@ -24,6 +24,11 @@
 		update f_game set game_img=#{game_img}, game_name=#{game_name}, game_player=#{game_player}, game_playTime=#{game_playTime},
 			game_level=#{game_level}, game_content=#{game_content} where game_num=#{game_num}
 	</update>
+	
+	<!-- 보드게임 삭제 시, 해당 상품이 있는지 확인 -->
+	<select id="adminGetProdGame" parameterType="int" resultType="shopProductDTO">
+		select * from f_product where game_num = #{game_num}
+	</select>
 	
 	<!-- 보드게임 상세보기 -->
 	<select id="adminGetGame" resultType="gameDTO">
@@ -68,7 +73,7 @@
 	
 	<!-- 보드게임 등록 시, 태그 등록 & 보드게임 수정 시, 재 등록-->
 	<insert id="adminInsertGameTag" parameterType="tagDTO">
-		insert into f_tag values(#{game_num}, 0, #{theme_num})
+		insert into f_tag values(#{game_num}, #{theme_num})
 	</insert>
 	<!-- 보드게임 수정/삭제 시, game_num 으로 등록된 태그 모두 삭제 -->
 	<delete id="adminDeleteGameTag" parameterType="int">
@@ -112,15 +117,19 @@
 	</select>
 
 	<!-- 보드게임 한줄평 신고내역 -->
-	<select id="adminListReviewReport" resultType="reviewDTO">
-		select r.*, m.mem_nickname from f_review r left join f_member m on r.mem_num = m.mem_num where not review_report ='0'
+	<select id="adminListReviewReport" resultType="reportDTO">
+		select r.*, m.mem_nickname from f_report r left join f_member m on r.mem_num = m.mem_num where report_mode = '보드게임한줄평' order by report_regdate asc
 	</select>
 	<select id="adminReviewReportCount" resultType="int">
 		select count(*) from f_review;
 	</select>
 	
+	<!-- 보드게임 한줄평 신고내역 -> 한줄평 상세보기 -->
+	<select id="adminReportReview_view" parameterType="int" resultType="int">
+		select game_num from f_review where review_num = #{review_num}
+	</select>
 	<!-- 보드게임 한줄평 신고내역 / 정렬 -->
-	<select id="adminListReviewReport1" resultType="reviewDTO">
+<!-- 	<select id="adminListReviewReport1" resultType="reviewDTO">
 		select r.*, m.mem_nickname from f_review r left join f_member m on r.mem_num = m.mem_num where not review_report='0' order by game_num asc
 	</select>
 	<select id="adminListReviewReport2" resultType="reviewDTO">
@@ -131,7 +140,31 @@
 	</select>
 	<select id="adminListReviewReport4" resultType="reviewDTO">
 		select r.*, m.mem_nickname from f_review r left join f_member m on r.mem_num = m.mem_num where not review_report='0' order by review_regdate desc
+	</select> -->
+	<!-- 보드게임 한줄평 신고내역 / 정렬 -->
+	<select id="adminListReviewReport3" resultType="reportDTO">
+		select r.*, m.mem_nickname from f_report r left join f_member m on r.mem_num = m.mem_num where report_mode = '보드게임한줄평' order by report_regdate asc
 	</select>
+	<select id="adminListReviewReport4" resultType="reportDTO">
+		select r.*, m.mem_nickname from f_report r left join f_member m on r.mem_num = m.mem_num where report_mode = '보드게임한줄평' order by report_regdate desc
+	</select>
+	<select id="adminListReviewReport2" resultType="reportDTO">
+		select r.*, m.mem_nickname from f_report r left join f_member m on r.mem_num = m.mem_num where report_mode = '보드게임한줄평' and report_check = 0
+	</select>
+
+	
+	<!-- 보드게임 한줄평 신고내역 상세보기 -->
+	<select id="adminReportListGameReview" parameterType="int" resultType="reportDTO">
+		select r.*, m.mem_nickname from f_report r left join f_member m on r.mem_num = m.mem_num where report_target = #{report_target} and report_mode = '보드게임한줄평'
+	</select>
+	<!-- 보드게임 한줄평 신고 취소 시, reportDTO 삭제 -->
+	<delete id="adminDelReportGameReview" parameterType="int">
+		delete from f_report where report_target = #{report_target} and report_mode = '보드게임한줄평'
+	</delete>
+	<!-- 보드게임 한줄평 삭제 시, 신고내역이 있는 경우 처리여부 0 ->1 -->
+	<update id="adminCheckGameReviewReport" parameterType="int">
+		update f_report set report_check = 1 where report_target = #{report_target} and report_mode = '보드게임한줄평'
+	</update>
 	
 	<!-- 보드게임 한줄평 신고내역 / 찾기 -->
 	<select id="adminFindReviewReport" parameterType="map" resultType="reviewDTO">
@@ -143,4 +176,13 @@
 		update f_review set review_report='0' where review_num = #{review_num}
 	</update>
 
+	<!-- 보드게임 한줄평 신고내역 미처리 건수 -->
+	<select id="adminHomeGameReport" resultType="int">
+		select count(*) from f_report where report_mode = '보드게임한줄평' and report_check = 0
+	</select>
+	<!-- 해당 게임의 좋아요 수 -->
+	<select id="adminGetGameLike" parameterType="int" resultType="int">
+		select count(*) from f_game_like where game_num = #{game_num}
+	</select>
+	
 </mapper>

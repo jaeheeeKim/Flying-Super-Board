@@ -15,13 +15,13 @@
   		<div class="row g-0">
     		<div class="col-md-4">
     			<c:if test="${dto.sc_type eq 'delchar' }">
-      			 	<img src="resources/img/coupon11.png" class="img-fluid rounded-start" alt="배송지쿠폰">
+      			 	<img src="resources/img/coupon_1.png" class="img-fluid rounded-start" alt="배송지쿠폰" width="200px" height="200px">
       			</c:if>
       			<c:if test="${dto.sc_type eq '-' }">
-      				<img src="resources/img/coupon2.png" class="img-fluid rounded-start" alt="금액쿠폰">
+      				<img src="resources/img/coupon_2.png" class="img-fluid rounded-start" alt="금액쿠폰" width="200px" height="200px">
       			</c:if>
       			<c:if test="${dto.sc_type eq '%' }">
-      				<img src="resources/img/coupon3.png" class="img-fluid rounded-start" alt="할인율쿠폰">
+      				<img src="resources/img/coupon_3.png" class="img-fluid rounded-start" alt="할인율쿠폰" width="200px" height="200px">
       			</c:if>
     		</div>
     	<div class="col-md-8">
@@ -39,11 +39,24 @@
         	<c:if test="${dto.sc_type eq '%' }">
         		% 할인
         	</c:if>
-        	</font>
-       		<br>
+        </font>
+        <br>
+        <c:if test="${dto.sc_limit ne 0 }">
+        <font size="2">
+       		${dto.sc_min }원 이상 구매 시 사용 가능
+       		<br> 최대 ${dto.sc_limit }원 할인
+       	</font>
+       	<br>
+       	</c:if>
+       	<c:if test="${dto.sc_limit eq 0 }">
+       	<font size="2">
+       		${dto.sc_min }원 이상 구매 시 사용 가능
+       		<br> -
+       	</font>
+       	<br>
+       	</c:if>
         	<b>발행일</b> : ${dto.usc_regdate }<br>
         	<b>유효기간</b> : ${dto.usc_duedate }
-        
         </p>
       		</div>
     	</div>

@@ -58,7 +58,7 @@
 										<c:if test="${dto.board_re_level >0}">
 												<img src="resources/img/re.png" width="${dto.board_re_level *10}">
 										</c:if>
-										<a href="admin_board_view.do?view=secondhand&board_num=${dto.board_num}&sort=all">${dto.board_title}</a> 
+										<c:if test="${dto.board_content eq '-' }"><font color="gray">[❌]</font></c:if><a href="admin_board_view.do?view=secondhand&board_num=${dto.board_num}&sort=all">${dto.board_title}</a> 
 										<c:if test="${dto.board_replycount ne 0}">
 										 [${dto.board_replycount}]💬
 										</c:if>

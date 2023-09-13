@@ -151,4 +151,73 @@
 	<update id="adminCheckReportBr" parameterType="int">
 		update f_report set report_check = 1 where report_target = #{report_target} and report_mode = '자유,익명댓글'
 	</update>
+	
+	<!-- 게시글 전체 신고내역 -->
+	<select id="adminTotalListBoard" resultType="reportDTO">
+		select r.*, m.mem_nickname from f_report r left join f_member m on r.mem_num = m.mem_num where report_mode = '자유,익명게시글' or report_mode = '중고게시글'
+	</select>
+	<!-- 댓글 전체 신고내역 -->
+	<select id="adminTotalListBr" resultType="reportDTO">
+		select r.*, m.mem_nickname from f_report r left join f_member m on r.mem_num = m.mem_num where report_mode = '자유,익명댓글' or report_mode = '중고댓글'
+	</select>
+	
+	<!-- 게시글 전체 미처리 신고내역 -->
+	<select id="adminTotalListBoard2" resultType="reportDTO">
+		select r.*, m.mem_nickname from f_report r left join f_member m on r.mem_num = m.mem_num where report_check = 0 and report_mode = '자유,익명게시글' or report_check = 0 and report_mode = '중고게시글'
+	</select>
+	<!-- 댓글 전체 미처리 신고내역 -->
+	<select id="adminTotalListBr2" resultType="reportDTO">
+		select r.*, m.mem_nickname from f_report r left join f_member m on r.mem_num = m.mem_num where report_check = 0 and report_mode = '자유,익명댓글' or report_check = 0 and report_mode = '중고댓글'
+	</select>
+	
+	<!-- br_num 으로 board_num 찾기 // 자유, 익명 -->
+	<select id="adminTotalFindBoard" parameterType="int" resultType="int">
+		select board_num from f_board_reply where br_num = #{br_num}
+	</select>
+	<!-- br_num 으로 board_num 찾기 // 중고 -->
+	<select id="adminTotalFindBoard_sh" parameterType="int" resultType="int">
+		select board_num from f_sh_board_reply where br_num = #{br_num}
+	</select>
+	
+	<!-- boardMapper.xml 에서 가져온 내용 -->
+	<!-- 자유게시판 글목록 개수 -->
+	<select id="adminGetCountBoard" resultType="int">
+		select count(*) from f_board where board_anony_check=0
+	</select>
+	<!-- 익명게시판 글목록 개수 -->
+	<select id="adminGetCountBoard_anony" resultType="int">
+		select count(*) from f_board where board_anony_check=1
+	</select>
+	<!-- 중고게시판 글목록 개수  -->
+	<select id="adminGetCountBoard_sh" resultType="int">
+		select count(*) from f_sh_board
+	</select>
+	<!-- 중고 거래 정렬 글목록 개수 -->
+ 	<select id="adminGetCountBoard_sort" parameterType="map" resultType="int">
+ 	 select count(*) from f_sh_board where board_condition = #{board_condition}
+ 	</select>
+ 	<!-- 자유, 익명게시판 글삭제 시 해당 글 댓글 삭제 -->
+	<delete id="adminDeleteReplyAll"  parameterType="int">
+		delete from f_board_reply where board_num=#{board_num}
+	</delete>
+	<!-- 자유게시판 익명게시판 글삭제 -->
+	<delete id="adminDeleteBoard" parameterType="map">
+		delete from f_board where board_num=#{board_num}
+	</delete>
+	<!-- 중고 게시글 삭제시 해당 게시판 댓글 전체 삭제 -->
+	<delete id="adminDeleteReplyAll_sh"  parameterType="int">
+		delete from f_sh_board_reply where board_num=#{board_num}
+	</delete>
+	<!-- 중고게시판  글삭제 -->
+	<delete id="adminDeleteBoard_sh" parameterType="map">
+		delete from f_sh_board where board_num=#{board_num}
+	</delete>
+	<!-- 중고게시판 해당 게시판  댓글 수  -->
+	<select id="adminGetCountReply_sh" resultType="int">
+		select count(*) from f_sh_board_reply where board_num=#{board_num}
+	</select>
+	<!-- 댓글 수 -->
+	<select id="adminGetCountReply" resultType="int">
+		select count(*) from f_board_reply where board_num=#{board_num}
+	</select>
 </mapper>

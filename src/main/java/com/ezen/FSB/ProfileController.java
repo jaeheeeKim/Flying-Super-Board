@@ -23,14 +23,53 @@ public class ProfileController {
 	
 	@Autowired
 	ProfileMapper profileMapper;
+	
+	//로그인 체크
+	public Boolean checkLogin(HttpServletRequest req) {
+		HttpSession session= req.getSession();
+		MemberDTO mdto = (MemberDTO)session.getAttribute("login_mem");
+		if(mdto == null) {return true;}
+		else {return false;}
+	}
+	//메인으로 튕기는 mav 만들기
+	public ModelAndView sentBack() {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("message");
+		mav.addObject("url","user_main.do");
+		mav.addObject("msg","로그인 해주세요" );
+		return mav;
+	}
+	
+	//사이드바 설정 및 멤버 정보 재설정 //memberDTO 반환
+	public MemberDTO setFriendSidebar(HttpServletRequest req) {
+		HttpSession session = req.getSession();
+		//멤버&프로필 정보 재설정
+		MemberDTO mdto = (MemberDTO)session.getAttribute("login_mem");
+		//멤버 설정
+		int mem_num = mdto.getMem_num();
+		mdto = profileMapper.getMember(mem_num);
+		//프로필 설정
+		ProfileDTO pdto = profileMapper.getProfile(mem_num);
+		//팔로우 팔로워 확인
+		int[] ff = profileMapper.getFollows(mem_num);
+		pdto.setProf_following(ff[0]);
+		pdto.setProf_follower(ff[1]);
+		session.setAttribute("login_mem", mdto);
+		session.setAttribute("profile", pdto);
+		
+		return mdto;
+	}
 
+	//-------------------------------------------------------------------------------------
 	//친구관리 페이지
 	@RequestMapping(value = "/friendRequest.do")
 	public ModelAndView feed(HttpServletRequest req) {
+		//로그인 체크&초기설정
+		if(checkLogin(req)) return sentBack();
+		MemberDTO mdto = setFriendSidebar(req);
+		
 		//세션에서 멤버 꺼내오기
-		HttpSession session = req.getSession();
-		MemberDTO member = (MemberDTO) session.getAttribute("member");
-		int mem_num = member.getMem_num();
+		int mem_num = mdto.getMem_num();
 		
 		ModelAndView mav = new ModelAndView("friend/friendRequest");
 		
@@ -49,9 +88,8 @@ public class ProfileController {
 	@ResponseBody
 	@RequestMapping(value = "/friendFindAuto.do")
 	public ModelAndView autoFind(@RequestParam String text, HttpServletRequest req) {
-		//세션에서 멤버 꺼내오기
-		HttpSession session = req.getSession();
-		MemberDTO member = (MemberDTO) session.getAttribute("member");
+		//로그인 체크&초기설정
+		MemberDTO mdto = setFriendSidebar(req);
 		
 		ModelAndView mav = new ModelAndView("friend/autoComplete");
 		
@@ -85,7 +123,7 @@ public class ProfileController {
 		Iterator<ProfileDTO> iterator = list.iterator();
 		while (iterator.hasNext()) {
 			ProfileDTO prof = iterator.next();
-			int mem_num = member.getMem_num();
+			int mem_num = mdto.getMem_num();
 			int friend_num = prof.getMem_num();
 			String[] states = profileMapper.followCheck(mem_num, friend_num);
 			if(mem_num == friend_num) { //나 자신이라면 목록에서 삭제
@@ -107,6 +145,9 @@ public class ProfileController {
 	@ResponseBody
 	@RequestMapping(value = "/follow.do")
 	public ModelAndView followClick(@RequestParam Map<String, String> map, HttpServletRequest req) {
+		//로그인 체크&초기설정
+		MemberDTO mdto = setFriendSidebar(req);
+		
 		String mode = map.get("mode");
 		String where = map.get("where");
 		System.out.println(mode);
@@ -142,7 +183,32 @@ public class ProfileController {
 			List<ProfileDTO> list = profileMapper.requestSentList(mem_num);
 			mav.addObject("listSentRequest", list);
 			mav.setViewName("friend/sentBox");
+		}else {//개인페이지라면
+			ProfileDTO pdto = profileMapper.getProfile(friend_num);
+			String[] states = profileMapper.followCheck(mem_num, friend_num);
+			if(states[0] == null) states[0] = "none";
+			if(states[1] == null) states[1] = "none";
+			pdto.setM_friend_accept(states[0]);
+			pdto.setF_friend_accept(states[1]);
+			mav.addObject("target_profile", pdto);
+			System.out.println(pdto.getProf_open());
+			mav.setViewName("friend/followZone");
 		}
+		return mav;
+	}
+	
+	//요청박스 새로고침
+	@ResponseBody
+	@RequestMapping(value = "/setSentBox.do")
+	public ModelAndView setSentBox(@RequestParam int mem_num, HttpServletRequest req) {
+		//로그인 체크&초기설정
+		MemberDTO mdto = setFriendSidebar(req);
+
+		List<ProfileDTO> list = profileMapper.requestSentList(mem_num);
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("listSentRequest", list);
+		mav.setViewName("friend/sentBox");
+		
 		return mav;
 	}
 }

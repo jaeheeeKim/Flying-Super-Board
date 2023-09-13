@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+       <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!-- member_sidebar.jsp // 회원 사이드바 -->
 
 <!-- 벡터 아이콘 정의 -->
@@ -38,7 +39,6 @@
 		          	<ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
 		            	<li><a href="admin_member_insert.do" class="link-dark d-inline-flex text-decoration-none rounded">일반 회원 등록</a></li>
 		            	<li><a href="admin_member_list.do" class="link-dark d-inline-flex text-decoration-none rounded">일반 회원 목록</a></li>
-		            	<li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">일반 회원 신고 내역</a></li>
 		         	</ul>
 		        </div>
 	        </li>
@@ -51,10 +51,28 @@
 		       	</button>
 		        <div class="collapse show" id="dashboard-collapse">
 		          	<ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-		          		<li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">비즈니스 회원 가입 신청 내역</a></li>
-		            	<li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">비즈니스 회원 등록</a></li>
-		            	<li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">비즈니스 회원 목록</a></li>
-		            	<li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">비즈니스 회원 신고 내역</a></li>
+		          		<li><a href="admin_member_join_list.do" class="link-dark d-inline-flex text-decoration-none rounded">비즈니스 회원 가입 신청 내역
+		          			<c:if test="${joinMember ne 0}"><span class="badge bg-danger">${joinMember}</span></c:if></a></li>
+		            	<li><a href="admin_member_b_insert.do" class="link-dark d-inline-flex text-decoration-none rounded">비즈니스 회원 등록</a></li>
+		            	<li><a href="admin_member_list.do?view=b" class="link-dark d-inline-flex text-decoration-none rounded">비즈니스 회원 목록</a></li>
+		         	</ul>
+		        </div>
+	        </li>
+	         <!-- 구분선 -->
+	        <li class="border-top my-3"></li>
+	        <li class="mb-1">
+		   		<button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse2" aria-expanded="true">
+		         			회원 공통
+		       	</button>
+		        <div class="collapse show" id="dashboard-collapse2">
+		          	<ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+		          		<li><a href="admin_member_report_list.do" class="link-dark d-inline-flex text-decoration-none rounded">전체 회원 신고 내역
+		          			<c:if test="${memReport ne 0 }"><span class="badge bg-danger">${memReport}</span></c:if>
+		          		</a></li>
+		          		<li><a href="admin_feed_report_list.do" class="link-dark d-inline-flex text-decoration-none rounded">전체 피드 신고 내역
+		          			<c:if test="${feedReport ne 0 }"><span class="badge bg-danger">${feedReport}</span></c:if>
+		          		</a></li>
+		          		<li><a href="admin_member_by.do" class="link-dark d-inline-flex text-decoration-none rounded">회원 탈퇴 내역</a></li>
 		         	</ul>
 		        </div>
 	        </li>

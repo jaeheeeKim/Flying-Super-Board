@@ -1,32 +1,47 @@
 package com.ezen.FSB.dto;
 
-public class SH_boardDTO {
-	private int board_num;
-	private int mem_num;
-	private String board_title;
-	private String board_regdate;
-	private String board_content;
-	private String board_ip;
-	private String board_readcount;
+public class SH_boardDTO { // 중고게시판
+	private int board_num;  // 중고게시판 번호
+	private int mem_num; // 멤버 번호 
 	
-	private String board_img1;
+	private String board_title; // 중고 게시글 제목
+	private String board_regdate; // 작성일
+	private String board_content; //내용
+	private String board_ip; //ip
+	private String board_readcount; // 조회수 
+	
+	private String board_img1; // 이미지
 	private String board_img2;
 	private String board_img3;
 	private String board_img4;
 	
-	private int board_re_level;
-	private int board_re_step;
+	private int board_re_level; //답글
+	private int board_re_step; 
 	private int board_re_group;
-	private int board_report;
 	
-	private String board_location;
-	private String board_price;
-	private String board_package;
-	private String board_condition;
-	private int board_replycount;
+	private int board_report; // 신고
 	
-	private String mem_nickname;
-	
+	private String board_location; // 주소
+	private String board_price; //가격
+	private String board_package; //거래 방법
+	private String board_condition; // 상태
+
+	private String mem_nickname; // 닉네임 join용
+	private String mem_img; // 테이블엔 없는 이미지 디티오
+
+	public String getMem_img() {
+		return mem_img;
+	}
+	public void setMem_img(String mem_img) {
+		this.mem_img = mem_img;
+	}
+	private int board_replycount; // 해당 게시글 댓글 수 
+	public int getBoard_replycount() {
+		return board_replycount;
+	}
+	public void setBoard_replycount(int board_replycount) {
+		this.board_replycount = board_replycount;
+	}
 	public String getMem_nickname() {
 		return mem_nickname;
 	}
@@ -147,14 +162,4 @@ public class SH_boardDTO {
 	public void setBoard_condition(String board_condition) {
 		this.board_condition = board_condition;
 	}
-	public int getBoard_replycount() {
-		return board_replycount;
-	}
-	public void setBoard_replycount(int board_replycount) {
-		this.board_replycount = board_replycount;
-	}
-	
-	
-	
-	
 }

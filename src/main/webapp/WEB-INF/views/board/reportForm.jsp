@@ -35,7 +35,7 @@
 <div align="center">
 	<div class="text-bg-warning p-3">신고여부 선택하기</div>
 	<div class="form-check">
-  		<input class="form-check-input" type="radio" name="board_report" value="1" id="flexCheckDefault1">
+  		<input class="form-check-input" type="radio" name="board_report" value="1" id="flexCheckDefault1" checked>
   		<label class="form-check-label" for="flexCheckDefault1">
    			욕설 및 부적절한 언어
   		</label>

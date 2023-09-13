@@ -62,8 +62,7 @@
 							<th>상품 별점</th><td>
 							<img src="resources/img/star2.png" width="25" height="25">&nbsp;
 							<c:if test="${empty starrating}">-</c:if><c:if test="${not empty starrating}">${starrating}</c:if></td>
-							<th>상품 찜수</th><td>
-							❤${getProd.prod_like}</td>	
+							<th>상품 찜수</th><td>❤️ ${prodLike}</td>	
 						</tr>
 						<tr align="center">
 							<th height="200">게임<br>이미지</th>

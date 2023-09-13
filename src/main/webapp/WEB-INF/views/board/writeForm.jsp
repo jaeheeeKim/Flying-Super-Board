@@ -26,7 +26,64 @@
 		}
 		return true
 	}
- 
+	
+function checkFile(file){
+		var file = file
+ 		   file.select();
+  		  document.selection.clear();
+}
+
+</script>
+
+<script>
+   attachFile = {
+      idx : 2,
+      add : function() { // 파일필드 추가
+          var o = this;
+          var idx = o.idx;
+          var div = document.createElement('div');
+         div.align = 'left';
+         div.className = 'input-group mb-3 w-50';
+         div.style.marginTop = '3px';
+         div.id = 'file' + o.idx;
+
+         var file = document.all ? document
+               .createElement('<input name="board_img">') : document
+               .createElement('input');
+         file.type = 'file';
+         file.name = 'board_img'+o.idx;
+         file.className = 'form-control';
+         file.id = 'fileField' + o.idx;
+         file.accept ='image/*';
+         file.oninput=function(){
+            attachFile.add();
+         }
+         var btn = document.createElement('input');
+         btn.type = 'button';
+         btn.className = 'btn-close';
+         btn.onclick = function() {
+            o.del(idx);
+            o.idx--;
+            idx--;
+         }
+         btn.style.marginLeft = '5px';
+         document.getElementById('attachFileDiv').appendChild(div);
+         if (o.idx > 4) {
+            alert("이미지는 4개까지!")
+         }
+         if (o.idx <= 4) {
+            div.appendChild(file);
+            div.appendChild(btn);
+            o.idx++;
+         }
+      },
+      
+      del : function(idx) { // 파일필드 삭제
+          
+          document.getElementById('attachFileDiv').removeChild(
+                document.getElementById('file' + idx));
+       }
+    }
 </script>
 
 </head>
@@ -71,27 +128,43 @@
                         <use xlink:href="#img-select"></use></svg>
                        		 이미지 업로드 🔽</button>
                 </div>
-                    <div class="collapse mb-3 w-50 p-3 mx-auto p-2" id="image-collapse">
-                    <div class="row row-cols-2">
-                     <div class="col-md-auto"><input type="file" class="form-control mb-2" id="formFileSm" name="board_img1"style="border: none; background: transparent;"></div>
-                     <div class="col-md-auto"><button type="button" class="btn-close" aria-label="Close"></button></div>
+                    <div class="collapse mb-3 w-50 p-3 mx-auto p-2 " id="image-collapse">
+                    <!-- div   id ="attachFileDiv">
+                    <div align="left" class="input-group mb-3 w-50" >
+                     <input type="file" class="form-control" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" name="board_img1" accept="image/*" style="border: none; background: transparent;" onchange="javascript:attachFile.add()">
+                     <button class="btn-close" type="button" id="inputGroupFileAddon04" onclick="javascript:Del()"></button>
                     </div>
+                    </div>
+                    	<input type="hidden" name="board_img1"/>
+                    	<input type="hidden" name="board_img2"/>
+                    	<input type="hidden" name="board_img3"/>
+                    	<input type="hidden" name="board_img4"/> -->
+                  <div class="row row-cols-2">
+                     <div class="col-md-auto"><input type="file" class="form-control mb-2" id="formFileSm" accept="image/*" name="board_img1" style="border: none; background: transparent;"></div>
+                     </div>
                     
-                    <div class="row row-cols-2">
-                     <div class="col-md-auto"><input type="file" class="form-control mb-2" id="formFileSm" name="board_img2" style="border: none; background: transparent;"></div>
-                     <div class="col-md-auto"><button type="button" class="btn-close" aria-label="Close"></button></div>
+                  <div class="row row-cols-2">
+                     <div class="col-md-auto"><input type="file" class="form-control mb-2" id="formFileSm" accept="image/*" name="board_img2" style="border: none; background: transparent;"></div>
                      </div>
                     
                     <div class="row row-cols-2">
-                     <div class="col-md-auto"><input type="file" class="form-control mb-2" id="formFileSm" name="board_img3" style="border: none; background: transparent;"></div>
-                     <div class="col-md-auto"><button type="button" class="btn-close" aria-label="Close"></button></div>
+                     <div class="col-md-auto"><input type="file" class="form-control mb-2" id="formFileSm" accept="image/*" name="board_img3" style="border: none; background: transparent;"></div>
                     </div>
                     
                     <div class="row row-cols-2">
-                     <div class="col-md-auto"><input type="file" class="form-control mb-2" id="formFileSm" name="board_img4" style="border: none; background: transparent;"></div>
-                     <div class="col-md-auto"><button type="button" class="btn-close" aria-label="Close"></button></div>
+                     <div class="col-md-auto"><input type="file" class="form-control mb-2" id="formFileSm" accept="image/*" name="board_img4" style="border: none; background: transparent;"></div>
                		</div>
+               		
                </div>
+               </td>
+               </tr>
+               <tr>
+               <td>
+               <div class="col mb-3 w-50 p-3 mx-auto p-2" align="left">
+               		<div class="row row-cols-2">
+                     <div class="col-md-auto"><input type="file" class="form-control mb-2" id="formFileSm" name="filename" style="border: none; background: transparent;" multiple="multiple"></div>
+              		</div>
+              	</div>
                </td>
                </tr>
 				<tr>

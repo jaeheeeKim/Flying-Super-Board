@@ -9,10 +9,21 @@
 <!-- 	<script src="resources/js/bootstrap.min.js"></script> -->
 	<script src="resources/js/bootstrap.bundle.min.js"></script>
 
+<script type="text/javascript">
+	function check() {
+		if (f.theme_name.value == "") {
+			alert("테마 이름을 입력해주세요!")
+			f.theme_name.focus()
+			return false
+		}
+		return true		
+	}
+</script>
+
 	<!-- 내용 // 테마 이름 수정 -->
 	
 	  		<p class="fs-4 text-center">테마 수정 하기</p>
-	  		<form name="f" action="admin_theme_update.do" method="post">
+	  		<form name="f" action="admin_theme_update.do" method="post" onsubmit="return check()">
 	  			<table class="table align-middle" width="80%" height="70%">
 		  		<tr>
 		  			<th>번호</th>

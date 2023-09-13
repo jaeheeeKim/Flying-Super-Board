@@ -26,16 +26,18 @@
 		return true
 	}
 </script>
+
 </head>
 <body>
 	<div align="center">
 		<form name="f" action="update_board.do" method="post"
 			onsubmit="return check()" enctype="multipart/form-data">
-			<input type="hidden" name="board_num" value="${getBoard.board_num}" />
-			<input type="hidden" name="board_re_group"value="${getBoard.board_re_group}" /> 
+				<input type="hidden" name="board_num" value="${getBoard.board_num}" />
+				<input type="hidden" name="board_re_group"value="${getBoard.board_re_group}" /> 
 				<input type="hidden" name="board_re_step" value="${getBoard.board_re_step}" /> 
 				<input type="hidden" name="board_re_level" value="${getBoard.board_re_level}" />
-			<input type="hidden" name="pageNum" value="${pageNum}">
+				<input type="hidden" name="pageNum" value="${pageNum}">
+				<input type="hidden" name="mode" value="${mode}">
 			<table class="table table-borderless">
 				<tr>
 					<td>
@@ -85,31 +87,23 @@
 				<tr>
 					<td>
 					<!-- 이미지 첨부 -->
-						<div class="col mb-3 w-75 p-3 mx-auto p-2" align=center>
-							<button type="button"
-								class="btn btn-sm btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
-								data-bs-toggle="collapse" data-bs-target="#image-collapse"
-								aria-expanded="false">
-								<svg class="bi pe-none me-2" fill="#A6A6A6" width="24"
-									height="24">
+							<div class="col mb-3 w-50 p-3 mx-auto p-2" align="left">
+              				 <button type="button" class="btn btn-sm btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#image-collapse" aria-expanded="false">
+                        <svg class="bi pe-none me-2" fill="#A6A6A6" width="24" height="24">
                         <use xlink:href="#img-select"></use></svg>
 								이미지 업로드 🔽
 							</button>
 						</div>
-						<div class="d-grid gap-2 w-50 mx-auto p-2">
-						<div class="collapse mb-3 w-75 p-3 mx-auto p-2"
-							id="image-collapse">
+						<div class="collapse mb-3 w-50 p-3 mx-auto p-2" id="image-collapse">
 							<label for="formFileSm" class="form-label"></label>
 
 							<div class="row row-cols-3">
-							
 								<div class="col-md-auto">
 									<input type="file" class="form-control mb-2 w-100 p-3"
-										id="formFileSm" name="board_img1"
+										id="formFileSm" name="board_img1" accept="image/*"
 										style="border: none; background: transparent;">
 								</div>
 								<div class="col-md-auto">
-									<button type="button" class="btn-close" aria-label="Close"></button>
 								</div>
 							<c:if test="${not empty getBoard.board_img1}">
 								<div class="col-md-auto">
@@ -124,11 +118,10 @@
 							<div class="row row-cols-3">
 								<div class="col-md-auto">
 									<input type="file" class="form-control mb-2" id="formFileSm"
-										name="board_img2"
+										name="board_img2" accept="image/*"
 										style="border: none; background: transparent;">
 								</div>
 								<div class="col-md-auto">
-									<button type="button" class="btn-close" aria-label="Close"></button>
 								</div>
 								
 								<c:if test="${not empty getBoard.board_img2}">
@@ -144,11 +137,10 @@
 							<div class="row row-cols-3">
 								<div class="col-md-auto">
 									<input type="file" class="form-control mb-2" id="formFileSm"
-										name="board_img3"
+										name="board_img3" accept="image/*"
 										style="border: none; background: transparent;">
 								</div>
 								<div class="col-md-auto">
-									<button type="button" class="btn-close" aria-label="Close"></button>
 								</div>
 							<c:if test="${not empty getBoard.board_img3}">
 								<div class="col-md-auto">
@@ -164,11 +156,10 @@
 							<div class="row row-cols-3">
 								<div class="col-md-auto">
 									<input type="file" class="form-control mb-2" id="formFileSm"
-										name="board_img4"
+										name="board_img4" accept="image/*"
 										style="border: none; background: transparent;">
 								</div>
 								<div class="col-md-auto">
-									<button type="button" class="btn-close" aria-label="Close"></button>
 								</div>
 							<c:if test="${not empty getBoard.board_img4}">
 								<div class="col-md-auto">
@@ -181,7 +172,20 @@
 									value="${getBoard.board_img4}">
 							</div>
 							</div>
-						</div>
+					</td>
+				</tr>
+				<tr>
+					<td> <div class="col mb-3 w-50 p-3 mx-auto p-2" align="left">
+               		<div class="row row-cols-2">
+                     <div class="col-md-auto"><input type="file" class="form-control mb-2" id="formFileSm" name="filename" style="border: none; background: transparent;" multiple="multiple"></div>
+                   	  </div>
+                     <div>
+                     <c:forEach var="file" items="${getFiles }">
+                     <p>첨부 파일 : ${file.filename }
+                     </c:forEach>
+                     </div>
+              		</div>
+					
 					</td>
 				</tr>
 				<!-- 수정 버튼 -->
@@ -191,7 +195,7 @@
 							<button class="btn btn-primary " type="submit">글수정</button>
 							<button class="btn btn-primary" type="reset">다시작성</button>
 							<button class="btn btn-primary" type="button"
-								onclick="window.location='board_free.do'">목록보기</button>
+								onclick="window.location='board_free.do?mode=${mode}'">목록보기</button>
 						</div>
 					</td>
 				</tr>

@@ -23,16 +23,46 @@ li p {width:100%; text-align:center} /* 텍스트가 가운데 정렬이 되도�
 <body>
    <ul class="nav justify-content-end">	
         <li class="nav-item"><a class="nav-link" href="shop_main.do">쇼핑몰 메인</a></li>   		
-        <li class="nav-item"><a class="nav-link active" aria-current="page" href="#">회원가입</a> </li>
-        <li class="nav-item"><a class="nav-link active" aria-current="page" href="login.do">로그인</a></li>
-        <li class="nav-item"><a class="nav-link active" aria-current="page" href="#">장바구니</a></li>
+   <c:set var="isLogin" value="false"/>
+   <c:if test="${not empty mbId or not empty mbName or not empty kname}">
+   <c:set var="isLogin" value="true"/>
+   </c:if>
+   
+   <c:if test="${isLogin=='true' and not empty loginMode and empty naverLogin}">
+     <li class="nav-item">            
+      <a class="nav-link" href="logout.do">로그아웃</a>
+      </li>
+   </c:if>
+   
+   <c:if test="${isLogin=='true' and empty loginMode and empty naverLogin}">
+     <li class="nav-item">            
+      <a class="nav-link" href="kakaologout.do?access_Token=${sessionScope.access_Token}">로그아웃</a>
+      </li>
+   </c:if>
+   
+   <c:if test="${isLogin=='true' and empty loginMode and not empty naverLogin}">
+   	<li class="nav-item">            
+      <a class="nav-link" href="naverLogout.do">로그아웃</a>
+     </li>
+   </c:if>
+   
+   <c:if test="${isLogin=='false'}">
+        <li class="nav-item">
+      <a class="nav-link" href="login.do">로그인</a>
+      </li>
+   </c:if>   
         <li class="nav-item"><a class="nav-link" href="user_main.do">메인페이지로 가기</a></li>
    </ul>
 <br><br>
 <ul class="nav nav-pills nav-fill">  
   <li>
   	&nbsp;&nbsp;
-  	<img src="resources/img/star.png" class="img-thumbnail" alt="프로필사진" width="70" height="70">
+  	<c:if test="${empty login_mem.mem_img }">
+  		<img src="resources/img/default_profile.png" class="img-thumbnail" alt="프로필사진" width="70" height="70">
+  	</c:if>
+  	<c:if test="${not empty login_mem.mem_img }">
+  		<img src="resources/img/${login_mem.mem_img }" class="img-thumbnail" alt="프로필사진" width="70" height="70">
+  	</c:if>
   </li>
   <li>
   	<br>
@@ -41,7 +71,7 @@ li p {width:100%; text-align:center} /* 텍스트가 가운데 정렬이 되도�
   		&nbsp;&nbsp;(${login_mem.mem_id })
   </li>
   <li class="nav-item">
-    <a class="nav-link" aria-current="page" href="#"><img src="resources/img/shop_delivery.png" alt="배송" width="70" height="70"><font size="2" color="	#4169e1"><br>주문배송</font></a>
+    <a class="nav-link" aria-current="page" href="user_shop_myPage.do"><img src="resources/img/shop_delivery.png" alt="배송" width="70" height="70"><font size="2" color="	#4169e1"><br>주문배송</font></a>
   </li>
   <li class="nav-item">
     <a class="nav-link" href="shop_myPage_review.do"><img src="resources/img/shop_review.png" alt="리뷰" width="70" height="70"><font size="2" color="#4169e1"><br>리뷰</font></a>
@@ -94,10 +124,9 @@ li p {width:100%; text-align:center} /* 텍스트가 가운데 정렬이 되도�
                 </button>
               <div class="collapse show" id="home-collapse">
                    <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                   		<li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">찜한 상품</a></li>
-                  		<li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">장바구니</a></li>
-                  		<li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">주문 목록</a></li>
-                  		<li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">취소·반품·환불·교환</a></li>
+                   		<li><a href="shop_myPage_listLike.do" class="link-dark d-inline-flex text-decoration-none rounded">찜한 상품</a></li>
+                  		<li><a href="shop_myPage_listCart.do" class="link-dark d-inline-flex text-decoration-none rounded">장바구니</a></li>
+                  		<li><a href="user_shop_myPage.do" class="link-dark d-inline-flex text-decoration-none rounded">주문 목록</a></li>
                   </ul>
               </div>
            </li>
@@ -127,28 +156,14 @@ li p {width:100%; text-align:center} /* 텍스트가 가운데 정렬이 되도�
               <div class="collapse show" id="dashboard-collapse2">
                    <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                       <li><a href="shop_myPage_coupon.do" class="link-dark d-inline-flex text-decoration-none rounded">내 쿠폰</a></li>
-                      <!-- <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">배송비 쿠폰</a></li> -->
                       <li><a href="shop_myPage_point.do" class="link-dark d-inline-flex text-decoration-none rounded">포인트 내역</a></li>
                   </ul>
               </div>
            </li>
            
-           <!-- 구분선 -->
+		   <!-- 구분선 -->
            <li class="border-top my-3"></li>
-          
-            <li class="mb-1">
-                <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse3" aria-expanded="true">
-					회원 정보
-                </button>
-              <div class="collapse show" id="dashboard-collapse3">
-                   <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                      <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">회원 정보 수정</a></li>
-                      <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">배송지 관리</a></li>
-                      <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">회원 탈퇴</a></li>
-                  </ul>
-              </div>
-           </li>
-           </ul>
-         </div>
+              <a href="myPage.do"><button type="button" class="btn btn-outline-secondary">회원 마이페이지로 이동</button></a>
+           </div>
       </main>
       </td>  

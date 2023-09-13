@@ -11,7 +11,19 @@ public class FeedReplyDTO {
 	private int fr_report;
 	private String fr_regdate;
 	private String fr_open;
-	private String fr_hide;
+	
+	//join용 멤버필드
+	private String mem_id; //회원 아이디
+	private String mem_nickname; //회원 닉네임
+	
+	private String prof_img;
+	private String prof_open;
+	private String prof_hide;
+	
+	private int friend_num;
+	private String friend_accept;
+	
+	private String visible; //보이는지 여부 //ok, no
 	
 	public int getFr_num() {
 		return fr_num;
@@ -73,10 +85,54 @@ public class FeedReplyDTO {
 	public void setFr_open(String fr_open) {
 		this.fr_open = fr_open;
 	}
-	public String getFr_hide() {
-		return fr_hide;
+	
+	public String getMem_id() {
+		return mem_id;
 	}
-	public void setFr_hide(String fr_hide) {
-		this.fr_hide = fr_hide;
+	public void setMem_id(String mem_id) {
+		this.mem_id = mem_id;
 	}
+	public String getMem_nickname() {
+		return mem_nickname;
+	}
+	public void setMem_nickname(String mem_nickname) {
+		this.mem_nickname = mem_nickname;
+	}
+	public String getProf_img() {
+		return prof_img;
+	}
+	public void setProf_img(String prof_img) {
+		this.prof_img = prof_img;
+	}
+	public String getProf_open() {
+		return prof_open;
+	}
+	public void setProf_open(String prof_open) {
+		this.prof_open = prof_open;
+	}
+	public String getProf_hide() {
+		return prof_hide;
+	}
+	public void setProf_hide(String prof_hide) {
+		this.prof_hide = prof_hide;
+	}
+	public int getFriend_num() {
+		return friend_num;
+	}
+	public void setFriend_num(int friend_num) {
+		this.friend_num = friend_num;
+	}
+	public String getFriend_accept() {
+		return friend_accept;
+	}
+	public void setFriend_accept(String friend_accept) {
+		this.friend_accept = friend_accept;
+	}
+	public String getVisible() {
+		return visible;
+	}
+	public void setVisible(String visible) {
+		this.visible = visible;
+	}
+	
 }

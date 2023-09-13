@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
 <!-- shop_qna_list.jsp // 쇼핑몰 문의내역 -->
 
 <%@include file="admin_top.jsp" %>
@@ -7,14 +8,14 @@
 	<!-- 쇼핑몰관리 사이드바 -->
 	<%@include file="shop_sidebar.jsp" %>
 	
-<!-- 삭제 script -->
+<!-- script -->
 	<script type="text/javascript">
 	function viewProd(prod_num){
 		window.open("admin_prod_view.do?prod_num="+prod_num, "", "width=1500, height=800")
 	}
 </script>
 
-<!-- <script type="text/javascript">
+	<script type="text/javascript">
 	function viewQna(sq_num){
 		$.ajax({
 		    url:'admin_shop_qna_view.do', //request 보낼 서버의 경로
@@ -38,7 +39,7 @@
 		});
 	}
 </script>
- -->
+
 
 	<!-- 내용  // 상품 목록 -->
 			<div class="container text-center">
@@ -80,10 +81,10 @@
 									<td><a href="javascript:viewProd('${dto.prod_num}')">${dto.prod_num}</a></td>
 									<td>${dto.mem_nickname}</td>
 									<td>
-										<c:if test="${dto.sq_type eq 'prod_QnA'}">상품 문의</c:if>
-										<c:if test="${dto.sq_type eq 'deli_QnA'}">배송 문의</c:if>
-										<c:if test="${dto.sq_type eq 'return_QnA'}">취소/반품/<br>교환 문의</c:if>
-										<c:if test="${dto.sq_type eq 'etc_QnA'}">기타 문의</c:if>
+										<c:if test="${dto.sq_type eq '상품 문의'}">상품 문의</c:if>
+										<c:if test="${dto.sq_type eq '배송 문의'}">배송 문의</c:if>
+										<c:if test="${dto.sq_type eq '취소/반품/교환 문의'}">취소/반품/<br>교환 문의</c:if>
+										<c:if test="${dto.sq_type eq '기타 문의'}">기타 문의</c:if>
 									</td>
 									<td><a href="javascript:viewQna('${dto.sq_num}')">보기</a></td>
 									<td>

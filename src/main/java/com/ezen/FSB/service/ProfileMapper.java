@@ -126,4 +126,15 @@ public class ProfileMapper {
 		return res;
 	}
 	
+	//프로필 수정
+	public int updateProfile(Map<String, Object> map) {
+		int res = sqlSession.update("updateProfile", map);
+		if(res == 0) {
+			return -1;
+		}else {
+			res = sqlSession.update("updateMemberProf", map);
+		}
+		return res;
+	}
+	
 }

@@ -2,6 +2,17 @@
     pageEncoding="UTF-8"%>
 <!-- theme_insert.jsp // 테마 등록 -->
 
+<script type="text/javascript">
+	function check() {
+		if (f.theme_name.value == "") {
+			alert("테마 이름을 입력해주세요!")
+			f.theme_name.focus()
+			return false
+		}
+		return true		
+	}
+</script>
+
 <%@include file="admin_top.jsp" %>
 
 	<!-- 보드게임 사이드바 -->
@@ -14,10 +25,11 @@
 				<div class="row row-cols-1">
 			    	<div class="col">
 			    		<p class="fs-5">테마 등록</p>
+			    		<font size="2" color="red">🚨테마는 8개 까지 등록 가능합니다🚨</font>
 			    	</div>
 			    	<p>
 					<div class="col" style="height: 200px;">
-						<form name="f" action="admin_theme_insert.do" method="post">
+						<form name="f" action="admin_theme_insert.do" method="post" onsubmit="return check()">
 							<table class="table table-hover table-bordered table align-middle" width="60%" height="80%">
 								<tr align="center">
 									<th width="50%" height="100">테마 이름</th>

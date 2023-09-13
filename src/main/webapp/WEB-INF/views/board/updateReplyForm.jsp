@@ -14,21 +14,21 @@
 				<input type="hidden" name="br_num" value="${dto.br_num}"/>
 				<input type="hidden" name="pageNum" value="${params.pageNum}">
 		<div class = "row">
-		<div class = "col">
+		<div class = "col-2">
 		<Strong>${dto.mem_nickname}</Strong>
 		</div>
 		<input hidden="hidden"><!-- 엔터키 서브밋 방지 -->
-		<div class = "col-5">
+		<div class = "col-6">
 		<input type="text" class="form-control form-control-sm" placeholder="수정할 내용을 입력하세요." name="br_content" value="${dto.br_content}">
 		</div>
-		<div class = "col" align ="center">
+		<div class = "col-2" align ="center">
 		<fmt:formatDate value="${now}" pattern="yyyy-MM-dd HH:mm" var="today"/>
-		<c:out value="${today}"/>
+		<small><c:out value="${today}"/></small>
 		</div>
-		<div class = "col-2">
+		<div class = "col-2" align ="center">
 			<div class="btn-group btn-group-sm" role="group" aria-label="Basic outlined example">
- 			<a href="javascript:updateReplyOk()"><button type="button" class="btn btn-outline-primary">수정</button></a>
- 			<a href="javascript:cancel('${dto.board_num}')"> <button type="button" class="btn btn-outline-primary">취소</button></a>
+ 			<a href="javascript:updateReplyOk()"><button type="button" class="btn btn-outline-primary btn-sm">수정</button></a>
+ 			<a href="javascript:cancel('${dto.board_num}')"> <button type="button" class="btn btn-outline-primary btn-sm">취소</button></a>
 			</div>
 		</div>
 		</div>

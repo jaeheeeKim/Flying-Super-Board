@@ -11,7 +11,7 @@
 
 	<!-- 관리자 작성글 목록 -->
 	<select id="adminListNotice" resultType="noticeDTO">
-		select * from f_notice
+		select * from f_notice where n_mode = 'notice' or n_mode = 'qna'
 	</select>
 	
 	<!-- 관리자 작성글 정렬 -->
@@ -19,15 +19,15 @@
 		select * from f_notice where n_mode = #{n_mode}
 	</select>
 	<select id="adminListNoticeSort2" resultType="noticeDTO">
-		select * from f_notice order by n_regdate asc
+		select * from f_notice where n_mode = 'notice' or n_mode = 'qna' order by n_regdate asc
 	</select>
 	<select id="adminListNoticeSort3" resultType="noticeDTO">
-		select * from f_notice order by n_regdate desc
+		select * from f_notice where n_mode = 'notice' or n_mode = 'qna' order by n_regdate desc
 	</select>
 	
 	<!-- 관리자 작성글 찾기 -->
 	<select id="adminFindNotice" parameterType="map" resultType="noticeDTO">
-		select * from f_notice where ${search} like '%'||#{searchString}||'%'
+		select * from f_notice where ${search} like '%'||#{searchString}||'%' and n_mode = 'notice' or ${search} like '%'||#{searchString}||'%' and n_mode = 'qna'
 	</select>
 	
 	<!-- 관리자 작성글 삭제 -->

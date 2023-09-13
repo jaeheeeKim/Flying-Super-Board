@@ -8,7 +8,6 @@ public class ProfileDTO {
 	private int prof_following;
 	private int prof_follower;
 	private String prof_open;
-	private String prof_hide;
 	
 	//join용 필드
 	private String mem_id; //회원 아이디
@@ -57,12 +56,6 @@ public class ProfileDTO {
 	}
 	public void setProf_open(String prof_open) {
 		this.prof_open = prof_open;
-	}
-	public String getProf_hide() {
-		return prof_hide;
-	}
-	public void setProf_hide(String prof_hide) {
-		this.prof_hide = prof_hide;
 	}
 	
 	//join용

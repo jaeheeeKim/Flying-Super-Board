@@ -1,20 +1,27 @@
 package com.ezen.FSB.dto;
 
-public class Board_replyDTO {
-	private int br_num;
-	private String br_content;
-	private String br_regdate;
-	private int br_re_level;
+public class Board_replyDTO { // 자유, 익명 게시판 댓글
+	private int br_num; // 댓글 넘
+	private String br_content; // 댓글 내용
+	private String br_regdate; // 댓글 작성일
+	private int br_re_level; // 대댓글 
 	private int br_re_step;
 	private int br_re_group;
-	private int br_report;
-	private int board_num;
-	private int mem_num;
 	
-	private int board_replycount;
+	private int br_report; // 댓글 신고
 	
-	private String mem_nickname;
+	private int board_num; // 댓글 달린 게싯글 번호
+	private int mem_num; // 멤넘
 	
+	private String mem_nickname; //join용 닉네임
+	private String mem_img; // 테이블엔 없는 이미지 디티오
+
+	public String getMem_img() {
+		return mem_img;
+	}
+	public void setMem_img(String mem_img) {
+		this.mem_img = mem_img;
+	}
 	
 	public String getMem_nickname() {
 		return mem_nickname;
@@ -69,12 +76,6 @@ public class Board_replyDTO {
 	}
 	public void setBr_re_group(int br_re_group) {
 		this.br_re_group = br_re_group;
-	}
-	public int getBoard_replycount() {
-		return board_replycount;
-	}
-	public void setBoard_replycount(int board_replycount) {
-		this.board_replycount = board_replycount;
 	}
 	public int getBr_report() {
 		return br_report;

@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> v
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 
     <c:if test="${fn:length(listGotRequest) > 0}">
@@ -12,7 +12,7 @@
 					<div class="container mb-3" align="left">
 						<div class="row align-items-center">
 							<div class="col-1" align="left" style="padding: 0; vertical-align: middle;">
-								<img src="resources/img/default_profile.png" width="30" height="30">&nbsp;
+								<img src="resources/img/${prof.prof_img}" width="30" height="30">&nbsp;
 							</div>
 							<div class="col-8 container" style="padding-left: 20px;">
 								<div class="row">

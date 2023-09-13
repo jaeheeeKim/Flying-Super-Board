@@ -4,7 +4,7 @@
 <!-- report.jsp -->
 <html>
 <head>
-	<title>신고사유</title>
+	<title>리뷰 신고사유</title>
 <!-- css 파일 연결하기 -->
 	<script src="resources/js/jquery-3.7.0.js">
 	</script>
@@ -32,7 +32,7 @@
 <div align="center">
 	<div class="text-bg-warning p-3">신고여부 선택하기</div>
 	<div class="form-check">
-  		<input class="form-check-input" type="radio" name="review_report" value="1" id="flexCheckDefault1">
+  		<input class="form-check-input" type="radio" name="review_report" value="1" id="flexCheckDefault1" checked>
   		<label class="form-check-label" for="flexCheckDefault1">
    			욕설 및 부적절한 언어
   		</label>
@@ -67,7 +67,7 @@
 	</div>
 	<hr>
 	<!-- 신고 한줄 상세사유  50자 제한 -->
-   <input class="form-control" type="text" name="breport_detail" placeholder="상세 사유를 입력해 주세요💥" maxlength = '50'>
+   <input class="form-control" type="text" name="report_detail" placeholder="상세 사유를 입력해 주세요💥" maxlength = '50'>
 	<br>
 	<a href="javascript:isReport()"><button type="button" class="btn btn-danger">신고하기</button></a>
 	<a href="javascript:reportClose()"><button type="button" class="btn btn-light">취소하기</button></a>

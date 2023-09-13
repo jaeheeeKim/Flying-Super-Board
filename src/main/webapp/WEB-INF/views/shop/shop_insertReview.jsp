@@ -40,7 +40,24 @@
 	}
 	
 </style>
-
+<!-- 유효성 검사 추가  -->
+<script>
+function check() {
+	if (f.sr_title.value == ""){
+		alert("리뷰 제목을 입력해주세요!")
+		f.board_title.focus()
+		return false
+	}if (f.sr_content.value == "") {
+		alert("리뷰 내용을 입력해주세요!")
+		f.board_title.focus()
+		return false
+	}
+	if(f)
+		f.action = 'shop_insertReview.do';
+		f.submit();
+		return true
+}
+</script>
 <script type="text/javascript">
 	let sorted_files = []; //이미지 배열
 	
@@ -67,10 +84,12 @@
 			}
 			submitFormAction();
 		}
+//유효성 검사 추가
 		//submit동작
 		function submitFormAction(){
-			f.action = 'shop_insertReview.do';
-			f.submit();
+			//f.action = 'shop_insertReview.do';
+			//f.submit();
+			check();
 		}
 	}
 	//이미지 Base64로 전환
@@ -260,15 +279,25 @@
 			</div>
 			<h4 class="pb-2" align="center">상품 리뷰 작성</h4>
 			<div class="col-8 py-2">
-				<form name="f" action="shop_insertReview.do" method="post" enctype="multipart/form-data">
+				<form name="f" id="f" action="shop_insertReview.do" method="post" enctype="multipart/form-data">
 				<input type="hidden" name="mem_num" value="${sessionScope.mem_num}">
+<c:forEach items="${listProd}" var="dto">
+	<input type="hidden" name="prod_company" value="${dto.prod_company}">
+	<input type="hidden" name="prod_qty" value="${dto.prod_qty}">
+	<input type="hidden" name="prod_price" value="${dto.prod_price}">
+	<input type="hidden" name="prod_point" value="${dto.prod_point}">
+	<input type="hidden" name="prod_discount" value="${dto.prod_discount}">
+	<input type="hidden" name="prod_delchar" value="${dto.prod_delchar}">
+	<input type="hidden" name="prod_img" value="${dto.prod_img}">
+	<input type="hidden" name="prod_img2" value="${dto.prod_img}">
+</c:forEach>					
 				<table border="0" width="100%" height="80%" align="center">
 					<tr height="50">
 						<th width="20%" align="right">상품명</th>
 						<td width="80%"><!-- 내가 주문한 상품들 중 선택 가능하도록!!! <<<해야함 -->
 							<select name="prod_num" id="prod_num" class="form-select">
-								<c:forEach items="${listProd}" var="dto">
-									<option value="${dto.prod_num}">${dto.game_name}</option>
+								<c:forEach items="${listOrderProd}" var="dto">
+									<option value="${dto.prod_num}">[${dto.prod_company}] ${dto.game_name}</option>
 								</c:forEach>
 							</select>								
 						</td>
@@ -330,5 +359,4 @@
 		</div>
 	</div>
 </div>
-
 <%@include file="shop_bottom.jsp" %>

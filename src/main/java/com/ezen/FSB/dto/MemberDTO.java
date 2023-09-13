@@ -7,23 +7,46 @@ public class MemberDTO {
 	private String mem_passwd; // 회원 비밀번호
 	private String mem_name; //회원 이름
 	private String mem_nickname;  //회원 닉네임
-	private String mem_mode;  //회원 모드(사업자/개인)
-	private String mem_join;  // 가입신청대기
+	private String mem_mode;  //회원 모드(개인/사업자)
+	private String mem_join;  // 가입신청대기(개인1/사업자2)
 	private int mem_report;  //회원 신고 누적 횟수
 	private String mem_img; //회원 프로필 이미지
 	private String mem_regdate;  //회원 가입일
-	private String mem_msg; //회원 상태메세지
-	private String mem_hp1; //회원 첫번호
-	private String mem_hp2; //회원 가운데번호
-	private String mem_hp3; //회원 끝 번호
-	private String mem_recommend; //추천인
+	
+	private String mem_hp1; //회원 핸드폰 첫번호
+	private String mem_hp2; //회원 핸드폰 가운데번호
+	private String mem_hp3; //회원 핸드폰 끝 번호
+	
 	private String mem_sel_agree; //선택동의
-	private String mem_bg_img;   //회원이 획득한 뱃지 이미지
-	private String mem_bg_name; //회원이 획득한 뱃지 이미지
-	private String mem_ac_date; //회원 활동일(하루에 로그인1회만 인정)
-	private String mem_tag; // 태그
-	//커뮤니티 작성게시글 수   //회원 커뮤니티 작성게시글 수
-	//커뮤니티 작성댓글 수    //회원 커뮤니티 작성 댓글 수
+	
+	private int mem_count;// 로그인시 마다 방문횟수 +1
+	
+	//배지
+	private String badge_king;
+	private String badge_write;
+	private String badge_1004;
+	private String badge_good;
+	private String badge_rich;
+	
+	//배지설정
+	private String badge_king_2;
+	private String badge_write_2;
+	private String badge_1004_2;
+	private String badge_good_2;
+	private String badge_rich_2;
+	
+	//태그 목록
+	private String tag_1;
+	private String tag_2;
+	private String tag_3;
+	private String tag_4;
+	private String tag_5;
+	private String tag_6;
+	private String tag_7;
+	private String tag_8;
+	
+	
+	private int bc_using; // 비즈니스 쿠폰 사용 확인용
 	
 	
 	public int getMem_num() {
@@ -86,12 +109,7 @@ public class MemberDTO {
 	public void setMem_regdate(String mem_regdate) {
 		this.mem_regdate = mem_regdate;
 	}
-	public String getMem_msg() {
-		return mem_msg;
-	}
-	public void setMem_msg(String mem_msg) {
-		this.mem_msg = mem_msg;
-	}
+	
 	public String getMem_hp1() {
 		return mem_hp1;
 	}
@@ -116,41 +134,132 @@ public class MemberDTO {
 		return mem_hp1+mem_hp2+mem_hp3;
 	}
 	
-	public String getMem_recommend() {
-		return mem_recommend;
-	}
-	public void setMem_recommend(String mem_recommend) {
-		this.mem_recommend = mem_recommend;
-	}
 	public String getMem_sel_agree() {
 		return mem_sel_agree;
 	}
 	public void setMem_sel_agree(String mem_sel_agree) {
 		this.mem_sel_agree = mem_sel_agree;
 	}
-	public String getMem_bg_img() {
-		return mem_bg_img;
+
+	public int getBc_using() {
+		return bc_using;
 	}
-	public void setMem_bg_img(String mem_bg_img) {
-		this.mem_bg_img = mem_bg_img;
+	public void setBc_using(int bc_using) {
+		this.bc_using = bc_using;
 	}
-	public String getMem_bg_name() {
-		return mem_bg_name;
+	public int getMem_count() {
+		return mem_count;
 	}
-	public void setMem_bg_name(String mem_bg_name) {
-		this.mem_bg_name = mem_bg_name;
+	public void setMem_count(int mem_count) {
+		this.mem_count = mem_count;
 	}
-	public String getMem_ac_date() {
-		return mem_ac_date;
+	public String getBadge_king() {
+		return badge_king;
 	}
-	public void setMem_ac_date(String mem_ac_date) {
-		this.mem_ac_date = mem_ac_date;
+	public void setBadge_king(String badge_king) {
+		this.badge_king = badge_king;
 	}
-	public String getMem_tag() {
-		return mem_tag;
+	public String getBadge_write() {
+		return badge_write;
 	}
-	public void setMem_tag(String mem_tag) {
-		this.mem_tag = mem_tag;
+	public void setBadge_write(String badge_write) {
+		this.badge_write = badge_write;
 	}
-		
+	public String getBadge_1004() {
+		return badge_1004;
+	}
+	public void setBadge_1004(String badge_1004) {
+		this.badge_1004 = badge_1004;
+	}
+	public String getBadge_good() {
+		return badge_good;
+	}
+	public void setBadge_good(String badge_good) {
+		this.badge_good = badge_good;
+	}
+	public String getBadge_rich() {
+		return badge_rich;
+	}
+	public void setBadge_rich(String badge_rich) {
+		this.badge_rich = badge_rich;
+	}
+	public String getBadge_king_2() {
+		return badge_king_2;
+	}
+	public void setBadge_king_2(String badge_king_2) {
+		this.badge_king_2 = badge_king_2;
+	}
+	public String getBadge_write_2() {
+		return badge_write_2;
+	}
+	public void setBadge_write_2(String badge_write_2) {
+		this.badge_write_2 = badge_write_2;
+	}
+	public String getBadge_1004_2() {
+		return badge_1004_2;
+	}
+	public void setBadge_1004_2(String badge_1004_2) {
+		this.badge_1004_2 = badge_1004_2;
+	}
+	public String getBadge_good_2() {
+		return badge_good_2;
+	}
+	public void setBadge_good_2(String badge_good_2) {
+		this.badge_good_2 = badge_good_2;
+	}
+	public String getBadge_rich_2() {
+		return badge_rich_2;
+	}
+	public void setBadge_rich_2(String badge_rich_2) {
+		this.badge_rich_2 = badge_rich_2;
+	}
+	public String getTag_1() {
+		return tag_1;
+	}
+	public void setTag_1(String tag_1) {
+		this.tag_1 = tag_1;
+	}
+	public String getTag_2() {
+		return tag_2;
+	}
+	public void setTag_2(String tag_2) {
+		this.tag_2 = tag_2;
+	}
+	public String getTag_3() {
+		return tag_3;
+	}
+	public void setTag_3(String tag_3) {
+		this.tag_3 = tag_3;
+	}
+	public String getTag_4() {
+		return tag_4;
+	}
+	public void setTag_4(String tag_4) {
+		this.tag_4 = tag_4;
+	}
+	public String getTag_5() {
+		return tag_5;
+	}
+	public void setTag_5(String tag_5) {
+		this.tag_5 = tag_5;
+	}
+	public String getTag_6() {
+		return tag_6;
+	}
+	public void setTag_6(String tag_6) {
+		this.tag_6 = tag_6;
+	}
+	public String getTag_7() {
+		return tag_7;
+	}
+	public void setTag_7(String tag_7) {
+		this.tag_7 = tag_7;
+	}
+	public String getTag_8() {
+		return tag_8;
+	}
+	public void setTag_8(String tag_8) {
+		this.tag_8 = tag_8;
+	}
+
 }

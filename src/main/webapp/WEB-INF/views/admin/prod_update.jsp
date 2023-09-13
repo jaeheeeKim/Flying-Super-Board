@@ -1,6 +1,37 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!-- prod_update.jsp // 상품 수정 폼 -->
+<script type="text/javascript">
+	function check() {
+		if (f.prod_price.value == "") {
+			alert("상품 가격을 입력해주세요!")
+			f.prod_price.focus()
+			return false
+		}
+		if (f.prod_qty.value == "") {
+			alert("상품 재고를 입력해주세요")
+			f.prod_qty.focus()
+			return false
+		}
+		if (f.prod_delchar.value == "") {
+			alert("배송비를 입력해주세요")
+			f.prod_delchar.focus()
+			return false
+		}
+		if (f.prod_discount.value == "") {
+			alert("할인율을 입력해주세요")
+			f.prod_discount.focus()
+			return false
+		}
+		if (f.prod_company.value == "") {
+			alert("판매사를 입력해주세요")
+			f.prod_company.focus()
+			return false
+		}
+		return true		
+	}
+</script>
+
 
 <%@include file="admin_top.jsp" %>
 
@@ -17,7 +48,7 @@
 			    	</div>
 			    	<p>
 					<div class="col" style="overflow: scroll; height: 800px;">
-					<form name="f" action="admin_prod_update.do" method="post" enctype="multipart/form-data">
+					<form name="f" action="admin_prod_update.do" method="post" enctype="multipart/form-data" onsubmit="return check()">
 					<table class="table align-middle" width="80%" height="80%">
 						<tr align="center">
 							<th width="15%">상품번호</th><td width="35%">${getProd.prod_num}
@@ -26,23 +57,23 @@
 						</tr>
 						<tr align="center">
 							<th>상품 판매사</th><td><input type="text" class="form-control" name="prod_company" value="${getProd.prod_company}"></td>
-							<th>상품 재고<br>(단위 : 개)</th><td><input type="text" class="form-control" name="prod_qty" value="${getProd.prod_qty}" size="15"></td>	
+							<th>상품 재고<br>(단위 : 개)</th><td><input type="number" class="form-control" name="prod_qty" value="${getProd.prod_qty}" size="15"></td>	
 						</tr>
 						<tr align="center">
 							<th>상품 가격<br>(단위 : 원)</th>
-							<td><input type="text" class="form-control" name="prod_price" value="${getProd.prod_price}"></td>
+							<td><input type="number" class="form-control" name="prod_price" value="${getProd.prod_price}"></td>
 							<th>상품 포인트</th>
-							<td><input type="text" class="form-control" name="prod_point" value="${getProd.prod_point}"></td>	
+							<td>${getProd.prod_point}</td>	
 						</tr>
 						<tr align="center">
 							<th>상품 할인율<br>(단위 : %)</th>
-							<td><input type="text" class="form-control" name="prod_discount" value="${getProd.prod_discount}"></td>
+							<td><input type="number" class="form-control" name="prod_discount" value="${getProd.prod_discount}"></td>
 							<th>상품 배송비<br>(단위 : 원)</th>
-							<td><input type="text" class="form-control" name="prod_delchar" value="${getProd.prod_delchar}"></td>	
+							<td><input type="number" class="form-control" name="prod_delchar" value="${getProd.prod_delchar}"></td>	
 						</tr>
 						<tr align="center">
 							<th>상품 별점</th><td>${getProd.prod_starrating}</td>
-							<th>상품 찜수</th><td>${getProd.prod_like}</td>	
+							<th>상품 찜수</th><td></td>
 						</tr>
 						<tr align="center">
 							<th height="200">게임 이미지</th>

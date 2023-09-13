@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!-- shop_sidebar.jsp // 쇼핑몰관리 사이드바 -->
 
 <!-- 벡터 아이콘 정의 -->
@@ -41,7 +42,10 @@
 		          	<ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
 		            	<li><a href="admin_prod_insert.do" class="link-dark d-inline-flex text-decoration-none rounded">상품 등록</a></li>
 						<li><a href="admin_prod_list.do?mode=all&sort=all" class="link-dark d-inline-flex text-decoration-none rounded">상품 목록</a></li>
-						<li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">전체 상품 리뷰 목록</a></li>
+						<li><a href="admin_shop_inventory_list.do" class="link-dark d-inline-flex text-decoration-none rounded">재고 관리&nbsp;
+							<c:if test="${sessionScope.inventory ne 0}"><span class="badge bg-danger">${inventory}</span></c:if>
+						</a></li>
+						<li><a href="admin_shop_total_review.do?sort=all" class="link-dark d-inline-flex text-decoration-none rounded">전체 상품 리뷰 목록</a></li>
 		         	</ul>
 		        </div>
 	        </li>
@@ -54,10 +58,16 @@
 		       	</button>
 		        <div class="collapse show" id="dashboard-collapse">
 		          	<ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-		          		<li><a class="link-dark d-inline-flex text-decoration-none rounded" href="admin_shop_qna_list.do?mode=all">문의 내역</a></li>
-		          		<li><a class="link-dark d-inline-flex text-decoration-none rounded" href="#">주문 내역</a></li>
-		          		<li><a class="link-dark d-inline-flex text-decoration-none rounded" href="#">환불 내역</a></li>
-		          		<li><a class="link-dark d-inline-flex text-decoration-none rounded" href="#">매출 내역</a></li>
+		          		<li><a class="link-dark d-inline-flex text-decoration-none rounded" href="admin_shop_qna_list.do?mode=all">문의 내역&nbsp;
+		          			<c:if test="${shopQnA ne 0 }"><span class="badge bg-danger">${shopQnA}</span></c:if>
+		          		</a></li>
+		          		<li><a class="link-dark d-inline-flex text-decoration-none rounded" href="admin_shop_order_list.do">주문 내역&nbsp;
+		          			<c:if test="${shopOrder ne 0 }"><span class="badge bg-danger">${shopOrder}</span></c:if>
+		          		</a></li>
+		          		<%-- <li><a class="link-dark d-inline-flex text-decoration-none rounded" href="admin_shop_refund_list.do">환불 내역&nbsp;
+		          			<c:if test="${shopRefund ne 0 }"><span class="badge bg-danger">${shopRefund}</span></c:if>
+		          		</a></li> --%>
+		          		<li><a class="link-dark d-inline-flex text-decoration-none rounded" href="admin_shop_sales_list.do">매출 내역</a></li>
 		         	</ul>
 		        </div>
 	        </li>
