@@ -24,7 +24,7 @@
   - 쇼핑몰 사용자페이지(기여도 80%)
   - 쇼핑몰 DB 구성(기여도 90%)
   - 장바구니 및 주문결제(기여도 100%)
-#### 결제API 적용하여 결제 기능 구현 시도중입니다.
+
 - 구성 설명
   - Spring Framework를 이용하여 Maven project로 제작된 보드게임 복합 커뮤니티
   - 관리자, 보드게임 정보, 쇼핑몰, 게시판, SNS 파트로 나누어 진행
@@ -45,13 +45,12 @@
   - MyBatis 3.2.3
 - **DB**
   - Oracle
-  - Docker Oracle 이미지
 - **IDE**
   - Spring Tool Suite
   - sqldeveloper
 - **라이브러리**
   - BootStrap
-  - Jquery
+  - jQquery
   - Ajax
 - **API** : Naver/Kakao Login API
 
@@ -59,9 +58,33 @@
 
 ## 3️⃣ 담당 기능 
 #### 1. 쇼핑몰 사용자 페이지 디자인
-- jsp에서 **Bootstap**을 이용해 모든 사용자 페이지 디자인
+- jsp에서 **Bootstap5** 구성요소들을 이용해 디자인
+
+#### 2. [쇼핑몰 메인]
+- 인기상품 4개 판매순으로 조회
 ![image](https://github.com/jaeheeeKim/Flying-Super-Board/assets/137701489/4d06d0b1-1ab5-4788-967f-06e6cee36208)
 
+- 전체 보드게임 20/40/60개씩 조회
+![image](https://github.com/jaeheeeKim/Flying-Super-Board/assets/137701489/373374f6-15b8-4002-9de7-c0737ec7f19f)
+
+
+
+#### 3. [상품 상세]
+- 클릭된 상품에 대한 상세정보 조회 외 기능
+  - **Ajax** 라이브러리를 이용한 **찜하기/해제** 기능과 **장바구니** 담기, **구매하기**
+  - 하단 탭에서 페이징 처리된 **상품리뷰** 목록과 **문의내역** 조회
+![image](https://github.com/jaeheeeKim/Flying-Super-Board/assets/137701489/36b74a55-4b59-444e-b550-5694e2a80dd7)
+![image](https://github.com/jaeheeeKim/Flying-Super-Board/assets/137701489/9cd7127a-253b-44f8-a605-c3716c980f20)
+![image](https://github.com/jaeheeeKim/Flying-Super-Board/assets/137701489/c47c9cf2-3192-4ffd-b8af-45b598897fa1)
+
+
+
+#### 3. [장바구니 및 주문결제] *한 페이지에 보이기 위해 1개의 상품만 노출
+- 장바구니 목록 **조회** 및 **수정**, **삭제**
+![image](https://github.com/jaeheeeKim/Flying-Super-Board/assets/137701489/4eb6ba92-23ea-431e-8677-bca8365b7633)
+
+- 주문결제 페이지 **쿠폰 적용**, **포인트 사용**, **배송지 관리 CRUD** 
+![image](https://github.com/jaeheeeKim/Flying-Super-Board/assets/137701489/981f5f18-ece1-4cb5-82af-3a66bf05ef2b)
 
 
 
