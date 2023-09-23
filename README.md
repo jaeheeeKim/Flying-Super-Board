@@ -38,8 +38,6 @@
   - JavaScript
 - **서버**
   - Apache Tomcat 9.0
-  - AWS EC2
-  - ubuntu
 - **프레임워크**
   - Spring
   - MyBatis 3.2.3
@@ -88,8 +86,22 @@
 
 
 
+#### 4. [마이페이지]
+- **주문 목록**에서 **주문 상세 내역** 확인 가능
+![image](https://github.com/jaeheeeKim/Flying-Super-Board/assets/137701489/f3097479-59ed-4a2d-a1b3-ad59b616bf88)
+
+- 주문 상세 내역에서 **리뷰 작성**하며 이미지 첨부 가능
+![image](https://github.com/jaeheeeKim/Flying-Super-Board/assets/137701489/b456ffc3-a292-48ac-b5fb-8c53655f34fa)
+![image](https://github.com/jaeheeeKim/Flying-Super-Board/assets/137701489/860825de-840d-4029-a0e9-10cd1f3f89bd)
+
 
 
 ## 4️⃣ 개선해야 할 부분
-## 5️⃣ 추가 학습
-### AWS 클라우드를 이용한 배포
+- 효율적인 설계를 위해 개발 전 단계에서 기능들을 상세하게 분석
+- 쇼핑몰페이지 속도 측정하여 개선
+- 사용자 입장에서 구매하고 싶고 편리한 웹페이지를 구현하도록 연구
+- 불필요한 코드 점검하며 개발
+
+
+
+
