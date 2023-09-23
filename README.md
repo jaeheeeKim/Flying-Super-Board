@@ -4,7 +4,6 @@
 
 ![image](https://github.com/jaeheeeKim/Flying-Super-Board/assets/137701489/82445a8a-d0fd-40d1-a556-d7d18e8a32d5)
 
-
 ---
 ## 🎲목차
 ### 1. 개요
@@ -13,8 +12,6 @@
 ### 4. 그 외 기능들
 ### 5. 배운점
 ---
-
-
 
 ## 1️⃣ 개요
 - 개발 기간 : 1개월 3주
@@ -29,8 +26,6 @@
 - 구성 설명
   - Spring Framework를 이용하여 Maven project로 제작된 보드게임 복합 커뮤니티
   - 관리자, 보드게임 정보, 쇼핑몰, 게시판, SNS 파트로 나누어 진행
-
-
 
 ## 2️⃣ 개발 환경
 - **언어**
@@ -53,56 +48,39 @@
   - Ajax
 - **API** : Naver/Kakao Login API
 
-
-
 ## 3️⃣ 담당 기능 
 #### 1. 쇼핑몰 사용자 페이지 디자인
 - jsp에서 **Bootstap5** 구성요소들을 이용해 디자인
 
 #### 2. [쇼핑몰 메인]
 - 인기상품 4개 판매순으로 조회
-
-
+![image](https://github.com/jaeheeeKim/Flying-Super-Board/assets/137701489/0679e880-1f0e-4e3c-85f1-facffda2038c)
 - 전체 보드게임 20/40/60개씩 조회
-![image](https://github.com/jaeheeeKim/Flying-Super-Board/assets/137701489/a4f622d2-970b-43ce-a58f-1a304c0c6061)
-
-
+![image](https://github.com/jaeheeeKim/Flying-Super-Board/assets/137701489/f0bf95b2-80e1-4d0d-b6c2-bdf6875ba22a)
 
 #### 3. [상품 상세]
 - 클릭된 상품에 대한 상세정보 조회 외 기능
   - **Ajax** 라이브러리를 이용한 **찜하기/해제** 기능과 **장바구니** 담기, **구매하기**
   - 하단 탭에서 페이징 처리된 **상품리뷰** 목록과 **문의내역** 조회
-![image](https://github.com/jaeheeeKim/Flying-Super-Board/assets/137701489/36b74a55-4b59-444e-b550-5694e2a80dd7)
-![image](https://github.com/jaeheeeKim/Flying-Super-Board/assets/137701489/9cd7127a-253b-44f8-a605-c3716c980f20)
-![image](https://github.com/jaeheeeKim/Flying-Super-Board/assets/137701489/c47c9cf2-3192-4ffd-b8af-45b598897fa1)
+![image](https://github.com/jaeheeeKim/Flying-Super-Board/assets/137701489/70650ba3-046a-4420-b42a-8103edd4bf9a)
+![image](https://github.com/jaeheeeKim/Flying-Super-Board/assets/137701489/5b4621cc-f477-4760-a125-d36d27178d28)
+![image](https://github.com/jaeheeeKim/Flying-Super-Board/assets/137701489/ea3377d9-e641-4774-954f-2e2fa06b277e)
 
-
-
-#### 3. [장바구니 및 주문결제] *한 페이지에 보이기 위해 1개의 상품만 노출
+#### 4. [장바구니 및 주문결제] *한 페이지에 보이기 위해 1개의 상품만 노출
 - 장바구니 목록 **조회** 및 **수정**, **삭제**
-![image](https://github.com/jaeheeeKim/Flying-Super-Board/assets/137701489/4eb6ba92-23ea-431e-8677-bca8365b7633)
-
+![image](https://github.com/jaeheeeKim/Flying-Super-Board/assets/137701489/7c9fcc5a-f0b1-4c60-8d3d-e8c02c3f02bc)
 - 주문결제 페이지 **쿠폰 적용**, **포인트 사용**, **배송지 관리 CRUD** 
-![image](https://github.com/jaeheeeKim/Flying-Super-Board/assets/137701489/981f5f18-ece1-4cb5-82af-3a66bf05ef2b)
+![image](https://github.com/jaeheeeKim/Flying-Super-Board/assets/137701489/df811e80-13ad-49ed-9817-d9b6a7e5149a)
 
-
-
-#### 4. [마이페이지]
+#### 5. [마이페이지]
 - **주문 목록**에서 **주문 상세 내역** 확인 가능
-![image](https://github.com/jaeheeeKim/Flying-Super-Board/assets/137701489/f3097479-59ed-4a2d-a1b3-ad59b616bf88)
-
+![image](https://github.com/jaeheeeKim/Flying-Super-Board/assets/137701489/48b90e91-942b-4390-a1fc-449f23517ea5)
+![image](https://github.com/jaeheeeKim/Flying-Super-Board/assets/137701489/57bbe7fd-ce21-4722-a9e2-ffb112bda087)
 - 주문 상세 내역에서 **리뷰 작성**하며 이미지 첨부 가능
-![image](https://github.com/jaeheeeKim/Flying-Super-Board/assets/137701489/b456ffc3-a292-48ac-b5fb-8c53655f34fa)
-![image](https://github.com/jaeheeeKim/Flying-Super-Board/assets/137701489/860825de-840d-4029-a0e9-10cd1f3f89bd)
-
-
+![image](https://github.com/jaeheeeKim/Flying-Super-Board/assets/137701489/6a333d3f-f3b5-4c98-8439-4e49d65219b8)
 
 ## 4️⃣ 개선해야 할 부분
 - 효율적인 설계를 위해 개발 전 단계에서 기능들을 상세하게 분석
 - 쇼핑몰페이지 속도 측정하여 개선
 - 사용자 입장에서 구매하고 싶고 편리한 웹페이지를 구현하도록 연구
 - 불필요한 코드 점검하며 개발
-
-
-
-
