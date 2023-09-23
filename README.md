@@ -2,7 +2,8 @@
 날아라슈퍼보드(보드게임 복합 커뮤니티 사이트)는 국비학원에서 진행한 팀프로젝트입니다.
 어린 시절 즐겁게 보았던 만화를 떠올리며 즐겁게 프로젝트에 임하기 위해 정해진 이름입니다.
 
-![image](https://github.com/jaeheeeKim/Flying-Super-Board/assets/137701489/5a0775de-a1c7-48a2-9cad-59d0e8b2ec2d)
+![image](https://github.com/jaeheeeKim/Flying-Super-Board/assets/137701489/82445a8a-d0fd-40d1-a556-d7d18e8a32d5)
+
 
 ---
 ## 🎲목차
@@ -60,10 +61,10 @@
 
 #### 2. [쇼핑몰 메인]
 - 인기상품 4개 판매순으로 조회
-![image](https://github.com/jaeheeeKim/Flying-Super-Board/assets/137701489/4d06d0b1-1ab5-4788-967f-06e6cee36208)
+
 
 - 전체 보드게임 20/40/60개씩 조회
-![image](https://github.com/jaeheeeKim/Flying-Super-Board/assets/137701489/373374f6-15b8-4002-9de7-c0737ec7f19f)
+![image](https://github.com/jaeheeeKim/Flying-Super-Board/assets/137701489/a4f622d2-970b-43ce-a58f-1a304c0c6061)
 
 
 
