@@ -1,6 +1,5 @@
 # 🛹Flying-Super-Board
-날아라슈퍼보드(보드게임 복합 커뮤니티 사이트)는 국비학원에서 진행한 팀프로젝트입니다.
-어린 시절 즐겁게 보았던 만화를 떠올리며 즐겁게 프로젝트에 임하기 위해 정해진 이름입니다.
+FSB(보드게임 복합 커뮤니티 사이트)는 국비학원에서 진행한 팀프로젝트입니다.
 
 ![image](https://github.com/jaeheeeKim/Flying-Super-Board/assets/137701489/82445a8a-d0fd-40d1-a556-d7d18e8a32d5)
 
