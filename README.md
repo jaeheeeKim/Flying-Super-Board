@@ -47,7 +47,19 @@ FSB(보드게임 복합 커뮤니티 사이트)는 국비학원에서 진행한 
   - Ajax
 - **API** : Naver/Kakao Login API
 
-## 3️⃣ 담당 기능 
+## 3️⃣ DB 설계도
+
+<div align="center"><쇼핑몰 DB></div>
+  
+![image](https://github.com/jaeheeeKim/Flying-Super-Board/assets/137701489/b5a14c79-5cf2-4a39-86aa-c453f071cb4e)
+
+<div align="center"><쇼핑몰 마이페이지 DB></div>
+  
+![image](https://github.com/jaeheeeKim/Flying-Super-Board/assets/137701489/bf7e41e1-c426-4366-8b36-b91acc4287e5)
+
+
+
+## 4️⃣ 담당 기능 
 #### 1. 쇼핑몰 사용자 페이지 디자인
 - jsp에서 **Bootstap5** 구성요소들을 이용해 디자인
 
@@ -78,7 +90,7 @@ FSB(보드게임 복합 커뮤니티 사이트)는 국비학원에서 진행한 
 - 주문 상세 내역에서 **리뷰 작성**하며 이미지 첨부 가능
 ![image](https://github.com/jaeheeeKim/Flying-Super-Board/assets/137701489/6a333d3f-f3b5-4c98-8439-4e49d65219b8)
 
-## 4️⃣ 개선해야 할 부분
+## 5️⃣ 개선해야 할 부분
 - 효율적인 설계를 위해 개발 전 단계에서 기능들을 상세하게 분석
 - 쇼핑몰페이지 속도 측정하여 개선
 - 사용자 입장에서 구매하고 싶고 편리한 웹페이지를 구현하도록 연구
